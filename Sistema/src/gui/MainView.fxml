@@ -16,9 +16,9 @@
          <children>
             <MenuBar fx:id="mainMenuBar">
               <menus>
-                <Menu mnemonicParsing="false" text="File">
+                <Menu mnemonicParsing="false" text="Registrar">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
+                    <MenuItem fx:id="menuItemColaboradores" mnemonicParsing="false" onAction="#onMenuItemColaboradoresAction" text="Colaborador" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">

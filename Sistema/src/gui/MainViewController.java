@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -40,6 +41,18 @@ public class MainViewController implements Initializable{
 	private MenuBar mainMenuBar;
 	
 	@FXML
+	private MenuItem menuItemColabList;
+	
+	
+	
+/* ========================================================================
+ * 			Declaracao das variaveis de login
+ * ========================================================================
+*/
+	
+	
+	
+	@FXML
 	private Button btnEntrar;
 	
 	@FXML
@@ -65,6 +78,10 @@ public class MainViewController implements Initializable{
 	
 	public void onBtnSairAction() {
 		Platform.exit();
+	}
+	
+	public void onMenuItemColaboradoresAction() {
+		loadView("/gui/ColaboradorList.fxml");
 	}
 	
 	
