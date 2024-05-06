@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /*
@@ -16,7 +17,7 @@ import javafx.stage.Stage;
  */
 
 
-//Classe principal que herda a classe aplication e inicializa a aplicacao javaFX
+//A classe principal (main) que herda a classe aplication e inicializa a aplicacao javaFX
 public class Main extends Application {
 
 	private static Scene mainScene;//Sera utilizada no carregamento de outras telas

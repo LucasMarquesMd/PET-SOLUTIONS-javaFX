@@ -5,14 +5,18 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import application.Main;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 
 /*
@@ -24,25 +28,55 @@ import javafx.scene.layout.VBox;
 
 
 public class MainViewController implements Initializable{
+	
+	
+	
+/* ========================================================================
+ * 			Declaracao das variaveis
+ * ========================================================================
+ */
 
 	@FXML
-	private MenuItem file;
+	private MenuBar mainMenuBar;
+	
+	@FXML
+	private Button btnEntrar;
+	
+	@FXML
+	private Button btnSair;
+	
+	@FXML
+	private TextField txtUserName;
+	
+	@FXML
+	private TextField txtPassworld;
+
+	
+/* ========================================================================
+ * 			Acoes dos controles
+ * ========================================================================
+*/
+	
+	public void onBtnEntrarAction() {
+		loadView("/gui/HomeScreen.fxml");
+		mainMenuBar.setVisible(true);
+	}
 	
 	
-	
-	public void onFileAction() {
-		loadView("/gui/Login.fxml");
+	public void onBtnSairAction() {
+		Platform.exit();
 	}
 	
 	
 	
-	
+/* ========================================================================
+ * 			Metodos da classe
+ * ========================================================================
+*/	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		
+		mainMenuBar.setVisible(false);
 	}
-	
 	
 	private synchronized void loadView(String absolutPath) {
 
@@ -73,12 +107,7 @@ public class MainViewController implements Initializable{
 			mainVBox.getChildren().add(mainMenu);
 			//Adicionar os conetudos da nova tela no VBox principal
 			mainVBox.getChildren().addAll(newVBox.getChildren());//Adiciona os filhos no newVBox
-			
-			
-			
-			
-			
-			
+				
 			
 		}
 		catch(IOException e) {
@@ -87,6 +116,4 @@ public class MainViewController implements Initializable{
 		
 		
 	}//end loadView
-
-	
 }
