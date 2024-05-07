@@ -12,7 +12,7 @@
       <Label text="Colaborador" />
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button fx:id="btnCadastrar" mnemonicParsing="false" text="Cadastrar" />
+          <Button fx:id="btnCadastrar" mnemonicParsing="false" onAction="#onBtnCadastrar" text="Cadastrar" />
             <Button fx:id="btnConsultar" mnemonicParsing="false" text="Consultar" />
         </items>
       </ToolBar>
