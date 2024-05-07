@@ -1,12 +1,13 @@
 package application;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /*
@@ -38,7 +39,6 @@ public class Main extends Application {
 			//Ajusta o ScrollPane para se ajustar à largura e à altura da cena
 			scrollPane.setFitToHeight(true);
 			scrollPane.setFitToWidth(true);
-			
 			
 			// Define a cena no palco principal (Stage)
 			primaryStage.setScene(mainScene);//Define a cena dentro do palco (A cena e do tipo ScrollPane)

@@ -46,13 +46,12 @@ public class ColaboradorListController implements Initializable{
 	@FXML
 	private TableColumn<Colaborador, Integer> tableCollumnCPF_CNPJ;
 	@FXML
-	private TableColumn<Colaborador, String> tableCollumnEnd;
-	@FXML
-	private TableColumn<Colaborador, String> tableCollumnEndNum;
-	@FXML
 	private TableColumn<Colaborador, String> tableCollumnTelefone;
 	@FXML
 	private TableColumn<Colaborador, String> tableCollumnCelular;
+	@FXML
+	private TableColumn<Colaborador, String> tableCollumnUserCol;
+
 
 	
 	
@@ -85,10 +84,9 @@ public class ColaboradorListController implements Initializable{
 		tableCollumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		tableCollumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 		tableCollumnCPF_CNPJ.setCellValueFactory(new PropertyValueFactory<>("cnpj_cpf"));
-		tableCollumnEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
-		tableCollumnEndNum.setCellValueFactory(new PropertyValueFactory<>("end_num"));
 		tableCollumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
 		tableCollumnCelular.setCellValueFactory(new PropertyValueFactory<>("celular"));
+		tableCollumnUserCol.setCellValueFactory(new PropertyValueFactory<>("user_Col"));
 		
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();//Referencia para o priaryStage

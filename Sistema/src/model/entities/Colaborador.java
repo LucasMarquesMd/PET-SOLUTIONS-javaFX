@@ -14,23 +14,26 @@ public class Colaborador implements Serializable{
 	private String name;
 	private String email;
 	private String cnpj_cpf;
-	private String end;
-	private Integer end_num;
+	private Integer id_End;
 	private Integer telefone;
 	private Integer celular;
+	private String user_Col;
+	private String user_Senha;
 	
 	public Colaborador() {
 	}
 
-	public Colaborador(Integer idColab, String name, String email, String cnpj_cpf, String end, Integer end_num, Integer telefone, Integer celular) {
+	public Colaborador(Integer idColab, String name, String email, String cnpj_cpf, Integer id_End, Integer telefone,
+			Integer celular, String user_Col, String user_Senha) {
 		this.idColab = idColab;
 		this.name = name;
 		this.email = email;
 		this.cnpj_cpf = cnpj_cpf;
-		this.end = end;
-		this.end_num = end_num;
+		this.id_End = id_End;
 		this.telefone = telefone;
 		this.celular = celular;
+		this.user_Col = user_Col;
+		this.user_Senha = user_Senha;
 	}
 
 	public Integer getIdColab() {
@@ -65,20 +68,12 @@ public class Colaborador implements Serializable{
 		this.cnpj_cpf = cnpj_cpf;
 	}
 
-	public String getEnd() {
-		return end;
+	public Integer getId_End() {
+		return id_End;
 	}
 
-	public void setEnd(String end) {
-		this.end = end;
-	}
-
-	public Integer getEnd_num() {
-		return end_num;
-	}
-
-	public void setEnd_num(Integer end_num) {
-		this.end_num = end_num;
+	public void setId_End(Integer id_End) {
+		this.id_End = id_End;
 	}
 
 	public Integer getTelefone() {
@@ -97,9 +92,29 @@ public class Colaborador implements Serializable{
 		this.celular = celular;
 	}
 
+	public String getUser_Col() {
+		return user_Col;
+	}
+
+	public void setUser_Col(String user_Col) {
+		this.user_Col = user_Col;
+	}
+
+	public String getUser_Senha() {
+		return user_Senha;
+	}
+
+	public void setUser_Senha(String user_Senha) {
+		this.user_Senha = user_Senha;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(cnpj_cpf, idColab);
+		return Objects.hash(idColab);
 	}
 
 	@Override
@@ -111,11 +126,10 @@ public class Colaborador implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Colaborador other = (Colaborador) obj;
-		return Objects.equals(cnpj_cpf, other.cnpj_cpf) && Objects.equals(idColab, other.idColab);
+		return Objects.equals(idColab, other.idColab);
 	}
 	
 	
-	
-	
 
+	
 }
