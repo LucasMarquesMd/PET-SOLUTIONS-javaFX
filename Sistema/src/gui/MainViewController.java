@@ -3,6 +3,7 @@ package gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import application.Main;
 import javafx.application.Platform;
@@ -17,7 +18,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import model.services.ColaboradorServices;
 
 
 /*
@@ -42,6 +43,9 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	private MenuItem menuItemColabList;
+	
+	@FXML
+	private MenuItem menuItemHome;
 	
 	
 	
@@ -71,7 +75,7 @@ public class MainViewController implements Initializable{
 */
 	
 	public void onBtnEntrarAction() {
-		loadView("/gui/HomeScreen.fxml");
+		loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia 
 		mainMenuBar.setVisible(true);
 	}
 	
@@ -81,9 +85,18 @@ public class MainViewController implements Initializable{
 	}
 	
 	public void onMenuItemColaboradoresAction() {
-		loadView("/gui/ColaboradorList.fxml");
-	}
+		loadView("/gui/ColaboradorList.fxml",
+				(ColaboradorListController controller) -> {
+					//Injetar a dependencia da classe de servico
+					controller.setColaboradorService(new ColaboradorServices());//Instancia a classe de servico
+					//Atualizar a tabela
+					controller.updateTableView();
+				});//Acao de inicializaco do controller 
+	}//end
 	
+	public void onMenuItemHomeAction() {
+		loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia
+	}
 	
 	
 /* ========================================================================
@@ -95,7 +108,7 @@ public class MainViewController implements Initializable{
 		mainMenuBar.setVisible(false);
 	}
 	
-	private synchronized void loadView(String absolutPath) {
+	private synchronized <T> void loadView(String absolutPath, Consumer<T> initializingAction) {
 
 		try {
 			// Carrega o novo arquivo FXML que define a interface do usuário
@@ -114,7 +127,7 @@ public class MainViewController implements Initializable{
 			 * O casting e necessario pois o compilador nao sabe qual o conteudo dentro do ScrollPane (no caso o VBox)
 			 * Por fim, o VBox da cena do meinView fica armazenado dentro do mainVBox (e todo o que esta dentro dele)
 			 */
-			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();//Ponteiro para o VBox dentrodo scrollPane
 			
 			// Obtém o nó do menu principal da cena principal
 			Node mainMenu = mainVBox.getChildren().get(0);//Preservamos apenas o menubar para reaplica-la
@@ -124,6 +137,11 @@ public class MainViewController implements Initializable{
 			mainVBox.getChildren().add(mainMenu);
 			//Adicionar os conetudos da nova tela no VBox principal
 			mainVBox.getChildren().addAll(newVBox.getChildren());//Adiciona os filhos no newVBox
+			
+			
+			//Acao de inicializacao
+			T controller = loader.getController();//Retorna o controlador do tipo T
+			initializingAction.accept(controller);//Executa a funcao passada como argumento
 				
 			
 		}

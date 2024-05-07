@@ -7,26 +7,25 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="400.0" prefWidth="619.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="619.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ColaboradorListController">
    <children>
       <Label text="Colaborador" />
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button mnemonicParsing="false" text="Cadastrar" />
-            <Button mnemonicParsing="false" text="Alterar" />
-            <Button mnemonicParsing="false" text="Consultar" />
+          <Button fx:id="btnCadastrar" mnemonicParsing="false" text="Cadastrar" />
+            <Button fx:id="btnConsultar" mnemonicParsing="false" text="Consultar" />
         </items>
       </ToolBar>
-      <TableView prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tableViewColaborador" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="ID" />
-          <TableColumn prefWidth="75.0" text="Nome" />
-            <TableColumn prefWidth="75.0" text="Email" />
-            <TableColumn prefWidth="75.0" text="CNPJ/CPF" />
-            <TableColumn prefWidth="75.0" text="Endereco" />
-            <TableColumn prefWidth="75.0" text="Telefone" />
-            <TableColumn prefWidth="75.0" text="Celular" />
-            <TableColumn prefWidth="75.0" text="Nivel" />
+          <TableColumn fx:id="tableCollumnId" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="tableCollumnName" prefWidth="75.0" text="Nome" />
+            <TableColumn fx:id="tableCollumnEmail" prefWidth="75.0" text="Email" />
+            <TableColumn fx:id="tableCollumnCPF_CNPJ" prefWidth="75.0" text="CNPJ/CPF" />
+            <TableColumn fx:id="tableCollumnEnd" prefWidth="75.0" text="Endereco" />
+            <TableColumn fx:id="tableCollumnEndNum" prefWidth="75.0" text="Numero" />
+            <TableColumn fx:id="tableCollumnTelefone" prefWidth="75.0" text="Telefone" />
+            <TableColumn fx:id="tableCollumnCelular" prefWidth="75.0" text="Celular" />
         </columns>
       </TableView>
    </children>

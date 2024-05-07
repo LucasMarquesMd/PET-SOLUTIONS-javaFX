@@ -1,8 +1,14 @@
 package model.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Colaborador {
+import org.w3c.dom.ls.LSSerializer;
+
+public class Colaborador implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	
 	private Integer idColab;
 	private String name;
