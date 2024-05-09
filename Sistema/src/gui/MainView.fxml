@@ -7,6 +7,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -14,7 +15,7 @@
    <content>
       <VBox prefHeight="377.0" prefWidth="552.0">
          <children>
-            <MenuBar fx:id="mainMenuBar">
+            <MenuBar fx:id="mainMenuBar" style="-fx-background-color: FFB6C1;">
               <menus>
                 <Menu mnemonicParsing="false" text="Registrar">
                   <items>
@@ -35,12 +36,13 @@
             </MenuBar>
             <AnchorPane prefHeight="315.0" prefWidth="552.0">
                <children>
-                  <Button fx:id="btnEntrar" layoutX="462.0" layoutY="198.0" mnemonicParsing="false" onAction="#onBtnEntrarAction" text="Entrar" />
-                  <Button fx:id="btnSair" layoutX="395.0" layoutY="198.0" mnemonicParsing="false" onAction="#onBtnSairAction" prefHeight="25.0" prefWidth="49.0" text="Sair" />
+                  <Button fx:id="btnEntrar" layoutX="462.0" layoutY="198.0" mnemonicParsing="false" onAction="#onBtnEntrarAction" style="-fx-background-color: FFB6C1;" text="Entrar" />
+                  <Button fx:id="btnSair" layoutX="395.0" layoutY="198.0" mnemonicParsing="false" onAction="#onBtnSairAction" prefHeight="25.0" prefWidth="49.0" style="-fx-background-color: FFB6C1;" text="Sair" />
                   <Label layoutX="293.0" layoutY="91.0" text="Usuario" />
                   <Label layoutX="301.0" layoutY="122.0" text="Senha" />
                   <TextField layoutX="343.0" layoutY="87.0" prefHeight="25.0" prefWidth="199.0" />
                   <TextField layoutX="344.0" layoutY="118.0" prefHeight="25.0" prefWidth="198.0" />
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </AnchorPane>
          </children>

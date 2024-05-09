@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,41 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 	
 	@Override
 	public void insert(Colaborador obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"INSERT INTO "
+					+ "Colaborador (nome_Col, cpf_Col, tel_Col, cel_Col, email_Col, user_Col, user_Senha) "
+					+ "VALUES "
+					+ "(?, ?, ?, ?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
+			
+			st.setString(1, obj.getName());
+			st.setString(2, obj.getCnpj_cpf());
+			st.setInt(3, obj.getTelefone());
+			st.setInt(4, obj.getCelular());
+			st.setString(5, obj.getEmail());
+			st.setString(6, obj.getUser_Col());
+			st.setString(7, obj.getUser_Senha());
+			
+			int rowsAffected = st.executeUpdate();
+			
+			if(rowsAffected > 0) {
+				ResultSet rs = st.getGeneratedKeys();//Recupera a chave primaria do objeto inserido
+				
+				while(rs.next()) {
+					int id = rs.getInt(1);//Pega o valor do primeiro campo
+					obj.setId_End(id);
+				}
+				DB.closeResultSet(rs);
+			}else {
+				throw new DbException("Unexpected error! No rows affected!");
+			}
+			
+		}catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 

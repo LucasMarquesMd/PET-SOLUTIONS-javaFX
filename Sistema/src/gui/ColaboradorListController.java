@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
+import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.collections.FXCollections;
@@ -24,9 +25,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Colaborador;
+import model.entities.Endereco;
 import model.services.ColaboradorServices;
+import model.services.EnderecoService;
 
-public class ColaboradorListController implements Initializable{
+public class ColaboradorListController implements Initializable, DataChangeListener{
 
 /* ========================================================================
  * 			Declaracao das variaveis
@@ -35,14 +38,17 @@ public class ColaboradorListController implements Initializable{
 	//Sera utilizado para auxiliar a manipulacao da classe de Colaboradores
 	private ColaboradorServices service;
 	
+
+	
 	//Observa a lista instanciada -> usada para atualizar a UI automaticamente de acordo com a mudanca dos dados na lista
 	private ObservableList<Colaborador> obsList;
+
 	
 	
 	@FXML
 	private Button btnCadastrar;
 	@FXML
-	private Button btnConsultar;
+	private Button btnCancelar;
 	
 	@FXML
 	private TableView<Colaborador> tableViewColaborador;
@@ -73,12 +79,22 @@ public class ColaboradorListController implements Initializable{
 	@FXML
 	public void onBtnCadastrar(ActionEvent event) {
 		//Stage parentStage = Utils.currentStage(event);
-		createDialogForm("/gui/ColaboradorForm.fxml", Utils.currentStage(event));
+		
+		Colaborador colab = new Colaborador();
+		Endereco end = new Endereco();
+		
+		createDialogForm(colab, end, "/gui/ColaboradorForm.fxml", Utils.currentStage(event));
 	}
 	
 	
+// =================================================================================
+//				Funcoes para injecao de dependencia	
+// =================================================================================	
 	
-	
+	//Inversao de controle - facilita a manutencao do codigo
+	public void setColaboradorService(ColaboradorServices service) {
+		this.service = service;
+	}
 	
 /* ========================================================================
  * 			Metodos da classe
@@ -93,7 +109,7 @@ public class ColaboradorListController implements Initializable{
 
 	private void initializeNode() {
 		//setCellValueFactory() -> Define como os valores dacoluna sao obtidos dos objetos associados da tabela
-		//PropertyValueFactory<>() -> Vinulaos dados de um objeto a coluna da tabela
+		//PropertyValueFactory<>() -> Vincula os dados de um objeto a coluna da tabela
 		tableCollumnId.setCellValueFactory(new PropertyValueFactory<>("idColab"));
 		tableCollumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
 		tableCollumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -110,19 +126,17 @@ public class ColaboradorListController implements Initializable{
 
 	}
 	
-	//Inversao de controle - facilita a manutencao do codigo
-	public void setColaboradorService(ColaboradorServices service) {
-		this.service = service;
-	}
+
 	
 	//Metodo responsavel por acessar o servico -> carrgar os colaboradores e atualiza-los no ObservableList<>
 	public void updateTableView() {
 		if(service == null) {
-			throw new IllegalStateException("Service was null!");
+			throw new IllegalStateException("Service Colaborador was null!");
 		}
 		
 		//Recebe a lista de colaboradores gerada pelo ColaboradorServices
 		List<Colaborador> list = service.findAll();
+
 		
 		//Associar a list ao ObservableList para verificar atualizacoes de dados.
 		obsList = FXCollections.observableArrayList(list);//A classe e oriunda da javaFX
@@ -130,17 +144,26 @@ public class ColaboradorListController implements Initializable{
 		//Carregar os dados no TableView
 		tableViewColaborador.setItems(obsList);
 		
+		
+		
 	}
 	
 	
-	private void createDialogForm(String absolutePath,Stage parentStage) {
+	private void createDialogForm(Colaborador colab, Endereco end, String absolutePath,Stage parentStage) {
 		try {
 			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutePath));
 			Pane pane = loader.load();
-			
 			//Instanciar um novo Stage (Palco)
 			Stage dialogStage = new Stage();
+			
+			ColaboradorFormController controller = loader.getController();//Pega o controlador da tela do formulario
+			controller.setColaborador(colab);
+			controller.setEndereco(end);
+			controller.setColaboradorServices(new ColaboradorServices());
+			controller.setEnderecoService(new EnderecoService());
+			controller.subscribeDataChangeListener(this);//Incrissao para receber o evento do DataChangeListener
+			controller.updateFormData();
 			
 			dialogStage.setTitle("Entre com os dados do colaborador: ");
 			dialogStage.setScene(new Scene(pane));//Instanciar nova cena
@@ -158,5 +181,11 @@ public class ColaboradorListController implements Initializable{
 		}catch (IOException e) {
 			Alerts.showAlerts("IOException", "Erro ao carragar a tela!", e.getMessage(), AlertType.ERROR);
 		}
+	}
+
+
+	@Override
+	public void onDataChanged() {
+		updateTableView();
 	}
 }

@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /*
@@ -40,10 +41,18 @@ public class Main extends Application {
 			scrollPane.setFitToHeight(true);
 			scrollPane.setFitToWidth(true);
 			
+			//Instancia uma imagem
+			Image image = new Image("/resource/Dog-icon.ico");
+			primaryStage.getIcons().add(image);//Adiciona a imagem como icone da aplicacao
+			
 			// Define a cena no palco principal (Stage)
 			primaryStage.setScene(mainScene);//Define a cena dentro do palco (A cena e do tipo ScrollPane)
 			// Define o título da janela
 			primaryStage.setTitle("PET SOLUTIONS");//Adiciona um titulo
+			
+			
+			
+			
 			 // Exibe a interface gráfica
 			primaryStage.show();
 		} catch (IOException e) {

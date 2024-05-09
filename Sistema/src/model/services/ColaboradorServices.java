@@ -20,6 +20,13 @@ public class ColaboradorServices {
 	//Busca todos os colaboradores no banco de dados.
 	public List<Colaborador> findAll(){
 		return dao.findAll();
-		
+	}
+	
+	public void saveOrUpdate(Colaborador obj) {
+		if(obj.getIdColab() == null) {
+			dao.insert(obj);
+		}else {
+			dao.update(obj);
+		}
 	}
 }
