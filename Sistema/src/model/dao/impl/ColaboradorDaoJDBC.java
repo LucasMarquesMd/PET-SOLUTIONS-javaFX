@@ -27,9 +27,9 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 		try {
 			st = conn.prepareStatement(
 					"INSERT INTO "
-					+ "Colaborador (nome_Col, cpf_Col, tel_Col, cel_Col, email_Col, user_Col, user_Senha) "
+					+ "Colaborador (nome_Col, cpf_Col, tel_Col, cel_Col, email_Col, user_Col, user_Senha, id_End) "
 					+ "VALUES "
-					+ "(?, ?, ?, ?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
+					+ "(?, ?, ?, ?, ?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
 			
 			st.setString(1, obj.getName());
 			st.setString(2, obj.getCnpj_cpf());
@@ -38,6 +38,7 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 			st.setString(5, obj.getEmail());
 			st.setString(6, obj.getUser_Col());
 			st.setString(7, obj.getUser_Senha());
+			st.setInt(8, obj.getEndereco().getId_End());
 			
 			int rowsAffected = st.executeUpdate();
 			
@@ -63,7 +64,31 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 
 	@Override
 	public void update(Colaborador obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"UPDATE Colaborador  "
+					+ "SET nome_Col = ?, cpf_Col = ?, tel_Col = ?, cel_Col = ?, email_Col = ?, user_Col = ?, user_Senha = ? "
+					+ "WHERE id_Col = ?");
+			
+			st.setString(1, obj.getName());
+			st.setString(2, obj.getCnpj_cpf());
+			st.setInt(3, obj.getTelefone());
+			st.setInt(4, obj.getCelular());
+			st.setString(5, obj.getEmail());
+			st.setString(6, obj.getUser_Col());
+			st.setString(7, obj.getUser_Senha());
+			
+			st.setInt(8, obj.getIdColab());
+			
+			st.executeUpdate();
+
+			
+		}catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 

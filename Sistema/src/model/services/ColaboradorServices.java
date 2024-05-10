@@ -27,6 +27,7 @@ public class ColaboradorServices {
 			dao.insert(obj);
 		}else {
 			dao.update(obj);
+			System.out.println("Colab Alterado");
 		}
 	}
 }

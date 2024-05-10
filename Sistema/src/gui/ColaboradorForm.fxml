@@ -21,8 +21,8 @@
       <GridPane layoutX="20.0" layoutY="40.0" prefHeight="253.0" prefWidth="673.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="30.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="10.0" prefWidth="84.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="455.0" minWidth="10.0" prefWidth="409.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" minWidth="10.0" prefWidth="180.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="455.0" minWidth="10.0" prefWidth="448.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" minWidth="10.0" prefWidth="141.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="34.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
@@ -78,7 +78,7 @@
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="2">
                <children>
                   <Label prefHeight="17.0" prefWidth="19.0" text="ID" />
-                  <TextField fx:id="txtIdEnd" prefHeight="25.0" prefWidth="80.0" />
+                  <TextField fx:id="txtIdCol" editable="false" prefHeight="25.0" prefWidth="74.0" />
                </children>
                <padding>
                   <Insets left="10.0" />
@@ -153,7 +153,7 @@
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="2">
                <children>
                   <Label text="ID" />
-                  <TextField fx:id="txtIdCol" editable="false" prefHeight="25.0" prefWidth="74.0" />
+                  <TextField fx:id="txtIdEnd" editable="false" prefHeight="25.0" prefWidth="80.0" />
                </children>
                <padding>
                   <Insets left="5.0" top="5.0" />

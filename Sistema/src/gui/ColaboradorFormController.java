@@ -140,15 +140,17 @@ public class ColaboradorFormController implements Initializable{
 			entityColab = getFormDataColab(entityEnd);
 			servicesColab.saveOrUpdate(entityColab);
 			
+			notifyDataChangeListeners();
+			
 			Utils.currentStage(event).close();//Fecha o formulario
 			
 		}
 		catch(ValidationException e) {
-			System.out.println("Error ");
 			setErrorMessages(e.getErrors());//Envia a colecao de erros
 
 		}
 		catch(DbException e) {
+			e.printStackTrace();
 			Alerts.showAlerts("Error saving object", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
@@ -232,6 +234,7 @@ public class ColaboradorFormController implements Initializable{
 			throw new IllegalStateException("Entity (Endereco) was null");
 		}
 		//Endereco
+		txtIdEnd.setText(String.valueOf(entityEnd.getId_End()));
 		txtRua.setText(entityEnd.getRua_End());
 		txtBairro.setText(entityEnd.getBairro_End());
 		txtCidade.setText(entityEnd.getCidade_End());
@@ -265,6 +268,7 @@ public class ColaboradorFormController implements Initializable{
 		obj.setUser_Senha("1234567@D");//Senha padrao para usuarios novos
 		
 		obj.setId_End(entity.getId_End());//Adiciona o id do endereco
+		obj.setEndereco(entity);//Adiciona adependencia do endereco
 		
 		return obj;
 	}

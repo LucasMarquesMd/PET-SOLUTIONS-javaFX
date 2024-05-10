@@ -9,6 +9,7 @@ import application.Main;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -51,7 +53,7 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 	private Button btnCancelar;
 	
 	@FXML
-	private TableView<Colaborador> tableViewColaborador;
+	private TableView<Colaborador> tableViewColaborador = new TableView<>();
 	@FXML
 	private TableColumn<Colaborador, Integer> tableCollumnId;
 	@FXML
@@ -66,6 +68,8 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 	private TableColumn<Colaborador, String> tableCollumnCelular;
 	@FXML
 	private TableColumn<Colaborador, String> tableCollumnUserCol;
+	@FXML
+	private TableColumn<Colaborador, Colaborador> tableCollumnEDIT;//Alterar colaboradores
 
 
 	
@@ -144,6 +148,8 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 		//Carregar os dados no TableView
 		tableViewColaborador.setItems(obsList);
 		
+		initEditButtons();
+		
 		
 		
 	}
@@ -188,4 +194,30 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 	public void onDataChanged() {
 		updateTableView();
 	}
+
+	//Adiciota o botao de alteracao
+	private void initEditButtons() {
+		tableCollumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableCollumnEDIT.setCellFactory(param -> new TableCell<Colaborador, Colaborador>() {
+			private final Button button = new Button("edit");
+
+			@Override
+			protected void updateItem(Colaborador obj, boolean empty) {
+				super.updateItem(obj, empty);
+
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+
+				EnderecoService service = new EnderecoService();
+				Endereco end = service.findById(obj.getId_End());
+				setGraphic(button);
+				button.setOnAction(
+						event -> createDialogForm(obj, end, "/gui/ColaboradorForm.fxml", Utils.currentStage(event)));
+			}
+		});
+	}// End initEditButtons
+	
+	
 }

@@ -8,12 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.cj.xdevapi.DbDoc;
-
 import db.DB;
 import db.DbException;
-import gui.util.Alerts;
-import javafx.scene.control.Alert.AlertType;
 import model.dao.EnderecoDao;
 import model.entities.Endereco;
 
@@ -71,7 +67,28 @@ public class EnderecoDaoJDBC implements EnderecoDao{
 
 	@Override
 	public void update(Endereco obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"UPDATE Endereco "
+					+ "SET cep_End = ?, num_End = ?, rua_End = ?, bairro_End = ?, cidade_End = ? "
+					+ "WHERE id_End = ?");
+			
+			st.setInt(1, obj.getCep_End());
+			st.setInt(2, obj.getNum_End());
+			st.setString(3, obj.getRua_End());
+			st.setString(4, obj.getBairro_End());
+			st.setString(5, obj.getCidade_End());
+			
+			st.setInt(6, obj.getId_End());
+			
+			st.executeUpdate();
+			
+		}catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
@@ -83,8 +100,29 @@ public class EnderecoDaoJDBC implements EnderecoDao{
 
 	@Override
 	public Endereco findById(Integer id) {
-		
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT *  "
+					+ "FROM Endereco "
+					+ "WHERE id_End = ?");
+			
+			st.setInt(1, id);
+			rs = st.executeQuery();
+			
+			if(rs.next()) {
+				Endereco obj = instantiateEndereco(rs);
+				return obj;
+			}
+			return null;
+			
+		}catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
 	}
 
 	@Override
@@ -122,9 +160,21 @@ public class EnderecoDaoJDBC implements EnderecoDao{
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
 		}
+
+	}
+	
+	
+	private Endereco instantiateEndereco(ResultSet rs) throws SQLException{
+		Endereco obj = new Endereco();
+		obj.setId_End(rs.getInt("id_End"));
+		obj.setRua_End(rs.getString("rua_End"));
+		obj.setBairro_End(rs.getNString("bairro_End"));
+		obj.setCidade_End(rs.getString("cidade_End"));
+		obj.setCep_End(rs.getInt("cep_End"));
+		obj.setNum_End(rs.getInt("num_End"));
+
 		
-		
-		
+		return obj;
 	}
 
 }

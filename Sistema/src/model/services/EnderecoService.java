@@ -14,6 +14,10 @@ public class EnderecoService {
 		return dao.findAll();
 	}
 	
+	public Endereco findById(Integer id) {
+		return dao.findById(id);
+	}
+	
 	public void saveOrUpdate(Endereco obj) {
 		if(obj.getId_End() == null) {
 			dao.insert(obj);
