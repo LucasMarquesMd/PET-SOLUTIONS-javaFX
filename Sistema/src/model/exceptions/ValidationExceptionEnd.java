@@ -6,7 +6,7 @@ import java.util.Map;
 //Os erros dos formularios serao guardados para retornar ao usuario
 //Ao inves de tratalos com interrupcoes - serao notificados para a correcao pelo usuario
 
-public class ValidationException extends RuntimeException{
+public class ValidationExceptionEnd extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -15,7 +15,7 @@ public class ValidationException extends RuntimeException{
 	//Sera utilizado para armazenar os erros gerados
 	private Map<String, String> errors = new HashMap<>();
 	
-	public ValidationException(String msg) {
+	public ValidationExceptionEnd(String msg) {
 		super(msg);
 	}
 	
