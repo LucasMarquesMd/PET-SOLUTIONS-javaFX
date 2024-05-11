@@ -30,4 +30,9 @@ public class ColaboradorServices {
 			System.out.println("Colab Alterado");
 		}
 	}
+	
+	
+	public void remove(Colaborador obj) {
+		dao.deleteById(obj.getIdColab());
+	}
 }

@@ -25,4 +25,8 @@ public class EnderecoService {
 			dao.update(obj);
 		}
 	}
+	
+	public void remove(Endereco obj) {
+		dao.deleteById(obj.getId_End());
+	}
 }

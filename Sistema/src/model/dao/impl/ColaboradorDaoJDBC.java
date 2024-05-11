@@ -10,8 +10,10 @@ import java.util.List;
 
 import db.DB;
 import db.DbException;
+import db.DbIntegrityException;
 import model.dao.ColaboradorDao;
 import model.entities.Colaborador;
+import model.entities.Endereco;
 
 public class ColaboradorDaoJDBC implements ColaboradorDao{
 
@@ -94,14 +96,49 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		
+		try {
+			st = conn.prepareStatement(
+					"DELETE FROM Colaborador WHERE id_Col = ? ");
+			
+			st.setInt(1, id);
+			
+			st.executeUpdate();
+			
+		}catch(SQLException e) {
+			throw new DbIntegrityException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
 	@Override
 	public Colaborador findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT * "
+					+ "FROM Colaborador "
+					+ "INNER JOIN Endereco ON Colaborador.id_End = Endereco.id_End "
+					+ "WHERE id_Col = ? ");
+			
+			st.setInt(1, id);
+			rs = st.executeQuery();
+			
+			if(rs.next()) {
+				Endereco end = instantiateEndereco(rs);
+				Colaborador obj = instantiateColaborador(rs, end);
+				return obj;
+			}
+			return null;
+			
+		}catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		
 	}
 
 	@Override
@@ -147,5 +184,36 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 		}
 
 	}//End findAll
+	
+	private Endereco instantiateEndereco(ResultSet rs) throws SQLException{
+		Endereco obj = new Endereco();
+		obj.setId_End(rs.getInt("id_End"));
+		obj.setRua_End(rs.getString("rua_End"));
+		obj.setBairro_End(rs.getNString("bairro_End"));
+		obj.setCidade_End(rs.getString("cidade_End"));
+		obj.setCep_End(rs.getInt("cep_End"));
+		obj.setNum_End(rs.getInt("num_End"));
+
+		
+		return obj;
+	}
+	
+	private Colaborador instantiateColaborador(ResultSet rs, Endereco end) throws SQLException{
+		Colaborador obj = new Colaborador();
+		
+		obj.setIdColab(rs.getInt("id_Col"));
+		obj.setName(rs.getString("nome_Col"));
+		obj.setCnpj_cpf(rs.getString("cpf_Col"));
+		obj.setTelefone(rs.getInt("tel_Col"));
+		obj.setCelular(rs.getInt("cel_Col"));
+		obj.setEmail(rs.getString("email_Col"));
+		obj.setId_End(rs.getInt("id_End"));
+		obj.setUser_Col(rs.getString("user_Col"));
+		obj.setUser_Senha(rs.getString("user_Senha"));
+		
+		obj.setEndereco(end);
+		
+		return obj;
+	}
 
 }

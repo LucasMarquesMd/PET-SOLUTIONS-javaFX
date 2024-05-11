@@ -2,10 +2,13 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.Main;
+import db.DbIntegrityException;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
@@ -19,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -70,6 +74,8 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 	private TableColumn<Colaborador, String> tableCollumnUserCol;
 	@FXML
 	private TableColumn<Colaborador, Colaborador> tableCollumnEDIT;//Alterar colaboradores
+	@FXML
+	private TableColumn<Colaborador, Colaborador> tableColumnREMOVE;//Deletar colaboradores
 
 
 	
@@ -149,6 +155,7 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 		tableViewColaborador.setItems(obsList);
 		
 		initEditButtons();
+		initRemoveButtons();
 		
 		
 		
@@ -218,6 +225,48 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 			}
 		});
 	}// End initEditButtons
+	
+	private void initRemoveButtons() {
+		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnREMOVE.setCellFactory(param -> new TableCell<Colaborador, Colaborador>() {
+			private final Button button = new Button("remove");
+
+			@Override
+			protected void updateItem(Colaborador obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction(event -> removeEntity(obj));
+			}
+		});
+	}//end initRemoveButtons
+
+
+	private void removeEntity(Colaborador obj) {
+		//Optional<> -> objeto que carraga outro objeto dentro dele
+		Optional<ButtonType> result = Alerts.showConfirmation("Confirmar", "Deletar " + obj.getName() + " ?");
+		
+		
+		if(result.get() == ButtonType.OK) {
+			if(service == null) {
+				throw new IllegalStateException("Service was null");
+			}
+			try {
+				EnderecoService serviceEnd = new EnderecoService();
+				Endereco end = serviceEnd.findById(obj.getEndereco().getId_End());
+
+				serviceEnd.remove(end);
+				service.remove(obj);
+				updateTableView();
+			}
+			catch(DbIntegrityException e) {
+				Alerts.showAlerts("Erro ao remover objeto", null,e.getMessage(), AlertType.ERROR);
+			}
+		}
+	}
 	
 	
 }

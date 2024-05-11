@@ -10,6 +10,7 @@ import java.util.List;
 
 import db.DB;
 import db.DbException;
+import db.DbIntegrityException;
 import model.dao.EnderecoDao;
 import model.entities.Endereco;
 
@@ -94,7 +95,19 @@ public class EnderecoDaoJDBC implements EnderecoDao{
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		
+		try {
+			st = conn.prepareStatement(
+					"DELETE FROM Endereco WHERE id_End = ? ");
+			st.setInt(1, id);
+			
+			st.executeUpdate();
+		}catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
@@ -118,7 +131,8 @@ public class EnderecoDaoJDBC implements EnderecoDao{
 			return null;
 			
 		}catch(SQLException e) {
-			throw new DbException(e.getMessage());
+			
+			throw new DbIntegrityException(e.getMessage());
 		}finally {
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
