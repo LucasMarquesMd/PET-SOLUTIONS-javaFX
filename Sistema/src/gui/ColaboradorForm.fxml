@@ -32,6 +32,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label text="Nome" GridPane.rowIndex="1">
@@ -90,6 +91,9 @@
             <Label fx:id="lblErrorTelefone" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             <Label fx:id="lblErrorCelular" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="5" />
             <Label fx:id="lblErrorUsuario" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Label text="Nivel" GridPane.rowIndex="7" />
+            <TextField fx:id="txtLevel" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label fx:id="lblErrorLevel" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="7" />
          </children>
       </GridPane>
       <GridPane layoutX="35.0" layoutY="296.0" prefHeight="241.0" prefWidth="663.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="15.0">

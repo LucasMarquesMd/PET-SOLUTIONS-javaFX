@@ -14,6 +14,7 @@ public interface ColaboradorDao {
 	Colaborador findById(Integer id);
 	List<Colaborador> findAll();
 	List<Colaborador> findByName(String name);
+	Colaborador ValidatingUser(String name, String passworld);
 }
 
 

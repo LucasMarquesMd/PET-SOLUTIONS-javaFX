@@ -6,18 +6,22 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import application.Main;
-import javafx.application.Platform;
+import gui.util.Alerts;
+import gui.util.Utils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import model.entities.Colaborador;
 import model.services.ColaboradorServices;
 
 
@@ -30,8 +34,15 @@ import model.services.ColaboradorServices;
 
 
 public class MainViewController implements Initializable{
+
+// ========================================================================
+//							Dependencias
+// ========================================================================
 	
+	ColaboradorServices  service;
 	
+	public static String userName;
+	public static Integer level;
 	
 /* ========================================================================
  * 			Declaracao das variaveis
@@ -75,13 +86,21 @@ public class MainViewController implements Initializable{
 */
 	
 	public void onBtnEntrarAction() {
-		loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia 
-		mainMenuBar.setVisible(true);
+		if(validarUsuario(txtUserName.getText(), txtPassworld.getText())) {
+			loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia 
+			mainMenuBar.setVisible(true);
+		}else {
+			Alerts.showAlerts("Erro", "Usuario e ou senha invalidos!", null, AlertType.ERROR);
+		}
+//		loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia 
+//		mainMenuBar.setVisible(true);
+		
 	}
 	
 	
-	public void onBtnSairAction() {
-		Platform.exit();
+	public void onBtnSairAction(ActionEvent event) {
+		//Platform.exit();
+		Utils.currentStage(event).close();
 	}
 	
 	public void onMenuItemColaboradoresAction() {
@@ -151,4 +170,20 @@ public class MainViewController implements Initializable{
 		
 		
 	}//end loadView
+	
+	
+	private boolean validarUsuario(String userName, String UserSenha) {
+		service = new ColaboradorServices();
+		if(service == null) {
+			throw new IllegalStateException("Service was null");
+		}
+		Colaborador obj = service.validatingUser(userName, UserSenha);
+		
+		if(obj == null) {
+			return false;
+		}
+		userName = obj.getUser_Col();
+		level = obj.getLevel_Access();
+		return true;
+	}
 }

@@ -57,6 +57,8 @@ public class ColaboradorFormController implements Initializable{
 	private TextField txtCelular;
 	@FXML
 	private TextField txtUsuario;
+	@FXML
+	private TextField txtLevel;
 	
 
 // =================================================================================
@@ -118,6 +120,8 @@ public class ColaboradorFormController implements Initializable{
 	private Label lblErrorCEP;
 	@FXML
 	private Label lblErrorNumero;
+	@FXML
+	private Label lblErrorLevel;
 	
 // =================================================================================
 //							Funcoes dos controles	
@@ -212,6 +216,7 @@ public class ColaboradorFormController implements Initializable{
 		Constraints.setTextFieldMaxLength(txtEmail, 50);
 		Constraints.setTextFieldMaxLength(txtCpf, 14);
 		Constraints.setTextFieldMaxLength(txtUsuario, 20);
+		Constraints.setTextFieldMaxLength(txtLevel, 20);
 		
 		
 	}
@@ -229,6 +234,8 @@ public class ColaboradorFormController implements Initializable{
 		txtTelefone.setText(String.valueOf(entityColab.getTelefone()));
 		txtCelular.setText(String.valueOf(entityColab.getCelular()));
 		txtUsuario.setText(entityColab.getUser_Col());
+		txtLevel.setText(String.valueOf(entityColab.getLevel_Access()));
+		
 		
 		if(entityEnd == null) {
 			throw new IllegalStateException("Entity (Endereco) was null");
@@ -264,6 +271,7 @@ public class ColaboradorFormController implements Initializable{
 		obj.setTelefone(Utils.tryParseToInt(txtTelefone.getText()));
 		obj.setCelular(Utils.tryParseToInt(txtCelular.getText()));
 		obj.setUser_Col(txtUsuario.getText());
+		obj.setLevel_Access(Utils.tryParseToInt(txtLevel.getText()));
 
 		obj.setUser_Senha("1234567@D");//Senha padrao para usuarios novos
 		
@@ -318,6 +326,10 @@ public class ColaboradorFormController implements Initializable{
 			exception.addErrors("Usuario", "Field can't be empty!");
 		}
 		
+		if(txtLevel.getText() == null || txtLevel.getText().trim().equals("")) {
+			exception.addErrors("Nivel", "Field can't be empty!");
+		}
+		
 		
 		if(txtRua.getText() == null || txtRua.getText().trim().equals("")) {
 			exception.addErrors("Rua", "Field can't be empty!");
@@ -358,6 +370,7 @@ public class ColaboradorFormController implements Initializable{
 		lblErrorTelefone.setText(fields.contains("Telefone") ? errors.get("Telefone") : "");
 		lblErrorCelular.setText(fields.contains("Celular") ? errors.get("Celular") : "");
 		lblErrorUsuario.setText(fields.contains("Usuario") ? errors.get("Usuario") : "");
+		lblErrorLevel.setText(fields.contains("Nivel") ? errors.get("Usuario") : "");
 		
 		lblErrorRua.setText(fields.contains("Rua") ? errors.get("Rua") : "");
 		lblErrorBairro.setText(fields.contains("Bairro") ? errors.get("Bairro") : "");

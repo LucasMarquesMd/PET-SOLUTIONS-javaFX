@@ -29,9 +29,9 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 		try {
 			st = conn.prepareStatement(
 					"INSERT INTO "
-					+ "Colaborador (nome_Col, cpf_Col, tel_Col, cel_Col, email_Col, user_Col, user_Senha, id_End) "
+					+ "Colaborador (nome_Col, cpf_Col, tel_Col, cel_Col, email_Col, user_Col, user_Senha, level_Access, id_End) "
 					+ "VALUES "
-					+ "(?, ?, ?, ?, ?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
+					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
 			
 			st.setString(1, obj.getName());
 			st.setString(2, obj.getCnpj_cpf());
@@ -40,7 +40,8 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 			st.setString(5, obj.getEmail());
 			st.setString(6, obj.getUser_Col());
 			st.setString(7, obj.getUser_Senha());
-			st.setInt(8, obj.getEndereco().getId_End());
+			st.setInt(8, obj.getLevel_Access());
+			st.setInt(9, obj.getId_End());
 			
 			int rowsAffected = st.executeUpdate();
 			
@@ -70,7 +71,7 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 		try {
 			st = conn.prepareStatement(
 					"UPDATE Colaborador  "
-					+ "SET nome_Col = ?, cpf_Col = ?, tel_Col = ?, cel_Col = ?, email_Col = ?, user_Col = ?, user_Senha = ? "
+					+ "SET nome_Col = ?, cpf_Col = ?, tel_Col = ?, cel_Col = ?, email_Col = ?, user_Col = ?, user_Senha = ?, level_Access = ? "
 					+ "WHERE id_Col = ?");
 			
 			st.setString(1, obj.getName());
@@ -80,8 +81,9 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 			st.setString(5, obj.getEmail());
 			st.setString(6, obj.getUser_Col());
 			st.setString(7, obj.getUser_Senha());
+			st.setInt(8, obj.getLevel_Access());
 			
-			st.setInt(8, obj.getIdColab());
+			st.setInt(9, obj.getIdColab());
 			
 			st.executeUpdate();
 
@@ -120,9 +122,10 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT * "
+					"SELECT Colaborador.*, Endereco.* "
 					+ "FROM Colaborador "
-					+ "INNER JOIN Endereco ON Colaborador.id_End = Endereco.id_End "
+					+ "INNER JOIN Endereco "
+					+ "ON Colaborador.id_End = Endereco.id_End "
 					+ "WHERE id_Col = ? ");
 			
 			st.setInt(1, id);
@@ -151,7 +154,7 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 					"SELECT Colaborador.*, Endereco.* "
 					+ "FROM Colaborador "
 					+ "INNER JOIN Endereco "
-					+ "ON Colaborador.id_Col = Endereco.id_End "
+					+ "ON Colaborador.id_End = Endereco.id_End "
 					+ "WHERE nome_Col LIKE ?");
 			
 			st.setString(1, name + "%");
@@ -178,6 +181,41 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 		}
 
 	}//End findAll
+	
+	@Override
+	public Colaborador ValidatingUser(String userName, String passworld) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			
+			st = conn.prepareStatement(
+					"SELECT Colaborador.*, Endereco.* "
+					+ "FROM Colaborador "
+					+ "INNER JOIN Endereco "
+					+ "ON Colaborador.id_End = Endereco.id_End "
+					+ "WHERE user_Col = ? "
+					+ "AND user_Senha = ? ");
+			
+			st.setString(1, userName);
+			st.setString(2, passworld);
+			rs = st.executeQuery();
+			
+			if(rs.next()) {
+				Endereco end = instantiateEndereco(rs);
+				Colaborador obj = instantiateColaborador(rs, end);
+				return obj;
+			}
+			return null;
+			
+		}catch (SQLException e) {
+			throw new DbException(e.getMessage());
+			
+		}finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+
+	}//End findAll
 
 	@Override
 	public List<Colaborador> findAll() {
@@ -189,6 +227,8 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 			//Cria a string sql eja define a conexao
 			st = conn.prepareStatement("SELECT *  "
 					+ "FROM Colaborador "
+					+ "INNER JOIN Endereco "
+					+ "ON Colaborador.id_End = Endereco.id_End "
 					+ "ORDER BY nome_Col");
 			
 			//Executa a query e salva o resultado no ResultSet
@@ -197,16 +237,8 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 			List<Colaborador> list = new ArrayList<>();
 			
 			while(rs.next()) {
-				Colaborador obj = new Colaborador();
-				obj.setIdColab(rs.getInt("id_Col"));
-				obj.setName(rs.getString("nome_Col"));
-				obj.setCnpj_cpf(rs.getString("cpf_Col"));
-				obj.setTelefone(rs.getInt("tel_Col"));
-				obj.setCelular(rs.getInt("cel_Col"));
-				obj.setEmail(rs.getString("email_Col"));
-				obj.setId_End(rs.getInt("id_End"));
-				obj.setUser_Col(rs.getString("user_Col"));
-				obj.setUser_Senha(rs.getString("user_Senha"));
+				Endereco end = instantiateEndereco(rs);
+				Colaborador obj = instantiateColaborador(rs, end);
 				
 				list.add(obj);
 			}//end while
@@ -248,6 +280,7 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 		obj.setId_End(rs.getInt("id_End"));
 		obj.setUser_Col(rs.getString("user_Col"));
 		obj.setUser_Senha(rs.getString("user_Senha"));
+		obj.setLevel_Access(rs.getInt("level_Access"));
 		
 		obj.setEndereco(end);
 		

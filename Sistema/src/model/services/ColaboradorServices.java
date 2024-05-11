@@ -38,4 +38,8 @@ public class ColaboradorServices {
 	public List<Colaborador> consultName(String name) {
 		return dao.findByName(name);
 	}
+	
+	public Colaborador validatingUser(String userName, String passWorld) {
+		return dao.ValidatingUser(userName, passWorld);
+	}
 }

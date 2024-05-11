@@ -40,8 +40,8 @@
                   <Button fx:id="btnSair" layoutX="395.0" layoutY="198.0" mnemonicParsing="false" onAction="#onBtnSairAction" prefHeight="25.0" prefWidth="49.0" style="-fx-background-color: FFB6C1;" text="Sair" />
                   <Label layoutX="293.0" layoutY="91.0" text="Usuario" />
                   <Label layoutX="301.0" layoutY="122.0" text="Senha" />
-                  <TextField layoutX="343.0" layoutY="87.0" prefHeight="25.0" prefWidth="199.0" />
-                  <TextField layoutX="344.0" layoutY="118.0" prefHeight="25.0" prefWidth="198.0" />
+                  <TextField fx:id="txtUserName" layoutX="343.0" layoutY="87.0" prefHeight="25.0" prefWidth="199.0" />
+                  <TextField fx:id="txtPassworld" layoutX="344.0" layoutY="118.0" prefHeight="25.0" prefWidth="198.0" />
                   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </AnchorPane>

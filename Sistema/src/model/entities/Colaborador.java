@@ -5,10 +5,7 @@ import java.util.Objects;
 
 import org.w3c.dom.ls.LSSerializer;
 
-public class Colaborador implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
-	
+public class Colaborador{
 	
 	private Integer idColab;
 	private String name;
@@ -18,6 +15,7 @@ public class Colaborador implements Serializable{
 	private Integer celular;
 	private String user_Col;
 	private String user_Senha;
+	private Integer level_Access;
 	
 	private Integer id_End;
 	private Endereco endereco;
@@ -28,7 +26,8 @@ public class Colaborador implements Serializable{
 
 
 	public Colaborador(Integer idColab, String name, String email, String cnpj_cpf, Integer telefone, Integer celular,
-			String user_Col, String user_Senha, Integer id_End, Endereco endereco) {
+			String user_Col, String user_Senha, Integer level_Access, Integer id_End) {
+		super();
 		this.idColab = idColab;
 		this.name = name;
 		this.email = email;
@@ -37,8 +36,8 @@ public class Colaborador implements Serializable{
 		this.celular = celular;
 		this.user_Col = user_Col;
 		this.user_Senha = user_Senha;
+		this.level_Access = level_Access;
 		this.id_End = id_End;
-		this.endereco = endereco;
 	}
 
 
@@ -122,6 +121,16 @@ public class Colaborador implements Serializable{
 	}
 
 
+	public Integer getLevel_Access() {
+		return level_Access;
+	}
+
+
+	public void setLevel_Access(Integer level) {
+		this.level_Access = level;
+	}
+
+
 	public Integer getId_End() {
 		return id_End;
 	}
@@ -142,14 +151,9 @@ public class Colaborador implements Serializable{
 	}
 
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(celular, cnpj_cpf, email, endereco, idColab, id_End, name, telefone, user_Col, user_Senha);
+		return Objects.hash(idColab);
 	}
 
 
@@ -162,13 +166,10 @@ public class Colaborador implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Colaborador other = (Colaborador) obj;
-		return Objects.equals(celular, other.celular) && Objects.equals(cnpj_cpf, other.cnpj_cpf)
-				&& Objects.equals(email, other.email) && Objects.equals(endereco, other.endereco)
-				&& Objects.equals(idColab, other.idColab) && Objects.equals(id_End, other.id_End)
-				&& Objects.equals(name, other.name) && Objects.equals(telefone, other.telefone)
-				&& Objects.equals(user_Col, other.user_Col) && Objects.equals(user_Senha, other.user_Senha);
+		return Objects.equals(idColab, other.idColab);
 	}
 
+	
 	
 	
 }
