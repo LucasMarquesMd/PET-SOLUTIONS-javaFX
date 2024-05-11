@@ -202,6 +202,7 @@ public class ColaboradorFormController implements Initializable{
 	//Restricoes
 	private void initializeNode() {
 		//Endereco
+		Constraints.setTextFieldInteger(txtIdEnd);
 		Constraints.setTextFieldInteger(txtNumero);
 		Constraints.setTextFieldInteger(txtCep);
 		Constraints.setTextFieldMaxLength(txtRua, 45);

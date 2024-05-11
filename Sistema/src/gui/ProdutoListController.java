@@ -31,24 +31,24 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.entities.Colaborador;
+import model.entities.Produto;
 import model.entities.Endereco;
-import model.services.ColaboradorServices;
+import model.services.ProdutoServices;
 import model.services.EnderecoService;
 
-public class ColaboradorListController implements Initializable, DataChangeListener{
+public class ProdutoListController implements Initializable, DataChangeListener{
 
 /* ========================================================================
  * 			Declaracao das variaveis
  * ========================================================================
  */
-	//Sera utilizado para auxiliar a manipulacao da classe de Colaboradores
-	private ColaboradorServices service;
+	//Sera utilizado para auxiliar a manipulacao da classe de Produtoes
+	private ProdutoServices service;
 	
 
 	
 	//Observa a lista instanciada -> usada para atualizar a UI automaticamente de acordo com a mudanca dos dados na lista
-	private ObservableList<Colaborador> obsList;
+	private ObservableList<Produto> obsList;
 
 	
 	
@@ -60,25 +60,19 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 	private TextField txtNome;
 	
 	@FXML
-	private TableView<Colaborador> tableViewColaborador = new TableView<>();
+	private TableView<Produto> tableViewProduto = new TableView<>();
 	@FXML
-	private TableColumn<Colaborador, Integer> tableCollumnId;
+	private TableColumn<Produto, Integer> tableCollumnId;
 	@FXML
-	private TableColumn<Colaborador, String> tableCollumnName;
+	private TableColumn<Produto, String> tableCollumnName;
 	@FXML
-	private TableColumn<Colaborador, String> tableCollumnEmail;
+	private TableColumn<Produto, String> tableCollumnDescricao;
 	@FXML
-	private TableColumn<Colaborador, Integer> tableCollumnCPF_CNPJ;
+	private TableColumn<Produto, String> tableCollumnPreco;
 	@FXML
-	private TableColumn<Colaborador, String> tableCollumnTelefone;
+	private TableColumn<Produto, Produto> tableCollumnEDIT;//Alterar colaboradores
 	@FXML
-	private TableColumn<Colaborador, String> tableCollumnCelular;
-	@FXML
-	private TableColumn<Colaborador, String> tableCollumnUserCol;
-	@FXML
-	private TableColumn<Colaborador, Colaborador> tableCollumnEDIT;//Alterar colaboradores
-	@FXML
-	private TableColumn<Colaborador, Colaborador> tableColumnREMOVE;//Deletar colaboradores
+	private TableColumn<Produto, Produto> tableColumnREMOVE;//Deletar colaboradores
 
 
 	
@@ -93,10 +87,9 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 	public void onBtnCadastrar(ActionEvent event) {
 		//Stage parentStage = Utils.currentStage(event);
 		
-		Colaborador colab = new Colaborador();
-		Endereco end = new Endereco();
+		Produto prod = new Produto();
 		
-		createDialogForm(colab, end, "/gui/ColaboradorForm.fxml", Utils.currentStage(event));
+		createDialogForm(prod,"/gui/ProdutoForm.fxml", Utils.currentStage(event));
 	}
 	
 	@FXML
@@ -110,7 +103,7 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 // =================================================================================	
 	
 	//Inversao de controle - facilita a manutencao do codigo
-	public void setColaboradorService(ColaboradorServices service) {
+	public void setProdutoService(ProdutoServices service) {
 		this.service = service;
 	}
 	
@@ -128,19 +121,15 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 	private void initializeNode() {
 		//setCellValueFactory() -> Define como os valores dacoluna sao obtidos dos objetos associados da tabela
 		//PropertyValueFactory<>() -> Vincula os dados de um objeto a coluna da tabela
-		tableCollumnId.setCellValueFactory(new PropertyValueFactory<>("idColab"));
-		tableCollumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
-		tableCollumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-		tableCollumnCPF_CNPJ.setCellValueFactory(new PropertyValueFactory<>("cnpj_cpf"));
-		tableCollumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
-		tableCollumnCelular.setCellValueFactory(new PropertyValueFactory<>("celular"));
-		tableCollumnUserCol.setCellValueFactory(new PropertyValueFactory<>("user_Col"));
-		
+		tableCollumnId.setCellValueFactory(new PropertyValueFactory<>("id_Prod"));
+		tableCollumnName.setCellValueFactory(new PropertyValueFactory<>("nome_Prod"));
+		tableCollumnDescricao.setCellValueFactory(new PropertyValueFactory<>("desc_Prod"));
+		tableCollumnPreco.setCellValueFactory(new PropertyValueFactory<>("preco_Prod"));
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();//Referencia para o priaryStage
 		
 		//O table view acompanha a janela
-		tableViewColaborador.prefHeightProperty().bind(stage.heightProperty());
+		tableViewProduto.prefHeightProperty().bind(stage.heightProperty());
 
 	}
 	
@@ -149,18 +138,17 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 	//Metodo responsavel por acessar o servico -> carrgar os colaboradores e atualiza-los no ObservableList<>
 	public void updateTableView() {
 		if(service == null) {
-			throw new IllegalStateException("Service Colaborador was null!");
+			throw new IllegalStateException("Service Produto was null!");
 		}
 		
-		//Recebe a lista de colaboradores gerada pelo ColaboradorServices
-		List<Colaborador> list = service.findAll();
+		//Recebe a lista de colaboradores gerada pelo ProdutoServices
+		List<Produto> list = service.findAll();
 
-		
 		//Associar a list ao ObservableList para verificar atualizacoes de dados.
 		obsList = FXCollections.observableArrayList(list);//A classe e oriunda da javaFX
 		
 		//Carregar os dados no TableView
-		tableViewColaborador.setItems(obsList);
+		tableViewProduto.setItems(obsList);
 		
 		initEditButtons();
 		initRemoveButtons();		
@@ -168,23 +156,23 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 	
 	public void updateTableViewConsult(String name) {
 		if(service == null) {
-			throw new IllegalStateException("Service Colaborador was null!");
+			throw new IllegalStateException("Service Produto was null!");
 		}
 		
-		//Recebe a lista de colaboradores gerada pelo ColaboradorServices
-		List<Colaborador> list = service.consultName(name);
+		//Recebe a lista de colaboradores gerada pelo ProdutoServices
+		List<Produto> list = service.consultName(name);
 		
 		//Associar a list ao ObservableList para verificar atualizacoes de dados.
 		obsList = FXCollections.observableArrayList(list);//A classe e oriunda da javaFX
 		
 		//Carregar os dados no TableView
-		tableViewColaborador.setItems(obsList);
+		tableViewProduto.setItems(obsList);
 		
 		initEditButtons();
 		initRemoveButtons();	
 	}//End updateTableViewConsult
 	
-	private void createDialogForm(Colaborador colab, Endereco end, String absolutePath,Stage parentStage) {
+	private void createDialogForm(Produto prod, String absolutePath,Stage parentStage) {
 		try {
 			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutePath));
@@ -192,11 +180,9 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 			//Instanciar um novo Stage (Palco)
 			Stage dialogStage = new Stage();
 			
-			ColaboradorFormController controller = loader.getController();//Pega o controlador da tela do formulario
-			controller.setColaborador(colab);
-			controller.setEndereco(end);
-			controller.setColaboradorServices(new ColaboradorServices());
-			controller.setEnderecoService(new EnderecoService());
+			ProdutoFormController controller = loader.getController();//Pega o controlador da tela do formulario
+			controller.setProduto(prod);
+			controller.setProdutoServices(new ProdutoServices());
 			controller.subscribeDataChangeListener(this);//Incrissao para receber o evento do DataChangeListener
 			controller.updateFormData();
 			
@@ -214,6 +200,7 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 			
 			
 		}catch (IOException e) {
+			e.printStackTrace();
 			Alerts.showAlerts("IOException", "Erro ao carragar a tela!", e.getMessage(), AlertType.ERROR);
 		}
 	}
@@ -227,11 +214,11 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 	//Adiciota o botao de alteracao
 	private void initEditButtons() {
 		tableCollumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableCollumnEDIT.setCellFactory(param -> new TableCell<Colaborador, Colaborador>() {
+		tableCollumnEDIT.setCellFactory(param -> new TableCell<Produto, Produto>() {
 			private final Button button = new Button("edit");
 
 			@Override
-			protected void updateItem(Colaborador obj, boolean empty) {
+			protected void updateItem(Produto obj, boolean empty) {
 				super.updateItem(obj, empty);
 
 				if (obj == null) {
@@ -239,22 +226,21 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 					return;
 				}
 
-				EnderecoService service = new EnderecoService();
-				Endereco end = service.findById(obj.getId_End());
+
 				setGraphic(button);
 				button.setOnAction(
-						event -> createDialogForm(obj, end, "/gui/ColaboradorForm.fxml", Utils.currentStage(event)));
+						event -> createDialogForm(obj, "/gui/ProdutoForm.fxml", Utils.currentStage(event)));
 			}
 		});
 	}// End initEditButtons
 	
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnREMOVE.setCellFactory(param -> new TableCell<Colaborador, Colaborador>() {
+		tableColumnREMOVE.setCellFactory(param -> new TableCell<Produto, Produto>() {
 			private final Button button = new Button("remove");
 
 			@Override
-			protected void updateItem(Colaborador obj, boolean empty) {
+			protected void updateItem(Produto obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -267,9 +253,9 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 	}//end initRemoveButtons
 
 
-	private void removeEntity(Colaborador obj) {
+	private void removeEntity(Produto obj) {
 		//Optional<> -> objeto que carraga outro objeto dentro dele
-		Optional<ButtonType> result = Alerts.showConfirmation("Confirmar", "Deletar " + obj.getName() + " ?");
+		Optional<ButtonType> result = Alerts.showConfirmation("Confirmar", "Deletar " + obj.getNome_Prod() + " ?");
 		
 		
 		if(result.get() == ButtonType.OK) {
@@ -277,11 +263,8 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 				throw new IllegalStateException("Service was null");
 			}
 			try {
-				EnderecoService serviceEnd = new EnderecoService();
-				Endereco end = serviceEnd.findById(obj.getId_End());
 				
 				service.remove(obj);
-				serviceEnd.remove(end);
 				updateTableView();
 			}
 			catch(DbIntegrityException e) {

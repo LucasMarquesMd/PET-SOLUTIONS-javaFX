@@ -23,6 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import model.entities.Colaborador;
 import model.services.ColaboradorServices;
+import model.services.ProdutoServices;
 
 
 /*
@@ -41,8 +42,7 @@ public class MainViewController implements Initializable{
 	
 	ColaboradorServices  service;
 	
-	public static String userName;
-	public static Integer level;
+	public static Colaborador colaborador;
 	
 /* ========================================================================
  * 			Declaracao das variaveis
@@ -54,6 +54,8 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	private MenuItem menuItemColabList;
+	@FXML
+	private MenuItem menuItemProduto;
 	
 	@FXML
 	private MenuItem menuItemHome;
@@ -86,14 +88,14 @@ public class MainViewController implements Initializable{
 */
 	
 	public void onBtnEntrarAction() {
-		if(validarUsuario(txtUserName.getText(), txtPassworld.getText())) {
-			loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia 
-			mainMenuBar.setVisible(true);
-		}else {
-			Alerts.showAlerts("Erro", "Usuario e ou senha invalidos!", null, AlertType.ERROR);
-		}
-//		loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia 
-//		mainMenuBar.setVisible(true);
+//		if(validarUsuario(txtUserName.getText(), txtPassworld.getText())) {
+//			loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia 
+//			mainMenuBar.setVisible(true);
+//		}else {
+//			Alerts.showAlerts("Erro", "Usuario e ou senha invalidos!", null, AlertType.ERROR);
+//		}
+		loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia 
+		mainMenuBar.setVisible(true);
 		
 	}
 	
@@ -115,6 +117,18 @@ public class MainViewController implements Initializable{
 	
 	public void onMenuItemHomeAction() {
 		loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia
+	}
+	
+	public void onMenuItemProdutoAction() {
+		
+		loadView("/gui/ProdutoList.fxml",
+				(ProdutoListController controller) -> {
+					//Injetar a dependencia da classe de servico
+					controller.setProdutoService(new ProdutoServices());//Instancia a classe de servico
+					//Atualizar a tabela
+					controller.updateTableView();
+				});//Acao de inicializaco do controller 
+		
 	}
 	
 	
@@ -177,13 +191,12 @@ public class MainViewController implements Initializable{
 		if(service == null) {
 			throw new IllegalStateException("Service was null");
 		}
-		Colaborador obj = service.validatingUser(userName, UserSenha);
+		colaborador = service.validatingUser(userName, UserSenha);
 		
-		if(obj == null) {
+		if(colaborador == null) {
 			return false;
 		}
-		userName = obj.getUser_Col();
-		level = obj.getLevel_Access();
+
 		return true;
 	}
 }
