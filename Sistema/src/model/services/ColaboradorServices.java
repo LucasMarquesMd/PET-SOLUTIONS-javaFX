@@ -27,12 +27,15 @@ public class ColaboradorServices {
 			dao.insert(obj);
 		}else {
 			dao.update(obj);
-			System.out.println("Colab Alterado");
+			
 		}
 	}
-	
-	
+
 	public void remove(Colaborador obj) {
 		dao.deleteById(obj.getIdColab());
+	}
+	
+	public List<Colaborador> consultName(String name) {
+		return dao.findByName(name);
 	}
 }

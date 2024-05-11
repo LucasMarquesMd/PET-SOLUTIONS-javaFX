@@ -140,6 +140,44 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 		}
 		
 	}
+	
+	@Override
+	public List<Colaborador> findByName(String name) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			
+			st = conn.prepareStatement(
+					"SELECT Colaborador.*, Endereco.* "
+					+ "FROM Colaborador "
+					+ "INNER JOIN Endereco "
+					+ "ON Colaborador.id_Col = Endereco.id_End "
+					+ "WHERE nome_Col LIKE ?");
+			
+			st.setString(1, name + "%");
+			rs = st.executeQuery();
+			
+			List<Colaborador> list = new ArrayList<>();
+			
+			
+			while(rs.next()) {
+				Endereco end = instantiateEndereco(rs);
+				Colaborador obj = instantiateColaborador(rs, end);
+				
+				list.add(obj);
+			}//end while
+			
+			return list;
+			
+		}catch (SQLException e) {
+			throw new DbException(e.getMessage());
+			
+		}finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+
+	}//End findAll
 
 	@Override
 	public List<Colaborador> findAll() {

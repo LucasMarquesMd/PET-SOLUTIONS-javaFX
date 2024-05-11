@@ -26,6 +26,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -54,7 +55,9 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 	@FXML
 	private Button btnCadastrar;
 	@FXML
-	private Button btnCancelar;
+	private Button btnConsultar;
+	@FXML
+	private TextField txtNome;
 	
 	@FXML
 	private TableView<Colaborador> tableViewColaborador = new TableView<>();
@@ -94,6 +97,12 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 		Endereco end = new Endereco();
 		
 		createDialogForm(colab, end, "/gui/ColaboradorForm.fxml", Utils.currentStage(event));
+	}
+	
+	@FXML
+	public void onBtnConsultar() {
+		updateTableViewConsult(txtNome.getText());
+		System.out.println("updateTableViewConsult");
 	}
 	
 	
@@ -155,12 +164,26 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 		tableViewColaborador.setItems(obsList);
 		
 		initEditButtons();
-		initRemoveButtons();
-		
-		
-		
-	}
+		initRemoveButtons();		
+	}//End updateTableView
 	
+	public void updateTableViewConsult(String name) {
+		if(service == null) {
+			throw new IllegalStateException("Service Colaborador was null!");
+		}
+		
+		//Recebe a lista de colaboradores gerada pelo ColaboradorServices
+		List<Colaborador> list = service.consultName(name);
+		
+		//Associar a list ao ObservableList para verificar atualizacoes de dados.
+		obsList = FXCollections.observableArrayList(list);//A classe e oriunda da javaFX
+		
+		//Carregar os dados no TableView
+		tableViewColaborador.setItems(obsList);
+		
+		initEditButtons();
+		initRemoveButtons();	
+	}//End updateTableViewConsult
 	
 	private void createDialogForm(Colaborador colab, Endereco end, String absolutePath,Stage parentStage) {
 		try {
@@ -256,10 +279,10 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 			}
 			try {
 				EnderecoService serviceEnd = new EnderecoService();
-				Endereco end = serviceEnd.findById(obj.getEndereco().getId_End());
-
-				serviceEnd.remove(end);
+				Endereco end = serviceEnd.findById(obj.getId_End());
+				
 				service.remove(obj);
+				serviceEnd.remove(end);
 				updateTableView();
 			}
 			catch(DbIntegrityException e) {

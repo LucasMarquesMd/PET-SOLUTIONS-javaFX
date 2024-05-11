@@ -362,7 +362,7 @@ public class ColaboradorFormController implements Initializable{
 		lblErrorRua.setText(fields.contains("Rua") ? errors.get("Rua") : "");
 		lblErrorBairro.setText(fields.contains("Bairro") ? errors.get("Bairro") : "");
 		lblErrorCidade.setText(fields.contains("Cidade") ? errors.get("Cidade") : "");
-		lblErrorCEP.setText(fields.contains("CEP") ? errors.get("CEP") : " ");
+		lblErrorCEP.setText(fields.contains("CEP") ? errors.get("CEP") : "");
 		lblErrorNumero.setText(fields.contains("Numero") ? errors.get("Numero") : "");
 		
 	}//

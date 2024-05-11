@@ -13,6 +13,7 @@ public interface ColaboradorDao {
 	void deleteById(Integer id);
 	Colaborador findById(Integer id);
 	List<Colaborador> findAll();
+	List<Colaborador> findByName(String name);
 }
 
 

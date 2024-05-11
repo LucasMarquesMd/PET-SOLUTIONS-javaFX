@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.VBox?>
 
@@ -13,7 +14,8 @@
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
           <Button fx:id="btnCadastrar" mnemonicParsing="false" onAction="#onBtnCadastrar" text="Cadastrar" />
-            <Button fx:id="btnConsultar" mnemonicParsing="false" text="Consultar" />
+            <TextField fx:id="txtNome" prefHeight="25.0" prefWidth="343.0" />
+            <Button fx:id="btnConsultar" mnemonicParsing="false" onAction="#onBtnConsultar" text="Consultar" />
         </items>
       </ToolBar>
       <TableView fx:id="tableViewColaborador" prefHeight="200.0" prefWidth="200.0">
