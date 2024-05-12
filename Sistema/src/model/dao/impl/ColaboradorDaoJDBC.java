@@ -50,7 +50,8 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 				
 				while(rs.next()) {
 					int id = rs.getInt(1);//Pega o valor do primeiro campo
-					obj.setId_End(id);
+					//obj.setId_End(id);
+					obj.setIdColab(id);
 				}
 				DB.closeResultSet(rs);
 			}else {

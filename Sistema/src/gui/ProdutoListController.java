@@ -2,7 +2,6 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -32,9 +31,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Produto;
-import model.entities.Endereco;
 import model.services.ProdutoServices;
-import model.services.EnderecoService;
 
 public class ProdutoListController implements Initializable, DataChangeListener{
 

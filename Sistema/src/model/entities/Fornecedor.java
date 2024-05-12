@@ -9,6 +9,7 @@ public class Fornecedor {
 	private String cnpj_Forn;
 	private Integer tel_Forn;
 	private String email_Forn;
+	private Integer id_End;
 	
 	private Endereco endereco;
 	
@@ -16,12 +17,14 @@ public class Fornecedor {
 	}
 
 	public Fornecedor(Integer id_Forn, String nome_Forn, String cnpj_Forn, Integer tel_Forn, String email_Forn,
-			Endereco endereco) {
+			Integer id_End, Endereco endereco) {
+		super();
 		this.id_Forn = id_Forn;
 		this.nome_Forn = nome_Forn;
 		this.cnpj_Forn = cnpj_Forn;
 		this.tel_Forn = tel_Forn;
 		this.email_Forn = email_Forn;
+		this.id_End = id_End;
 		this.endereco = endereco;
 	}
 
@@ -65,6 +68,14 @@ public class Fornecedor {
 		this.email_Forn = email_Forn;
 	}
 
+	public Integer getId_End() {
+		return id_End;
+	}
+
+	public void setId_End(Integer id_End) {
+		this.id_End = id_End;
+	}
+
 	public Endereco getEndereco() {
 		return endereco;
 	}
@@ -89,6 +100,7 @@ public class Fornecedor {
 		Fornecedor other = (Fornecedor) obj;
 		return Objects.equals(id_Forn, other.id_Forn);
 	}
+
 	
 	
 	

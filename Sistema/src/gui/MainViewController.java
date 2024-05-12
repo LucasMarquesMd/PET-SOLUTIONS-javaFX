@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import application.Main;
-import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +13,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -23,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import model.entities.Colaborador;
 import model.services.ColaboradorServices;
+import model.services.FornecedorServices;
 import model.services.ProdutoServices;
 
 
@@ -40,7 +39,7 @@ public class MainViewController implements Initializable{
 //							Dependencias
 // ========================================================================
 	
-	ColaboradorServices  service;
+	public ColaboradorServices  service;
 	
 	public static Colaborador colaborador;
 	
@@ -53,17 +52,21 @@ public class MainViewController implements Initializable{
 	private MenuBar mainMenuBar;
 	
 	@FXML
+	private MenuItem menuItemHome;
+
+// ========================================================================
+//						Menu Items
+//========================================================================
+	
+	@FXML
 	private MenuItem menuItemColabList;
 	@FXML
 	private MenuItem menuItemProduto;
-	
 	@FXML
-	private MenuItem menuItemHome;
-	
-	
+	private MenuItem menuItemFornecedor;
 	
 /* ========================================================================
- * 			Declaracao das variaveis de login
+ * 				Declaracao das variaveis de login
  * ========================================================================
 */
 	
@@ -128,7 +131,17 @@ public class MainViewController implements Initializable{
 					//Atualizar a tabela
 					controller.updateTableView();
 				});//Acao de inicializaco do controller 
+	}
+	
+public void onMenuItemFornecedorAction() {
 		
+		loadView("/gui/FornecedorList.fxml",
+				(FornecedorListController controller) -> {
+					//Injetar a dependencia da classe de servico
+					controller.setFornecedorService(new FornecedorServices());//Instancia a classe de servico
+					//Atualizar a tabela
+					controller.updateTableView();
+				});//Acao de inicializaco do controller 
 	}
 	
 	
