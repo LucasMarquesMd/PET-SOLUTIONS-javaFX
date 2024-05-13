@@ -1,6 +1,7 @@
 package model.dao;
 
 import db.DB;
+import model.dao.impl.ClienteDaoJDBC;
 import model.dao.impl.ColaboradorDaoJDBC;
 import model.dao.impl.EnderecoDaoJDBC;
 import model.dao.impl.FornecedorDaoJDBC;
@@ -23,5 +24,9 @@ public class DaoFactory {
 	
 	public static FornecedorDao createFornecedorDao() {
 		return new FornecedorDaoJDBC(DB.getConnection());
+	}
+	
+	public static ClienteDao createClienteDao() {
+		return new ClienteDaoJDBC(DB.getConnection());
 	}
 }
