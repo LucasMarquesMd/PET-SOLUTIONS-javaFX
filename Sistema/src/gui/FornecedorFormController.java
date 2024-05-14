@@ -109,8 +109,7 @@ public class FornecedorFormController implements Initializable{
 	private Label lblErrorCEP;
 	@FXML
 	private Label lblErrorNumero;
-	@FXML
-	private Label lblErrorLevel;
+
 	
 // =================================================================================
 //							Funcoes dos controles	
@@ -331,7 +330,6 @@ public class FornecedorFormController implements Initializable{
 		lblErrorEmail.setText(fields.contains("Email") ? errors.get("Email") : "");
 		lblErrorCPF.setText(fields.contains("CNPJ") ? errors.get("CNPJ") : "");
 		lblErrorTelefone.setText(fields.contains("Telefone") ? errors.get("Telefone") : "");
-		lblErrorLevel.setText(fields.contains("Nivel") ? errors.get("Usuario") : "");
 		
 		lblErrorRua.setText(fields.contains("Rua") ? errors.get("Rua") : "");
 		lblErrorBairro.setText(fields.contains("Bairro") ? errors.get("Bairro") : "");

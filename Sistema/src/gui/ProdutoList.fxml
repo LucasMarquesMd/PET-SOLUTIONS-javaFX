@@ -14,7 +14,7 @@
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
           <Button fx:id="btnCadastrar" mnemonicParsing="false" onAction="#onBtnCadastrar" text="Cadastrar" />
-            <TextField fx:id="txtNome" prefHeight="25.0" prefWidth="238.0" />
+            <TextField fx:id="txtNome" prefHeight="25.0" prefWidth="238.0" promptText="Nome do produto" />
             <Button fx:id="btnConsultar" mnemonicParsing="false" onAction="#onBtnConsultar" text="Consultar" />
         </items>
       </ToolBar>

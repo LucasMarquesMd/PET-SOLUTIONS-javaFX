@@ -199,8 +199,8 @@ public class ProdutoFormController implements Initializable{
 		Set<String> fields = errors.keySet();
 
 		lblErrorNome.setText(fields.contains("Nome") ? errors.get("Nome") : "");
-		lblErrorDescricao.setText(fields.contains("Descricao") ? errors.get("Nome") : "");
-		lblErrorPreco.setText(fields.contains("Preco") ? errors.get("Nome") : "");
+		lblErrorDescricao.setText(fields.contains("Descricao") ? errors.get("Descricao") : "");
+		lblErrorPreco.setText(fields.contains("Preco") ? errors.get("Preco") : "");
 		
 		
 	}//
