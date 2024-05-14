@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="344.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LocalListController">
+   <children>
+      <Label text="Locais" />
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button fx:id="btnCadastrar" mnemonicParsing="false" onAction="#onBtnCadastrar" text="Cadastrar" />
+            <TextField fx:id="txtNome" prefHeight="25.0" prefWidth="238.0" />
+            <Button fx:id="btnConsultar" mnemonicParsing="false" onAction="#onBtnConsultar" text="Consultar" />
+        </items>
+      </ToolBar>
+      <TableView fx:id="tableViewLocalDeEstoque" prefHeight="260.0" prefWidth="462.0">
+        <columns>
+          <TableColumn fx:id="tableCollumnId" prefWidth="70.0" text="ID" />
+          <TableColumn fx:id="tableCollumnName" text="Nome" />
+            <TableColumn fx:id="tableCollumnDescricao" prefWidth="165.0" text="Descricao" />
+            <TableColumn fx:id="tableCollumnStatus" minWidth="0.0" prefWidth="88.0" text="Situacao" />
+            <TableColumn fx:id="tableCollumnEDIT" prefWidth="61.0" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="67.0" />
+        </columns>
+      </TableView>
+   </children>
+</VBox>

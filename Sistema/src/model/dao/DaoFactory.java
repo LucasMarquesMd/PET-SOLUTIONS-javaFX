@@ -5,6 +5,7 @@ import model.dao.impl.ClienteDaoJDBC;
 import model.dao.impl.ColaboradorDaoJDBC;
 import model.dao.impl.EnderecoDaoJDBC;
 import model.dao.impl.FornecedorDaoJDBC;
+import model.dao.impl.LocalDeEstoqueDaoJDBC;
 import model.dao.impl.ProdutoDaoJDBC;
 
 //Classe responsavel por instanciar a implentacao dos Dao
@@ -28,5 +29,9 @@ public class DaoFactory {
 	
 	public static ClienteDao createClienteDao() {
 		return new ClienteDaoJDBC(DB.getConnection());
+	}
+	
+	public static LocalDeEstoqueDao createLocalDeEstoqueDao() {
+		return new LocalDeEstoqueDaoJDBC(DB.getConnection());
 	}
 }

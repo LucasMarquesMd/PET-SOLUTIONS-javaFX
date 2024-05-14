@@ -30,6 +30,11 @@
                     <MenuItem fx:id="menuItemHome" mnemonicParsing="false" onAction="#onMenuItemHomeAction" text="Home" />
                   </items>
                 </Menu>
+                  <Menu mnemonicParsing="false" text="Estoque">
+                    <items>
+                      <MenuItem fx:id="menuItemLocal" mnemonicParsing="false" onAction="#onMenuItemLocalAction" text="Local" />
+                    </items>
+                  </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
                     <MenuItem mnemonicParsing="false" text="About" />

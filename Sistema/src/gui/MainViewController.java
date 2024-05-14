@@ -23,6 +23,7 @@ import model.entities.Colaborador;
 import model.services.ClienteServices;
 import model.services.ColaboradorServices;
 import model.services.FornecedorServices;
+import model.services.LocalDeEstoqueServices;
 import model.services.ProdutoServices;
 
 /*
@@ -50,13 +51,14 @@ public class MainViewController implements Initializable {
 	@FXML
 	private MenuBar mainMenuBar;
 
-	@FXML
-	private MenuItem menuItemHome;
+	
 
 // ========================================================================
 //						Menu Items
 //========================================================================
 
+	@FXML
+	private MenuItem menuItemHome;
 	@FXML
 	private MenuItem menuItemColabList;
 	@FXML
@@ -65,6 +67,8 @@ public class MainViewController implements Initializable {
 	private MenuItem menuItemFornecedor;
 	@FXML
 	private MenuItem menuItemCliente;
+	@FXML
+	private MenuItem menuItemLocal;
 
 	/*
 	 * ========================================================================
@@ -147,6 +151,16 @@ public class MainViewController implements Initializable {
 		loadView("/gui/ClienteList.fxml", (ClienteListController controller) -> {
 			// Injetar a dependencia da classe de servico
 			controller.setClienteService(new ClienteServices());// Instancia a classe de servico
+			// Atualizar a tabela
+			controller.updateTableView();
+		});// Acao de inicializaco do controller
+	}
+	
+	public void onMenuItemLocalAction() {
+
+		loadView("/gui/LocalList.fxml", (LocalListController controller) -> {
+			// Injetar a dependencia da classe de servico
+			controller.setLocalDeEstoqueService(new LocalDeEstoqueServices());// Instancia a classe de servico
 			// Atualizar a tabela
 			controller.updateTableView();
 		});// Acao de inicializaco do controller
