@@ -199,7 +199,7 @@ public class LocalDeEstoqueDaoJDBC implements LocalDeEstoqueDao {
 		obj.setId_Local(rs.getInt("id_Local"));
 		obj.setNome_Local(rs.getString("nome_Local"));
 		obj.setDesc_Local(rs.getString("desc_Local"));
-		obj.setSit_Local(LocalStatus.valueOf(rs.getString("sit_Local")));
+		obj.setSit_Local(LocalStatus.valueOf(rs.getString("sit_Local")));//Converte a string para enum
 
 		return obj;
 

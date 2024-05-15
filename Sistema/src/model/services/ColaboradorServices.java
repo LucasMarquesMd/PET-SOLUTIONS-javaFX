@@ -22,6 +22,12 @@ public class ColaboradorServices {
 		return dao.findAll();
 	}
 	
+	
+	public Colaborador findById(Integer id) {
+		return dao.findById(id);
+	}
+	
+	
 	public void saveOrUpdate(Colaborador obj) {
 		if(obj.getIdColab() == null) {
 			dao.insert(obj);

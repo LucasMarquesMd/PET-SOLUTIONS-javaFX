@@ -5,6 +5,7 @@ import java.util.Objects;
 public class PedidoItems {
 
 	private Integer id_PedIt;
+	private Integer id_Ped;
 	private Integer id_Prod;
 	private Integer qt_PedIt;
 	private Double preco_PedIt;

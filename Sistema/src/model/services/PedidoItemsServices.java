@@ -11,7 +11,7 @@ public class PedidoItemsServices {
 	private PedidoItemsDao dao = DaoFactory.createPedidoItemsDao();
 
 	public void remove(PedidoItems obj) {
-		dao.deleteById(obj.getId_Prod());
+		dao.deleteById(obj.getId_PedIt());
 		
 	}
 
@@ -20,7 +20,7 @@ public class PedidoItemsServices {
 	}
 
 	public void saveOrUpdate(PedidoItems entity) {
-		if(entity.getId_Prod() == null) {
+		if(entity.getId_PedIt() == null) {
 			dao.insert(entity);
 		}else {
 			dao.update(entity);

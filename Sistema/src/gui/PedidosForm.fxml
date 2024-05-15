@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="507.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PedidosFormController">
+   <children>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+         <items>
+            <Label text="ID" />
+            <Separator prefHeight="30.0" prefWidth="2.0" />
+            <TextField fx:id="txtId" editable="false" prefHeight="25.0" prefWidth="78.0" />
+         </items>
+      </ToolBar>
+      <AnchorPane prefHeight="428.0" prefWidth="615.0">
+         <children>
+            <DatePicker fx:id="dpData" layoutX="51.0" layoutY="14.0" />
+            <Label layoutX="14.0" layoutY="18.0" text="Data" />
+            <Label layoutX="12.0" layoutY="58.0" text="Preco" />
+            <Label layoutX="10.0" layoutY="95.0" text="Status" />
+            <Label layoutX="329.0" layoutY="18.0" text="Colaborador" />
+            <TextField fx:id="txtPreco" editable="false" layoutX="51.0" layoutY="54.0" prefHeight="25.0" prefWidth="188.0" />
+            <TextField fx:id="txtColaborador" editable="false" layoutX="416.0" layoutY="14.0" />
+            <ComboBox fx:id="cboStatus" layoutX="65.0" layoutY="91.0" prefHeight="25.0" prefWidth="161.0" promptText="Situcao" />
+            <Label layoutX="14.0" layoutY="145.0" text="Produto" />
+            <ComboBox fx:id="cboProduto" layoutX="71.0" layoutY="141.0" prefHeight="25.0" prefWidth="200.0" />
+            <Button fx:id="btnAdicionar" layoutX="363.0" layoutY="141.0" mnemonicParsing="false" onAction="#onBtnAdicionarAction" text="Adicionar" />
+            <TableView fx:id="tableViewPedidos" layoutX="12.0" layoutY="176.0" prefHeight="238.0" prefWidth="592.0">
+              <columns>
+                <TableColumn fx:id="tbcId" prefWidth="63.0" text="ID" />
+                <TableColumn fx:id="tbcNome" prefWidth="126.0" text="Nome" />
+                  <TableColumn fx:id="tbcQuantidade" prefWidth="79.0" text="Quantidade" />
+                  <TableColumn fx:id="tbcPreco" prefWidth="115.0" text="Sub totais" />
+                  <TableColumn prefWidth="75.0" text="Column X" />
+              </columns>
+            </TableView>
+            <Label layoutX="348.0" layoutY="58.0" text="Cliente" />
+            <ComboBox fx:id="cboCliente" layoutX="416.0" layoutY="54.0" prefHeight="25.0" prefWidth="161.0" />
+            <TextField layoutX="281.0" layoutY="141.0" prefHeight="25.0" prefWidth="67.0" />
+            <Button layoutX="445.0" layoutY="141.0" mnemonicParsing="false" text="Remover" />
+         </children>
+      </AnchorPane>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button fx:id="btnSalvar" mnemonicParsing="false" text="Salvar" />
+            <Button fx:id="btnCancelar" mnemonicParsing="false" text="Cancelar" />
+        </items>
+      </ToolBar>
+   </children>
+</VBox>
