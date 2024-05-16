@@ -32,6 +32,11 @@ public class ProdutoServices {
 		}
 	}
 	
+	//Busca os produtos po id
+	public Produto findById(Integer id) {
+		return dao.findById(id);
+	}
+	
 	
 
 }

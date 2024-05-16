@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import application.Main;
+import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -98,15 +100,15 @@ public class MainViewController implements Initializable {
 	 */
 
 	public void onBtnEntrarAction() {
-//		if(validarUsuario(txtUserName.getText(), txtPassworld.getText())) {
-//			loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia 
-//			mainMenuBar.setVisible(true);
-//		}else {
-//			Alerts.showAlerts("Erro", "Usuario e ou senha invalidos!", null, AlertType.ERROR);
-//		}
-		loadView("/gui/HomeScreen.fxml", x -> {
-		});// Lambda vazia
-		mainMenuBar.setVisible(true);
+		if(validarUsuario(txtUserName.getText(), txtPassworld.getText())) {
+			loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia 
+			mainMenuBar.setVisible(true);
+		}else {
+			Alerts.showAlerts("Erro", "Usuario e ou senha invalidos!", null, AlertType.ERROR);
+		}
+//		loadView("/gui/HomeScreen.fxml", x -> {
+//		});// Lambda vazia
+//		mainMenuBar.setVisible(true);
 
 	}
 

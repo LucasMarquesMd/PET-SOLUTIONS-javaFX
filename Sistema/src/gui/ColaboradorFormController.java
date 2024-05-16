@@ -58,6 +58,8 @@ public class ColaboradorFormController implements Initializable{
 	@FXML
 	private TextField txtUsuario;
 	@FXML
+	private TextField txtSenha;
+	@FXML
 	private TextField txtLevel;
 	
 
@@ -122,6 +124,8 @@ public class ColaboradorFormController implements Initializable{
 	private Label lblErrorNumero;
 	@FXML
 	private Label lblErrorLevel;
+	@FXML
+	private Label lblErrorSenha;
 	
 // =================================================================================
 //							Funcoes dos controles	
@@ -204,7 +208,9 @@ public class ColaboradorFormController implements Initializable{
 		//Endereco
 		Constraints.setTextFieldInteger(txtIdEnd);
 		Constraints.setTextFieldInteger(txtNumero);
+		Constraints.setTextFieldMaxLength(txtNumero, 10);
 		Constraints.setTextFieldInteger(txtCep);
+		Constraints.setTextFieldMaxLength(txtCep, 10);
 		Constraints.setTextFieldMaxLength(txtRua, 45);
 		Constraints.setTextFieldMaxLength(txtBairro, 45);
 		Constraints.setTextFieldMaxLength(txtCidade, 45);
@@ -212,13 +218,16 @@ public class ColaboradorFormController implements Initializable{
 		//Colaborador
 		Constraints.setTextFieldInteger(txtIdCol);
 		Constraints.setTextFieldInteger(txtCelular);
+		Constraints.setTextFieldMaxLength(txtCelular, 10);
 		Constraints.setTextFieldInteger(txtTelefone);
+		Constraints.setTextFieldMaxLength(txtTelefone, 10);
 		Constraints.setTextFieldMaxLength(txtNome, 45);
 		Constraints.setTextFieldMaxLength(txtEmail, 50);
 		Constraints.setTextFieldMaxLength(txtCpf, 14);
 		Constraints.setTextFieldMaxLength(txtUsuario, 20);
-		Constraints.setTextFieldMaxLength(txtLevel, 20);
-		
+		Constraints.setTextFieldInteger(txtLevel);
+		Constraints.setTextFieldMaxLength(txtLevel, 1);
+		Constraints.setTextFieldMaxLength(txtSenha, 20);
 		
 	}
 	
@@ -236,6 +245,7 @@ public class ColaboradorFormController implements Initializable{
 		txtCelular.setText(String.valueOf(entityColab.getCelular()));
 		txtUsuario.setText(entityColab.getUser_Col());
 		txtLevel.setText(String.valueOf(entityColab.getLevel_Access()));
+		txtSenha.setText(entityColab.getUser_Senha());
 		
 		
 		if(entityEnd == null) {
@@ -274,7 +284,7 @@ public class ColaboradorFormController implements Initializable{
 		obj.setUser_Col(txtUsuario.getText());
 		obj.setLevel_Access(Utils.tryParseToInt(txtLevel.getText()));
 
-		obj.setUser_Senha("1234567@D");//Senha padrao para usuarios novos
+		obj.setUser_Senha(txtSenha.getText());
 		
 		obj.setId_End(entity.getId_End());//Adiciona o id do endereco
 		obj.setEndereco(entity);//Adiciona adependencia do endereco
@@ -325,6 +335,10 @@ public class ColaboradorFormController implements Initializable{
 		
 		if(txtUsuario.getText() == null || txtUsuario.getText().trim().equals("")) {
 			exception.addErrors("Usuario", "Field can't be empty!");
+		}
+		
+		if(txtUsuario.getText() == null || txtUsuario.getText().trim().equals("")) {
+			exception.addErrors("Senha", "Field can't be empty!");
 		}
 		
 		if(txtLevel.getText() == null || txtLevel.getText().trim().equals("")) {
@@ -378,6 +392,7 @@ public class ColaboradorFormController implements Initializable{
 		lblErrorCidade.setText(fields.contains("Cidade") ? errors.get("Cidade") : "");
 		lblErrorCEP.setText(fields.contains("CEP") ? errors.get("CEP") : "");
 		lblErrorNumero.setText(fields.contains("Numero") ? errors.get("Numero") : "");
+		lblErrorSenha.setText(fields.contains("Senha") ? errors.get("Senha") : "");
 		
 	}//
 

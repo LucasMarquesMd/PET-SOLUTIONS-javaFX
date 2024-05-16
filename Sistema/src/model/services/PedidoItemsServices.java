@@ -28,6 +28,16 @@ public class PedidoItemsServices {
 		}
 	}
 	
+	public List<PedidoItems> findItemsProd(Integer id) {
+		return dao.findItemsProd(id);
+	}
 	
+	public PedidoItems findByIdPed(Integer id_Ped, Integer id_Prod) {
+		return dao.findByIdPed(id_Ped, id_Prod);
+	}
+	
+	public PedidoItems findById(Integer id) {
+		return dao.findById(id);
+	}
 
 }

@@ -14,7 +14,7 @@ public interface ProdutoDao {
 	Produto findById(Integer id);
 	List<Produto> findAll();
 	List<Produto> findByName(String name);
-	Produto ValidatingUser(String name, String passworld);
+	//List<Produto> listfindById(Integer id);
 }
 
 

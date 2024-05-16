@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -32,10 +33,12 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Colaborador;
+import model.entities.PedidoItems;
 import model.entities.Pedidos;
 import model.entities.enums.PedidoStatus;
 import model.services.ClienteServices;
 import model.services.ColaboradorServices;
+import model.services.PedidoItemsServices;
 import model.services.PedidosServices;
 import model.services.ProdutoServices;
 
@@ -93,9 +96,9 @@ public class PedidosListController implements Initializable, DataChangeListener{
 		//Stage parentStage = Utils.currentStage(event);
 		
 		Pedidos pedido = new Pedidos();
-		Colaborador colab = new Colaborador(1, "a", "a", "a", 12, 12, "a", "a", 1, 1);
+		//Colaborador colab = new Colaborador(1, "a", "a", "a", 12, 12, "a", "a", 1, 1);
 		
-		createDialogForm(pedido, colab, "/gui/PedidosForm.fxml", Utils.currentStage(event));
+		createDialogForm(pedido, MainViewController.colaborador, "/gui/PedidosForm.fxml", Utils.currentStage(event));
 	}
 	
 	@FXML
@@ -133,11 +136,31 @@ public class PedidosListController implements Initializable, DataChangeListener{
 		tableCollumnStatus.setCellValueFactory(new PropertyValueFactory<>("status_Ped"));
 		tableCollumnResponsavel.setCellValueFactory(new PropertyValueFactory<>("colaborador"));
 		
+		initializeTbcColaborador();
+		
 		Stage stage = (Stage) Main.getMainScene().getWindow();//Referencia para o priaryStage
 		
 		//O table view acompanha a janela
 		tableViewPedidos.prefHeightProperty().bind(stage.heightProperty());
 
+	}
+	
+	private void initializeTbcColaborador() {
+		// Configurar a célula para exibir o nome do colaborador
+				tableCollumnResponsavel.setCellFactory(column -> {
+				    return new TableCell<Pedidos, Colaborador>() {
+				        @Override
+				        protected void updateItem(Colaborador colaborador, boolean empty) {
+				            super.updateItem(colaborador, empty);
+
+				            if (colaborador == null || empty) {
+				                setText(null);
+				            } else {
+				                setText(colaborador.getName());
+				            }
+				        }
+				    };
+				});
 	}
 	
 
@@ -191,10 +214,16 @@ public class PedidosListController implements Initializable, DataChangeListener{
 			PedidosFormController controller = loader.getController();//Pega o controlador da tela do formulario
 			controller.setPedidos(ped);
 			controller.setColaborador(col);
+			controller.setPedidoItems(new PedidoItems());
+			
+			controller.setListPedidoItems(new ArrayList<>());
+			controller.setListProdutosList(new ArrayList<>());
+			
 			controller.setColaboradorServices(new ColaboradorServices());
 			controller.setServicesCli(new ClienteServices());
 			controller.setServicesProd(new ProdutoServices());
 			controller.setPedidosServices(new PedidosServices());
+			controller.setPedidoItemsServices(new PedidoItemsServices());
 			
 			controller.loadAssociatedObjects();
 			controller.subscribeDataChangeListener(this);//Incrissao para receber o evento do DataChangeListener
@@ -243,9 +272,10 @@ public class PedidosListController implements Initializable, DataChangeListener{
 				ColaboradorServices service = new ColaboradorServices();
 				Colaborador col = service.findById(obj.getId_Col());
 				
+				
 				setGraphic(button);
 				button.setOnAction(
-						event -> createDialogForm(obj, MainViewController.colaborador, "/gui/PedidosForm.fxml", Utils.currentStage(event)));
+						event -> createDialogForm(obj, col, "/gui/PedidosForm.fxml", Utils.currentStage(event)));
 			}
 		});
 	}// End initEditButtons
@@ -279,11 +309,9 @@ public class PedidosListController implements Initializable, DataChangeListener{
 				throw new IllegalStateException("Service was null");
 			}
 			try {
-				ColaboradorServices serviceEnd = new ColaboradorServices();
-				Colaborador end = serviceEnd.findById(obj.getId_Col());
+				
 				
 				service.remove(obj);
-				serviceEnd.remove(end);
 				updateTableView();
 			}
 			catch(DbIntegrityException e) {

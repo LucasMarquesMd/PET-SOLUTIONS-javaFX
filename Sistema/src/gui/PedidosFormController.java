@@ -16,6 +16,7 @@ import db.DbException;
 import db.DbIntegrityException;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
+import gui.util.Constraints;
 import gui.util.Utils;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -66,12 +67,15 @@ public class PedidosFormController implements Initializable{
 	private ProdutoServices servicesProd;
 	private ClienteServices servicesCli;
 	
-	
-	private List<PedidoItems> pedidoItems = new ArrayList<>();
+	//Lista de produtos da tabela 
+	private List<Produto> produtosList;
+
+	//Lista de items 
+	private List<PedidoItems> pedidoItems;
 	
 	private ObservableList<PedidoStatus> pedidoStatus = FXCollections.observableArrayList(PedidoStatus.values());//Pega a colecao de valores do enum
 	private ObservableList<Cliente> clienteList;
-	private ObservableList<Produto> produtoList;
+	private ObservableList<Produto> obsListProd;
 	private ObservableList<PedidoItems> itemsList;
 
 	
@@ -91,11 +95,15 @@ public class PedidosFormController implements Initializable{
 	@FXML
 	private TextField txtColaborador;
 	@FXML
+	private TextField txtQuantidade;
+	@FXML
 	private ComboBox<PedidoStatus> cboStatus;
 	@FXML
 	private ComboBox<Cliente> cboCliente;
 	@FXML
 	private ComboBox<Produto> cboProduto;
+	
+	private Double total = 0.0;
 	
 // =================================================================================
 //						Atibutos da tabela
@@ -104,15 +112,15 @@ public class PedidosFormController implements Initializable{
 	@FXML
 	private TableView tableViewPedidos;
 	@FXML
-	private TableColumn<PedidoItems, Integer> tbcId;
+	private TableColumn<Produto, Integer> tbcId;
 	@FXML
 	private TableColumn<Produto, String> tbcNome;
 	@FXML
-	private TableColumn<PedidoItems, Integer> tbcQuantidade;
+	private TableColumn<Produto, Integer> tbcQuantidade;
 	@FXML
-	private TableColumn<PedidoItems, Double> tbcPreco;
+	private TableColumn<Produto, Double> tbcPreco;
 	@FXML
-	private TableColumn<PedidoItems, PedidoItems> tableColumnREMOVE;
+	private TableColumn<Produto, Produto> tableColumnREMOVE;
 	
 	
 
@@ -136,6 +144,8 @@ public class PedidosFormController implements Initializable{
 	private Label lblErrorStatus;
 	@FXML
 	private Label lblProdutos;
+	@FXML
+	private Label lblErrorData;
 	
 	
 // =================================================================================
@@ -151,10 +161,13 @@ public class PedidosFormController implements Initializable{
 			throw new IllegalStateException("Entity (entityPed) was null");
 		}
 		try {
-			fieldesValidation();//Validacao dos campos
+			
+			fieldesValidation();
 			
 			entityPed = getFormData(pedidoItems);
+			
 			servicesPed.saveOrUpdate(entityPed);
+			savePedidosItems(entityPed.getId_Ped());
 			
 			notifyDataChangeListeners();
 			
@@ -176,16 +189,35 @@ public class PedidosFormController implements Initializable{
 		Utils.currentStage(event).close();
 	}
 	
+	//Adiciona o produto na tabela
 	public void onBtnAdicionarAction() {
-		PedidoItems obj = new PedidoItems();
+		PedidoItems pedIt = new PedidoItems();
+		Produto prod = cboProduto.getSelectionModel().getSelectedItem();
 		
-		obj.setQt_PedIt(Utils.tryParseToInt(tbcQuantidade.getText()));
-		obj.setPreco_PedIt(Utils.tryParseToDouble(tbcPreco.getText()));
-		obj.setProduto(cboProduto.getSelectionModel().getSelectedItem());
-		//obj.setId_Prod(obj.getProduto().getId_Prod());
+		if(produtosList.contains(prod)) {
+			Alerts.showAlerts("Aviso", "Pedido", "O produto ja consta na lista de items!", AlertType.WARNING);
+		}else {
+			if(txtQuantidade.getText().equals("")) {
+				pedIt.setQt_PedIt(1);
+				prod.setQt_Prod(1);
+			}else {
+				pedIt.setQt_PedIt(Utils.tryParseToInt(txtQuantidade.getText()));
+				prod.setQt_Prod(Utils.tryParseToInt(txtQuantidade.getText()));
+			}
+			
+			pedIt.setPreco_PedIt(prod.getPreco_Prod());
+			pedIt.setProduto(prod);
+			pedIt.setId_Prod(prod.getId_Prod());
 		
-		pedidoItems.add(obj);
-		updateTableView();
+			pedidoItems.add(pedIt);
+			produtosList.add(prod);
+			
+			total += pedIt.subTotal();
+			txtPreco.setText(total.toString());
+			updateTableView();
+		}
+
+		
 	}
 	
 	
@@ -208,9 +240,6 @@ public class PedidosFormController implements Initializable{
 	public void setPedidosServices(PedidosServices servicesPed) {
 		this.servicesPed = servicesPed;
 	}
-	public void setPedidoItemsServices(PedidoItemsServices servicesItems) {
-		this.servicesItems = servicesItems;
-	}
 	
 	public void setColaboradorServices(ColaboradorServices servicesCol) {
 		this.servicesCol = servicesCol;
@@ -223,6 +252,20 @@ public class PedidosFormController implements Initializable{
 	public void setServicesCli(ClienteServices servicesCli) {
 		this.servicesCli = servicesCli;
 	}
+	
+	public void setPedidoItemsServices(PedidoItemsServices servicesItems) {
+		this.servicesItems = servicesItems;
+	}
+	
+	public void setListProdutosList(List<Produto> produtosList) {
+		this.produtosList = produtosList;
+	}
+
+	public void setListPedidoItems(List<PedidoItems> pedidoItems) {
+		this.pedidoItems = pedidoItems;
+	}
+
+	
 
 // =================================================================================
 //								Funcoes da view
@@ -230,33 +273,55 @@ public class PedidosFormController implements Initializable{
 
 	
 
+	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		initializeNode();
+		initializeDatePicker();
 		
 	}
 	
 	//Restricoes
 	private void initializeNode() {
-		
+		//ComboBox
 		cboStatus.setItems(pedidoStatus);
 		cboCliente.setItems(clienteList);
-		cboProduto.setItems(produtoList);
+		cboProduto.setItems(obsListProd);
 		
-		
+		//DataPicker
 		Utils.formatDatePicker(dpData, "dd/MM/yyyy");
 		dpData.setValue(null);
 		
-		//PedidoItems
-		tbcId.setCellValueFactory(new PropertyValueFactory<>("id_PedIt"));
+		//TableView
+		tbcId.setCellValueFactory(new PropertyValueFactory<>("id_Prod"));
 		tbcNome.setCellValueFactory(new PropertyValueFactory<>("nome_Prod"));
-		tbcPreco.setCellValueFactory(new PropertyValueFactory<>("preco_PedIt"));
-		tbcQuantidade.setCellValueFactory(new PropertyValueFactory<>("qt_PedIt"));
+		tbcPreco.setCellValueFactory(new PropertyValueFactory<>("preco_Prod"));
+		tbcQuantidade.setCellValueFactory(new PropertyValueFactory<>("qt_Prod"));
+		
+		//TextFields
+		Integer n = 1;
+		txtQuantidade.setText(n.toString());
+		
+		
+		//Constraints
+		Constraints.setTextFieldInteger(txtId);
+		Constraints.setTextFieldInteger(txtQuantidade);
 		
 		
 		initializeComboBoxCliente();
 		initializeComboBoxProduto();
 		
+		cboProduto.getSelectionModel().selectFirst();
+		cboStatus.getSelectionModel().selectFirst();
+		
+	}
+	
+	private void initializeDatePicker() {
+	    // Obter a data atual
+	    LocalDate currentDate = LocalDate.now();
+	    
+	    // Configurar o DatePicker com a data atual
+	    dpData.setValue(currentDate);
 	}
 	
 // =================================================================================
@@ -268,11 +333,13 @@ public class PedidosFormController implements Initializable{
 			throw new IllegalStateException("Service Pedidos was null!");
 		}
 		
-		List<PedidoItems> list = servicesItems.findAll();
+		
+		ObservableList<Produto> list = FXCollections.observableArrayList(produtosList);
 
-		itemsList = FXCollections.observableArrayList(list);
+		 
 	
-		tableViewPedidos.setItems(itemsList);
+		tableViewPedidos.setItems(list);
+		
 
 		initRemoveButtons();		
 	}//End updateTableView
@@ -299,9 +366,34 @@ public class PedidosFormController implements Initializable{
 		//Colaborador
 		txtColaborador.setText(entityCol.getName());
 		
+		//Combobox
+		if (entityItems.getProduto() == null) {
+			cboProduto.getSelectionModel().selectFirst();
+		} else {
+			cboProduto.setValue(entityItems.getProduto());
+		}
+		
+		if (entityPed.getStatus_Ped() == null) {
+			cboStatus.getSelectionModel().selectFirst();
+		} else {
+			cboStatus.setValue(entityPed.getStatus_Ped());
+		}
 		
 		
-		
+
+		if(entityPed.getId_Ped() != null) {
+			pedidoItems = servicesItems.findItemsProd(entityPed.getId_Ped());
+			
+			for(PedidoItems item : pedidoItems) {
+				Produto prod = servicesProd.findById(item.getId_Prod());
+				prod.setQt_Prod(item.getQt_PedIt());
+				total += item.getPreco_PedIt() * item.getQt_PedIt();
+				produtosList.add(prod);
+				updateTableView();
+			}
+			
+			txtPreco.setText(total.toString());
+		}
 		
 	}
 	
@@ -318,8 +410,8 @@ public class PedidosFormController implements Initializable{
 			throw new IllegalStateException("servicesProd was null!");
 		}
 		List<Produto> listProd = servicesProd.findAll();
-		produtoList = FXCollections.observableArrayList(listProd);
-		cboProduto.setItems(produtoList);
+		obsListProd = FXCollections.observableArrayList(listProd);
+		cboProduto.setItems(obsListProd);
 	}
 	
 	private void initializeComboBoxCliente() {
@@ -365,44 +457,44 @@ public class PedidosFormController implements Initializable{
 	//Preenche ou atualiza os dados do objeto colaborador
 	private Pedidos getFormData(List<PedidoItems> pedidoItems) {
 		Pedidos obj = new Pedidos();
+		
+		ValidationException exception = new ValidationException("Erro ao validar os dados do pedido!");
+		
 		for(PedidoItems items : pedidoItems) {
 			obj.addItem(items);
 		}
 		
 		//Instant -> data independente de localidade
-		Instant instant = Instant.from(dpData.getValue().atStartOfDay(ZoneId.systemDefault()));
-		obj.setDt_Ped(Date.from(instant));
+		LocalDate selectedDate = dpData.getValue();
+		if (selectedDate != null) {
+		    Instant instant = Instant.from(selectedDate.atStartOfDay(ZoneId.systemDefault()));
+		    obj.setDt_Ped(Date.from(instant));
+		} else {
+			exception.addErrors("Data", "informar a data");
+		}
+		
+		obj.setId_Ped(Utils.tryParseToInt(txtId.getText()));
 		obj.setPreco_Ped(Utils.tryParseToDouble(txtPreco.getText()));
 		obj.setStatus_Ped(PedidoStatus.valueOf(cboStatus.getValue().toString()));
+		obj.setId_Col(entityCol.getIdColab());
 		obj.setColaborador(entityCol);
+		
+		if(exception.getErrors().size() > 0) {
+			throw exception;//Lanca a excessao
+		}
 		
 		return obj;
 	}
 	
-	private void fieldesValidation() {
-		ValidationException exception = new ValidationException("Erro ao validar os dados do colaborador!");
-
-		if(exception.getErrors().size() > 0) {
-			throw exception;//Lanca a excessao
-		}
-	}
 	
-	private void setErrorMessages(Map<String, String> errors) {
-		Set<String> fields = errors.keySet();
-
-		lblErrorStatus.setText(fields.contains("Status") ? errors.get("Status") : "");
-		lblProdutos.setText(fields.contains("Produto") ? errors.get("Produto") : "");
-		
-		
-	}//
 	
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnREMOVE.setCellFactory(param -> new TableCell<PedidoItems, PedidoItems>() {
+		tableColumnREMOVE.setCellFactory(param -> new TableCell<Produto, Produto>() {
 			private final Button button = new Button("remove");
 
 			@Override
-			protected void updateItem(PedidoItems obj, boolean empty) {
+			protected void updateItem(Produto obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -415,9 +507,9 @@ public class PedidosFormController implements Initializable{
 	}//end initRemoveButtons
 	
 	
-	private void removeEntity(PedidoItems obj) {
+	private void removeEntity(Produto obj) {
 		//Optional<> -> objeto que carraga outro objeto dentro dele
-		Optional<ButtonType> result = Alerts.showConfirmation("Confirmar", "Deletar " + obj.getId_PedIt() + " ?");
+		Optional<ButtonType> result = Alerts.showConfirmation("Confirmar", "Deletar " + obj.getId_Prod() + " ?");
 		
 		
 		if(result.get() == ButtonType.OK) {
@@ -426,7 +518,12 @@ public class PedidosFormController implements Initializable{
 			}
 			try {
 				
-				servicesItems.remove(obj);
+				PedidoItems item = servicesItems.findByIdPed(entityPed.getId_Ped(), obj.getId_Prod());
+				
+				total -= item.getPreco_PedIt() * item.getQt_PedIt();
+				produtosList.remove(obj);
+				txtPreco.setText(total.toString());
+				
 				updateTableView();
 			}
 			catch(DbIntegrityException e) {
@@ -437,6 +534,59 @@ public class PedidosFormController implements Initializable{
 	
 	
 
+	private void savePedidosItems(Integer id){
+		List<PedidoItems> list = servicesItems.findItemsProd(id);//Lista dos produtos de um pedido
+		
+		ValidationException exception = new ValidationException("Erro ao validar os dados do pedido!");
+		
+		if(list == null) {
+			for(PedidoItems item: pedidoItems) {
+				item.setId_Ped(id);
+				servicesItems.saveOrUpdate(item);
+			}
+		}else {
+			//Remover os items atuais
+			for(PedidoItems item: list) {
+				servicesItems.remove(item);
+			}
+			if(pedidoItems != null) {
+				//Adicionar nova listaa
+				for(PedidoItems item: pedidoItems) {
+					item.setId_Ped(id);
+					servicesItems.saveOrUpdate(item);
+				}
+			}else {
+				exception.addErrors("Produto", "Lista vazia! adicione produtos a lista!");
+			}
+			
+		}
+		
+		if(exception.getErrors().size() > 0) {
+			throw exception;//Lanca a excessao
+		}
+
+	}
+	
+	private void fieldesValidation() {
+		ValidationException exception = new ValidationException("Erro ao validar os dados do colaborador!");
+		
+		if(produtosList.size() == 0) {
+			exception.addErrors("Produto", "Lista de produtos vazia!");
+		}
+
+		
+		
+
+
+		if(exception.getErrors().size() > 0) {
+			throw exception;//Lanca a excessao
+		}
+	}
+	
+	private void setErrorMessages(Map<String, String> errors) {
+		Set<String> fields = errors.keySet();
+		lblProdutos.setText(fields.contains("Produto") ? errors.get("Produto") : "");
+	}//
 }
 
 

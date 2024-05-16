@@ -1,5 +1,6 @@
 package model.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class Pedidos {
 	private Integer id_Col;
 //	private Integer id_Pag;
 	
-	private List<PedidoItems> pedidoItems;
+	private List<PedidoItems> pedidoItems = new ArrayList<>();
 	private Colaborador colaborador;
 	//private Pegamento pagamento;
 	

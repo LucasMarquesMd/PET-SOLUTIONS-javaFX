@@ -8,16 +8,26 @@ public class Produto {
 	private String nome_Prod;
 	private String desc_Prod;
 	private Double preco_Prod;
+	private Integer qt_Prod;
 	
 	public Produto() {
 	}
 
-	public Produto(Integer id_Prod, String nome_Prod, String desc_Prod, Double preco_Prod) {
-		super();
+	public Produto(Integer id_Prod, String nome_Prod, String desc_Prod, Double preco_Prod, Integer qt_Prod) {
 		this.id_Prod = id_Prod;
 		this.nome_Prod = nome_Prod;
 		this.desc_Prod = desc_Prod;
 		this.preco_Prod = preco_Prod;
+		this.qt_Prod = qt_Prod;
+	}
+
+	
+	public Integer getQt_Prod() {
+		return qt_Prod;
+	}
+
+	public void setQt_Prod(Integer qt_Prod) {
+		this.qt_Prod = qt_Prod;
 	}
 
 	public Integer getId_Prod() {

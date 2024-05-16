@@ -32,6 +32,4 @@ public class PedidosServices {
 		return dao.consultPed(numero);
 	}
 	
-	
-
 }

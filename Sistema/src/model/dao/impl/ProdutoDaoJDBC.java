@@ -190,11 +190,7 @@ public class ProdutoDaoJDBC implements ProdutoDao {
 		}
 	}
 
-	@Override
-	public Produto ValidatingUser(String name, String passworld) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	private Produto instantiateProduct(ResultSet rs) throws SQLException {
 		Produto obj = new Produto();
@@ -207,5 +203,8 @@ public class ProdutoDaoJDBC implements ProdutoDao {
 		return obj;
 
 	}
+
+
+
 
 }
