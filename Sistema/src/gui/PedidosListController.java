@@ -12,6 +12,7 @@ import application.Main;
 import db.DbIntegrityException;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
+import gui.util.Constraints;
 import gui.util.Utils;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -103,7 +104,7 @@ public class PedidosListController implements Initializable, DataChangeListener{
 	
 	@FXML
 	public void onBtnConsultar() {
-		updateTableViewConsult(Utils.tryParseToInt(txtNumero.getText()));
+		updateTableViewConsult(txtNumero.getText());
 	}
 	
 	
@@ -135,6 +136,8 @@ public class PedidosListController implements Initializable, DataChangeListener{
 		tableCollumnPreco.setCellValueFactory(new PropertyValueFactory<>("preco_Ped"));
 		tableCollumnStatus.setCellValueFactory(new PropertyValueFactory<>("status_Ped"));
 		tableCollumnResponsavel.setCellValueFactory(new PropertyValueFactory<>("colaborador"));
+		
+		Constraints.setTextFieldInteger(txtNumero);
 		
 		initializeTbcColaborador();
 		
@@ -185,7 +188,7 @@ public class PedidosListController implements Initializable, DataChangeListener{
 		initRemoveButtons();		
 	}//End updateTableView
 	
-	public void updateTableViewConsult(Integer numero) {
+	public void updateTableViewConsult(String numero) {
 		if(service == null) {
 			throw new IllegalStateException("Service Pedidos was null!");
 		}

@@ -28,7 +28,7 @@ public class PedidosServices {
 		}
 	}
 	
-	public List<Pedidos> consultPed(Integer numero){
+	public List<Pedidos> consultPed(String numero){
 		return dao.consultPed(numero);
 	}
 	

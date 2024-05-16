@@ -212,9 +212,40 @@ public class PedidosDaoJDBC implements PedidosDao{
 	}
 
 	@Override
-	public List<Pedidos> consultPed(Integer numero) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Pedidos> consultPed(String numero) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		try {
+			//Cria a string sql eja define a conexao
+			st = conn.prepareStatement("SELECT *  "
+					+ "FROM Pedido "
+					+ "INNER JOIN Colaborador "
+					+ "ON Pedido.id_Col = Colaborador.id_Col "
+					+ "WHERE id_Ped LIKE ? ");
+		
+			st.setString(1, numero + "%");
+			rs = st.executeQuery();
+			
+			List<Pedidos> list = new ArrayList<>();
+			
+			while(rs.next()) {
+				Colaborador col = instantiateColaborador(rs);
+				Pedidos obj = instantiatePedidos(rs, col);
+				
+				list.add(obj);
+			}//end while
+			
+			return list;
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(e.getMessage());
+			
+		}finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
 	}
 
 }

@@ -13,7 +13,7 @@ public interface PedidosDao {
 	void deleteById(Integer id);
 	Pedidos findById(Integer id);
 	List<Pedidos> findAll();
-	List<Pedidos> consultPed(Integer numero);
+	List<Pedidos> consultPed(String numero);
 }
 
 
