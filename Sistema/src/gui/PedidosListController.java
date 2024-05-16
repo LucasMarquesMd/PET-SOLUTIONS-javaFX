@@ -309,7 +309,13 @@ public class PedidosListController implements Initializable, DataChangeListener{
 				throw new IllegalStateException("Service was null");
 			}
 			try {
-				
+				PedidoItemsServices servicesItems = new PedidoItemsServices();
+				List<PedidoItems> list = servicesItems.findItemsProd(obj.getId_Ped());
+				//Remover os items atuais
+				for(PedidoItems item: list) {
+					
+					servicesItems.remove(item);
+				}
 				
 				service.remove(obj);
 				updateTableView();
