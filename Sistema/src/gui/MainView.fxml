@@ -38,6 +38,7 @@
                   <Menu mnemonicParsing="false" text="Estoque">
                     <items>
                       <MenuItem fx:id="menuItemLocal" mnemonicParsing="false" onAction="#onMenuItemLocalAction" text="Local" />
+                        <MenuItem fx:id="menuItemNotas" mnemonicParsing="false" onAction="#onMenuItemNotasAction" text="Notas" />
                     </items>
                   </Menu>
                 <Menu mnemonicParsing="false" text="Help">

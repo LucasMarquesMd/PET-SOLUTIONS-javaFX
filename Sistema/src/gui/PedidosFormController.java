@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import application.Main;
 import db.DbException;
 import db.DbIntegrityException;
 import gui.listeners.DataChangeListener;
@@ -37,6 +38,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.entities.Cliente;
 import model.entities.Colaborador;
@@ -57,10 +59,12 @@ public class PedidosFormController implements Initializable{
 // =================================================================================
 //								Dependencias	
 // =================================================================================	
-	
+	//Entidades
 	private Pedidos entityPed;
 	private Colaborador entityCol;
 	private PedidoItems entityItems;
+	
+	//Servicos
 	private PedidosServices servicesPed;
 	private ColaboradorServices servicesCol;
 	private PedidoItemsServices servicesItems;
@@ -73,6 +77,7 @@ public class PedidosFormController implements Initializable{
 	//Lista de items 
 	private List<PedidoItems> pedidoItems;
 	
+	//ObsLists
 	private ObservableList<PedidoStatus> pedidoStatus = FXCollections.observableArrayList(PedidoStatus.values());//Pega a colecao de valores do enum
 	private ObservableList<Cliente> clienteList;
 	private ObservableList<Produto> obsListProd;
@@ -287,6 +292,8 @@ public class PedidosFormController implements Initializable{
 		cboStatus.setItems(pedidoStatus);
 		cboCliente.setItems(clienteList);
 		cboProduto.setItems(obsListProd);
+		cboProduto.getSelectionModel().selectFirst();
+		cboStatus.getSelectionModel().selectFirst();
 		
 		//DataPicker
 		Utils.formatDatePicker(dpData, "dd/MM/yyyy");
@@ -311,8 +318,10 @@ public class PedidosFormController implements Initializable{
 		initializeComboBoxCliente();
 		initializeComboBoxProduto();
 		
-		cboProduto.getSelectionModel().selectFirst();
-		cboStatus.getSelectionModel().selectFirst();
+		
+		
+		Stage stage = (Stage) Main.getMainScene().getWindow();
+		tableViewPedidos.prefHeightProperty().bind(stage.heightProperty());
 		
 	}
 	

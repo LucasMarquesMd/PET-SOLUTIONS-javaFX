@@ -22,6 +22,10 @@ public class FornecedorServices {
 		return dao.findAll();
 	}
 	
+	public Fornecedor findById(Integer id){
+		return dao.findById(id);
+	}
+	
 	public void saveOrUpdate(Fornecedor obj) {
 		if(obj.getId_Forn() == null) {
 			dao.insert(obj);

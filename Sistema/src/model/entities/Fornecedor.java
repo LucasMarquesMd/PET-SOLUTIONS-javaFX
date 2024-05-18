@@ -2,6 +2,8 @@ package model.entities;
 
 import java.util.Objects;
 
+import javafx.collections.ObservableList;
+
 public class Fornecedor {
 	
 	private Integer id_Forn;
@@ -12,6 +14,7 @@ public class Fornecedor {
 	private Integer id_End;
 	
 	private Endereco endereco;
+	
 	
 	public Fornecedor() {
 	}

@@ -76,7 +76,7 @@ public class LocalDeEstoqueFormController implements Initializable{
 	@FXML
 	private Label lblErrorDescricao;
 	@FXML
-	private Label lblErrorPreco;
+	private Label lblErrorStatus;
 
 	
 // =================================================================================
@@ -98,7 +98,6 @@ public class LocalDeEstoqueFormController implements Initializable{
 			
 		}
 		catch(ValidationException e) {
-			e.printStackTrace();
 			setErrorMessages(e.getErrors());//Envia a colecao de erros
 
 		}
@@ -146,6 +145,7 @@ public class LocalDeEstoqueFormController implements Initializable{
 
 		cboStatus.setItems(statusLis);//Define os items do comboBox de acordo com a observableList
 		cboStatus.setValue(LocalStatus.A);
+		cboStatus.getSelectionModel().selectFirst();
 		
 	}
 	
@@ -176,7 +176,7 @@ public class LocalDeEstoqueFormController implements Initializable{
 	private LocalDeEstoque getFormData() {
 		LocalDeEstoque obj = new LocalDeEstoque();
 		
-		ValidationException exception = new ValidationException("Erro ao validar os dados do colaborador!");
+		ValidationException exception = new ValidationException("Erro ao validar os dados do Local!");
 		
 		obj.setId_Local(Utils.tryParseToInt(txtIdLocal.getText()));//O tryParseInt() ja faz a verificacao
 		
@@ -190,7 +190,7 @@ public class LocalDeEstoqueFormController implements Initializable{
 		}
 		obj.setDesc_Local(txtDescricao.getText());
 		
-		if (cboStatus.getValue() == null) {//Verifica se e nulo
+		if (cboStatus.getSelectionModel().getSelectedItem() == null) {//Verifica se e nulo
 		    exception.addErrors("Status", "Field can't be empty!");
 		} 
 		obj.setSit_Local(cboStatus.getValue());
@@ -209,7 +209,7 @@ public class LocalDeEstoqueFormController implements Initializable{
 
 		lblErrorNome.setText(fields.contains("Nome") ? errors.get("Nome") : "");
 		lblErrorDescricao.setText(fields.contains("Descricao") ? errors.get("Descricao") : "");
-		lblErrorPreco.setText(fields.contains("Status") ? errors.get("Status") : "");
+		lblErrorStatus.setText(fields.contains("Status") ? errors.get("Status") : "");
 		
 		
 	}//

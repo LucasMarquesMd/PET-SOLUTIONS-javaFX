@@ -48,7 +48,7 @@
             <TextField fx:id="txtQuantidade" layoutX="281.0" layoutY="141.0" prefHeight="25.0" prefWidth="67.0" promptText="Nro" />
             <Label fx:id="lblErrorStatus" layoutX="225.0" layoutY="95.0" textFill="RED" />
             <Label fx:id="lblProdutos" layoutX="430.0" layoutY="145.0" textFill="#ff0101" />
-            <Label layoutX="225.0" layoutY="18.0" text="Label" textFill="RED" />
+            <Label fx:id="lblErrorData" layoutX="225.0" layoutY="18.0" textFill="RED" />
          </children>
       </AnchorPane>
       <ToolBar prefHeight="40.0" prefWidth="200.0">

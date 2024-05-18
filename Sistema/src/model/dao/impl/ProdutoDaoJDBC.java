@@ -28,13 +28,18 @@ public class ProdutoDaoJDBC implements ProdutoDao {
 	public void insert(Produto obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("INSERT INTO " + "Produto (nome_Prod, desc_Prod, preco_Forn, preco_Cli) "
-					+ "VALUES " + "(?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			st = conn.prepareStatement(
+					"INSERT INTO " 
+				+ "Produto (nome_Prod, desc_Prod, preco_Forn, preco_Cli, qtd_Estocado, qtd_Min) "
+				+ "VALUES " 
+				+ "(?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			st.setString(1, obj.getNome_Prod());
 			st.setString(2, obj.getDesc_Prod());
-			st.setDouble(3, 0.0);
+			st.setDouble(3, obj.getPreco_Forn());
 			st.setDouble(4, obj.getPreco_Prod());
+			st.setInt(5, obj.getQtd_Estocado());
+			st.setInt(6, obj.getQtd_Min());
 
 			int rowsAffected = st.executeUpdate();
 
@@ -62,15 +67,19 @@ public class ProdutoDaoJDBC implements ProdutoDao {
 	public void update(Produto obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("UPDATE Produto  "
-					+ "SET nome_Prod = ?, desc_Prod = ?, preco_Forn = ?, preco_Cli = ? " + "WHERE id_Prod = ?");
+			st = conn.prepareStatement(
+					"UPDATE Produto  "
+					+ "SET nome_Prod = ?, desc_Prod = ?, preco_Forn = ?, preco_Cli = ?, qtd_Estocado = ?, qtd_Min = ? " 
+					+ "WHERE id_Prod = ?");
 
 			st.setString(1, obj.getNome_Prod());
 			st.setString(2, obj.getDesc_Prod());
-			st.setDouble(3, 0.0);
+			st.setDouble(3, obj.getPreco_Forn());
 			st.setDouble(4, obj.getPreco_Prod());
+			st.setInt(5, obj.getQtd_Estocado());
+			st.setInt(6, obj.getQtd_Min());
 
-			st.setInt(5, obj.getId_Prod());
+			st.setInt(7, obj.getId_Prod());
 
 			st.executeUpdate();
 
@@ -199,6 +208,9 @@ public class ProdutoDaoJDBC implements ProdutoDao {
 		obj.setNome_Prod(rs.getString("nome_Prod"));
 		obj.setDesc_Prod(rs.getString("desc_Prod"));
 		obj.setPreco_Prod(rs.getDouble("preco_Cli"));
+		obj.setPreco_Forn(rs.getDouble("preco_Forn"));
+		obj.setQtd_Estocado(rs.getInt("qtd_Estocado"));
+		obj.setQtd_Min(rs.getInt("qtd_Min"));
 
 		return obj;
 

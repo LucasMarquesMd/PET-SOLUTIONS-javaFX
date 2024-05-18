@@ -48,6 +48,12 @@ public class ProdutoFormController implements Initializable{
 	private TextArea txtDescricao;
 	@FXML
 	private TextField txtPreco;
+	@FXML
+	private TextField txtPrecoForn;
+	@FXML
+	private TextField txtQtdMin;
+	@FXML
+	private TextField txtEstoque;
 
 		
 	
@@ -71,6 +77,12 @@ public class ProdutoFormController implements Initializable{
 	private Label lblErrorDescricao;
 	@FXML
 	private Label lblErrorPreco;
+	@FXML
+	private Label lblErrorPrecoForn;
+	@FXML
+	private Label lblErrorQtdMin;
+	@FXML
+	private Label lblErrorEstoque;
 
 	
 // =================================================================================
@@ -137,6 +149,9 @@ public class ProdutoFormController implements Initializable{
 		Constraints.setTextFieldMaxLength(txtNome, 45);
 		Constraints.setTextAreaMaxLength(txtDescricao, 50);
 		Constraints.setTextFieldDouble(txtPreco);
+		Constraints.setTextFieldDouble(txtPrecoForn);
+		Constraints.setTextFieldInteger(txtEstoque);
+		Constraints.setTextFieldInteger(txtQtdMin);
 		
 		
 	}
@@ -151,6 +166,9 @@ public class ProdutoFormController implements Initializable{
 		txtNome.setText(entity.getNome_Prod());
 		txtDescricao.setText(entity.getDesc_Prod());
 		txtPreco.setText(String.valueOf(entity.getPreco_Prod()));
+		txtPrecoForn.setText(String.valueOf(entity.getPreco_Forn()));
+		txtEstoque.setText(String.valueOf(entity.getQtd_Estocado()));
+		txtQtdMin.setText(String.valueOf(entity.getQtd_Min()));
 	}
 	
 	//Quais quer objetos que implementarem a inteface, podem se inscrever para receber o evento do controller
@@ -187,6 +205,21 @@ public class ProdutoFormController implements Initializable{
 		}
 		obj.setPreco_Prod(Utils.tryParseToDouble(txtPreco.getText()));
 		
+		if(txtPrecoForn.getText() == null || txtPrecoForn.getText().trim().equals("")) {
+			exception.addErrors("PrecoForn", "Field can't be empty!");
+		}
+		obj.setPreco_Forn(Utils.tryParseToDouble(txtPrecoForn.getText()));
+		
+		if(txtQtdMin.getText() == null || txtQtdMin.getText().trim().equals("")) {
+			exception.addErrors("QtdMin", "Field can't be empty!");
+		}
+		obj.setQtd_Min(Utils.tryParseToInt(txtQtdMin.getText()));
+		
+		if(txtEstoque.getText() == null || txtEstoque.getText().trim().equals("")) {
+			exception.addErrors("Estoque", "Field can't be empty!");
+		}
+		obj.setQtd_Estocado(Utils.tryParseToInt(txtEstoque.getText()));
+		
 		if(exception.getErrors().size() > 0) {
 			throw exception;//Lanca a excessao
 		}
@@ -201,6 +234,9 @@ public class ProdutoFormController implements Initializable{
 		lblErrorNome.setText(fields.contains("Nome") ? errors.get("Nome") : "");
 		lblErrorDescricao.setText(fields.contains("Descricao") ? errors.get("Descricao") : "");
 		lblErrorPreco.setText(fields.contains("Preco") ? errors.get("Preco") : "");
+		lblErrorPrecoForn.setText(fields.contains("PrecoForn") ? errors.get("PrecoForn") : "");
+		lblErrorEstoque.setText(fields.contains("Estoque") ? errors.get("Estoque") : "");
+		lblErrorQtdMin.setText(fields.contains("QtdMin") ? errors.get("QtdMin") : "");
 		
 		
 	}//

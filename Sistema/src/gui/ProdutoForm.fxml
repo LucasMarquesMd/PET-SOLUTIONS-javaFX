@@ -7,25 +7,34 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="279.0" prefWidth="514.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ProdutoFormController">
+<AnchorPane prefHeight="345.0" prefWidth="514.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ProdutoFormController">
    <children>
       <Label layoutX="-1.0" layoutY="6.0" text="Cadastro de Produtos" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
          <font>
             <Font name="Arial Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="364.0" layoutY="69.0" text="ID" />
+      <Label layoutX="371.0" layoutY="124.0" text="ID" />
       <Label layoutX="14.0" layoutY="44.0" text="Nome" />
-      <Label layoutX="17.0" layoutY="87.0" text="Descricao" />
-      <Label layoutX="20.0" layoutY="228.0" text="Preco" />
-      <TextArea fx:id="txtDescricao" layoutX="14.0" layoutY="104.0" prefHeight="107.0" prefWidth="474.0" />
-      <TextField fx:id="txtIdProd" editable="false" layoutX="395.0" layoutY="65.0" prefHeight="25.0" prefWidth="87.0" />
-      <TextField fx:id="txtNome" layoutX="64.0" layoutY="40.0" prefHeight="25.0" prefWidth="276.0" />
-      <TextField fx:id="txtPreco" layoutX="64.0" layoutY="224.0" />
-      <Button fx:id="btnSalvar" layoutX="338.0" layoutY="224.0" mnemonicParsing="false" onAction="#onBtnSaveAction" text="Salvar" />
-      <Button fx:id="btnCancelar" layoutX="404.0" layoutY="224.0" mnemonicParsing="false" onAction="#onBtnCancelAction" text="Cancelar" />
-      <Label fx:id="lblErrorPreco" layoutX="225.0" layoutY="228.0" textFill="RED" />
-      <Label fx:id="lblErrorNome" layoutX="338.0" layoutY="44.0" textFill="RED" />
-      <Label fx:id="lblErrorDescricao" layoutX="72.0" layoutY="87.0" textFill="RED" />
+      <Label layoutX="23.0" layoutY="140.0" text="Descricao" />
+      <Label layoutX="17.0" layoutY="274.0" text="Preco" />
+      <TextArea fx:id="txtDescricao" layoutX="20.0" layoutY="157.0" prefHeight="107.0" prefWidth="474.0" promptText="Descricao" />
+      <TextField fx:id="txtIdProd" editable="false" layoutX="402.0" layoutY="120.0" prefHeight="25.0" prefWidth="87.0" />
+      <TextField fx:id="txtNome" layoutX="64.0" layoutY="40.0" prefHeight="25.0" prefWidth="276.0" promptText="Nome do Produto" />
+      <TextField fx:id="txtPreco" layoutX="75.0" layoutY="270.0" promptText="Preco de venda" />
+      <Button fx:id="btnSalvar" layoutX="371.0" layoutY="305.0" mnemonicParsing="false" onAction="#onBtnSaveAction" text="Salvar" />
+      <Button fx:id="btnCancelar" layoutX="439.0" layoutY="305.0" mnemonicParsing="false" onAction="#onBtnCancelAction" text="Cancelar" />
+      <Label layoutX="9.0" layoutY="77.0" text="Minimo" />
+      <Label layoutX="11.0" layoutY="111.0" text="Estoque" />
+      <TextField fx:id="txtQtdMin" layoutX="64.0" layoutY="75.0" prefHeight="25.0" prefWidth="149.0" promptText="Quantidade minima" />
+      <TextField fx:id="txtEstoque" layoutX="64.0" layoutY="107.0" prefHeight="25.0" prefWidth="149.0" promptText="Total no estoque" />
+      <Label layoutX="10.0" layoutY="309.0" text="Fornecedo" />
+      <TextField fx:id="txtPrecoForn" layoutX="75.0" layoutY="305.0" promptText="Preco do fornecedor" />
+      <Label fx:id="lblErrorPreco" layoutX="224.0" layoutY="274.0" textFill="#fc0505" />
+      <Label fx:id="lblErrorPrecoForn" layoutX="224.0" layoutY="309.0" textFill="#f50808" />
+      <Label fx:id="lblErrorNome" layoutX="340.0" layoutY="44.0" textFill="RED" />
+      <Label fx:id="lblErrorQtdMin" layoutX="213.0" layoutY="79.0" textFill="RED" />
+      <Label fx:id="lblErrorEstoque" layoutX="213.0" layoutY="111.0" textFill="RED" />
+      <Label fx:id="lblErrorDescricao" layoutX="75.0" layoutY="140.0" textFill="RED" />
    </children>
 </AnchorPane>

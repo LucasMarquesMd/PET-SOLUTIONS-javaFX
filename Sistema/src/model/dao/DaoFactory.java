@@ -4,8 +4,11 @@ import db.DB;
 import model.dao.impl.ClienteDaoJDBC;
 import model.dao.impl.ColaboradorDaoJDBC;
 import model.dao.impl.EnderecoDaoJDBC;
+import model.dao.impl.EstoqueDaoJDBC;
 import model.dao.impl.FornecedorDaoJDBC;
+import model.dao.impl.FornecimentoDaoJDBC;
 import model.dao.impl.LocalDeEstoqueDaoJDBC;
+import model.dao.impl.NotaEstoqueDaoJDBC;
 import model.dao.impl.PedidoItemsDaoJDBC;
 import model.dao.impl.PedidosDaoJDBC;
 import model.dao.impl.ProdutoDaoJDBC;
@@ -43,5 +46,17 @@ public class DaoFactory {
 	
 	public static PedidosDao createPedidosDao() {
 		return new PedidosDaoJDBC(DB.getConnection());
+	}
+	
+	public static EstoqueDao createEstoqueDao() {
+		return new EstoqueDaoJDBC(DB.getConnection());
+	}
+	
+	public static NotaEstoqueDao createNotaEstoqueDao() {
+		return new NotaEstoqueDaoJDBC(DB.getConnection());
+	}
+	
+	public static FornecimentoDao createFornecimentoDao() {
+		return new FornecimentoDaoJDBC(DB.getConnection());
 	}
 }

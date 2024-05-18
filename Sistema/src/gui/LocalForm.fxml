@@ -24,7 +24,7 @@
       <TextField fx:id="txtNome" layoutX="64.0" layoutY="40.0" prefHeight="25.0" prefWidth="276.0" />
       <Button fx:id="btnSalvar" layoutX="338.0" layoutY="224.0" mnemonicParsing="false" onAction="#onBtnSaveAction" text="Salvar" />
       <Button fx:id="btnCancelar" layoutX="404.0" layoutY="224.0" mnemonicParsing="false" onAction="#onBtnCancelAction" text="Cancelar" />
-      <Label fx:id="lblErrorPreco" layoutX="225.0" layoutY="228.0" textFill="RED" />
+      <Label fx:id="lblErrorStatus" layoutX="225.0" layoutY="228.0" textFill="RED" />
       <Label fx:id="lblErrorNome" layoutX="338.0" layoutY="44.0" textFill="RED" />
       <Label fx:id="lblErrorDescricao" layoutX="72.0" layoutY="87.0" textFill="RED" />
       <ComboBox fx:id="cboStatus" layoutX="64.0" layoutY="224.0" prefWidth="150.0" promptText="Situacao...." />

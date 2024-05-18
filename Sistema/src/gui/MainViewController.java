@@ -26,6 +26,7 @@ import model.services.ClienteServices;
 import model.services.ColaboradorServices;
 import model.services.FornecedorServices;
 import model.services.LocalDeEstoqueServices;
+import model.services.NotaEstoqueServices;
 import model.services.PedidosServices;
 import model.services.ProdutoServices;
 
@@ -74,6 +75,8 @@ public class MainViewController implements Initializable {
 	private MenuItem menuItemLocal;
 	@FXML
 	private MenuItem menuItemPedidos;
+	@FXML
+	private MenuItem menuItemNotas;
 
 	/*
 	 * ========================================================================
@@ -100,15 +103,15 @@ public class MainViewController implements Initializable {
 	 */
 
 	public void onBtnEntrarAction() {
-		if(validarUsuario(txtUserName.getText(), txtPassworld.getText())) {
-			loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia 
-			mainMenuBar.setVisible(true);
-		}else {
-			Alerts.showAlerts("Erro", "Usuario e ou senha invalidos!", null, AlertType.ERROR);
-		}
-//		loadView("/gui/HomeScreen.fxml", x -> {
-//		});// Lambda vazia
-//		mainMenuBar.setVisible(true);
+//		if(validarUsuario(txtUserName.getText(), txtPassworld.getText())) {
+//			loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia 
+//			mainMenuBar.setVisible(true);
+//		}else {
+//			Alerts.showAlerts("Erro", "Usuario e ou senha invalidos!", null, AlertType.ERROR);
+//		}
+		loadView("/gui/HomeScreen.fxml", x -> {
+		});// Lambda vazia
+		mainMenuBar.setVisible(true);
 
 	}
 
@@ -176,6 +179,16 @@ public class MainViewController implements Initializable {
 		loadView("/gui/PedidosList.fxml", (PedidosListController controller) -> {
 			// Injetar a dependencia da classe de servico
 			controller.setPedidosService(new PedidosServices());// Instancia a classe de servico
+			// Atualizar a tabela
+			controller.updateTableView();
+		});// Acao de inicializaco do controller
+	}
+	
+	public void onMenuItemNotasAction() {
+
+		loadView("/gui/NotasList.fxml", (NotasListController controller) -> {
+			// Injetar a dependencia da classe de servico
+			controller.setNotaEstoqueService(new NotaEstoqueServices());// Instancia a classe de servico
 			// Atualizar a tabela
 			controller.updateTableView();
 		});// Acao de inicializaco do controller

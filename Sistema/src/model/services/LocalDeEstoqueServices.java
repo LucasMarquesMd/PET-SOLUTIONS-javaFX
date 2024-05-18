@@ -22,6 +22,10 @@ public class LocalDeEstoqueServices {
 	public List<LocalDeEstoque> findAll() {
 		return dao.findAll();
 	}
+	
+	public LocalDeEstoque findById(Integer id) {
+		return dao.findById(id);
+	}
 
 	public void saveOrUpdate(LocalDeEstoque entity) {
 		if(entity.getId_Local() == null) {
