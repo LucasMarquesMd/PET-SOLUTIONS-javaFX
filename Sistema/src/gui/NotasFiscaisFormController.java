@@ -219,6 +219,12 @@ public class NotasFiscaisFormController implements Initializable {
 			// Nota
 			entityNota = getFormDataNota(entityForne);
 			serviceNota.saveOrUpdate(entityNota);
+			
+			//Produto
+			entityProd = getFormDataProduto();
+			entityProd.sumProduct(Utils.tryParseToInt(txtQuantidade.getText()));
+			serviceProd.saveOrUpdate(entityProd);
+			
 
 			notifyDataChangeListeners();
 
@@ -340,10 +346,10 @@ public class NotasFiscaisFormController implements Initializable {
 		}
 		
 		if (entityForne.getProduto() != null) {
-			txtQuantidade.setText(String.valueOf(entityForne.getProduto().getQtd_Estocado()));
+			txtQuantidade.setText(String.valueOf(entityForne.getEstoque().getQt_Prod_Est()));
 		}
 		
-		if(entityProd == null) {
+		if(entityProd.getNome_Prod() == null) {
 			cboProduto.getSelectionModel().selectFirst();
 		}else {
 			cboProduto.setValue(entityProd);

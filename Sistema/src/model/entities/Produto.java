@@ -148,6 +148,12 @@ public class Produto {
 		return Objects.equals(id_Prod, other.id_Prod);
 	}
 	
+	public void sumProduct(Integer product) {
+		this.qtd_Estocado += product;
+	}
 	
+	public void subtractProduct(Integer product) {
+		this.qtd_Estocado -= product;
+	}
 
 }

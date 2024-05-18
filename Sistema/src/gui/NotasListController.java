@@ -37,6 +37,7 @@ import model.entities.Fornecedor;
 import model.entities.Fornecimento;
 import model.entities.LocalDeEstoque;
 import model.entities.NotaEstoque;
+import model.entities.Produto;
 import model.services.EstoqueServices;
 import model.services.FornecedorServices;
 import model.services.FornecimentoServices;
@@ -92,8 +93,9 @@ public class NotasListController implements Initializable, DataChangeListener {
 		Fornecimento forne = new Fornecimento();
 		Fornecedor forn = new Fornecedor();
 		LocalDeEstoque local = new LocalDeEstoque();
+		Produto prod = new Produto();
 
-		createDialogForm(est, forne, forn, local, "/gui/NotasFiscaisForm.fxml", Utils.currentStage(event));
+		createDialogForm(est, forne, forn, local, prod, "/gui/NotasFiscaisForm.fxml", Utils.currentStage(event));
 	}
 
 	@FXML
@@ -199,7 +201,8 @@ public class NotasListController implements Initializable, DataChangeListener {
 		initRemoveButtons();
 	}// End updateTableViewConsult
 
-	private void createDialogForm(NotaEstoque nota, Fornecimento forne, Fornecedor forn, LocalDeEstoque local, String absolutePath, Stage parentStage) {
+	private void createDialogForm(NotaEstoque nota, Fornecimento forne, Fornecedor forn, LocalDeEstoque local, Produto prod, 
+			String absolutePath, Stage parentStage) {
 		try {
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutePath));
@@ -214,6 +217,7 @@ public class NotasListController implements Initializable, DataChangeListener {
 			controller.setEntityNota(nota);
 			controller.setEntityForn(forn);
 			controller.setEntityLocal(local);
+			controller.setEntityProd(prod);
 			
 			//Servicos
 			controller.setServiceEst(new EstoqueServices());
@@ -286,9 +290,12 @@ public class NotasListController implements Initializable, DataChangeListener {
 					forn = new Fornecedor();
 				}
 				
+				ProdutoServices serviceProd = new ProdutoServices();
+				Produto prod = serviceProd.findById(forne.getId_Prod());
+				
 				setGraphic(button);
 				button.setOnAction(
-						event -> createDialogForm(obj, forne, forn, local, "/gui/NotasFiscaisForm.fxml", Utils.currentStage(event)));
+						event -> createDialogForm(obj, forne, forn, local, prod, "/gui/NotasFiscaisForm.fxml", Utils.currentStage(event)));
 			}
 		});
 	}// End initEditButtons
@@ -327,13 +334,18 @@ public class NotasListController implements Initializable, DataChangeListener {
 				
 				FornecimentoServices serviceForne = new FornecimentoServices();
 				EstoqueServices serviceEst = new EstoqueServices();
+				ProdutoServices serviceProd = new ProdutoServices();
 				Fornecimento forne = serviceForne.findById(obj.getId_Forne());
 				Estoque est = serviceEst.findById(forne.getId_Est());
+				Produto prod = serviceProd.findById(est.getId_Prod());
+				
+				prod.subtractProduct(est.getQt_Prod_Est());
 				
 				service.remove(obj);
 				serviceForne.remove(forne);
 				serviceEst.remove(est);
 
+				
 				updateTableView();
 			} catch (DbIntegrityException e) {
 				Alerts.showAlerts("Erro ao remover objeto", null, e.getMessage(), AlertType.ERROR);
