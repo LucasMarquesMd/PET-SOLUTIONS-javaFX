@@ -240,8 +240,8 @@ public class PedidosDaoJDBC implements PedidosDao{
 		obj.setIdColab(rs.getInt("id_Col"));
 		obj.setName(rs.getString("nome_Col"));
 		obj.setCnpj_cpf(rs.getString("cpf_Col"));
-		obj.setTelefone(rs.getInt("tel_Col"));
-		obj.setCelular(rs.getInt("cel_Col"));
+		obj.setTelefone(rs.getString("tel_Col"));
+		obj.setCelular(rs.getString("cel_Col"));
 		obj.setEmail(rs.getString("email_Col"));
 		obj.setId_End(rs.getInt("id_End"));
 		obj.setUser_Col(rs.getString("user_Col"));

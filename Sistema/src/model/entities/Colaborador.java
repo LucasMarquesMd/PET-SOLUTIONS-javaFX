@@ -11,8 +11,8 @@ public class Colaborador{
 	private String name;
 	private String email;
 	private String cnpj_cpf;
-	private Integer telefone;
-	private Integer celular;
+	private String telefone;
+	private String celular;
 	private String user_Col;
 	private String user_Senha;
 	private Integer level_Access;
@@ -25,7 +25,7 @@ public class Colaborador{
 	}
 
 
-	public Colaborador(Integer idColab, String name, String email, String cnpj_cpf, Integer telefone, Integer celular,
+	public Colaborador(Integer idColab, String name, String email, String cnpj_cpf, String telefone, String celular,
 			String user_Col, String user_Senha, Integer level_Access, Integer id_End) {
 		super();
 		this.idColab = idColab;
@@ -81,22 +81,22 @@ public class Colaborador{
 	}
 
 
-	public Integer getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
 
 
-	public void setTelefone(Integer telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 
 
-	public Integer getCelular() {
+	public String getCelular() {
 		return celular;
 	}
 
 
-	public void setCelular(Integer celular) {
+	public void setCelular(String celular) {
 		this.celular = celular;
 	}
 

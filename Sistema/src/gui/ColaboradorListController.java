@@ -228,7 +228,7 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 	private void initEditButtons() {
 		tableCollumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableCollumnEDIT.setCellFactory(param -> new TableCell<Colaborador, Colaborador>() {
-			private final Button button = new Button("edit");
+			private final Button button = new Button("Editar");
 
 			@Override
 			protected void updateItem(Colaborador obj, boolean empty) {
@@ -251,7 +251,7 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnREMOVE.setCellFactory(param -> new TableCell<Colaborador, Colaborador>() {
-			private final Button button = new Button("remove");
+			private final Button button = new Button("Remover");
 
 			@Override
 			protected void updateItem(Colaborador obj, boolean empty) {

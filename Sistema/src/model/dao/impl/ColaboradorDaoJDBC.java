@@ -35,8 +35,8 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 			
 			st.setString(1, obj.getName());
 			st.setString(2, obj.getCnpj_cpf());
-			st.setInt(3, obj.getTelefone());
-			st.setInt(4, obj.getCelular());
+			st.setString(3, obj.getTelefone());
+			st.setString(4, obj.getCelular());
 			st.setString(5, obj.getEmail());
 			st.setString(6, obj.getUser_Col());
 			st.setString(7, obj.getUser_Senha());
@@ -77,8 +77,8 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 			
 			st.setString(1, obj.getName());
 			st.setString(2, obj.getCnpj_cpf());
-			st.setInt(3, obj.getTelefone());
-			st.setInt(4, obj.getCelular());
+			st.setString(3, obj.getTelefone());
+			st.setString(4, obj.getCelular());
 			st.setString(5, obj.getEmail());
 			st.setString(6, obj.getUser_Col());
 			st.setString(7, obj.getUser_Senha());
@@ -275,8 +275,8 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 		obj.setIdColab(rs.getInt("id_Col"));
 		obj.setName(rs.getString("nome_Col"));
 		obj.setCnpj_cpf(rs.getString("cpf_Col"));
-		obj.setTelefone(rs.getInt("tel_Col"));
-		obj.setCelular(rs.getInt("cel_Col"));
+		obj.setTelefone(rs.getString("tel_Col"));
+		obj.setCelular(rs.getString("cel_Col"));
 		obj.setEmail(rs.getString("email_Col"));
 		obj.setId_End(rs.getInt("id_End"));
 		obj.setUser_Col(rs.getString("user_Col"));

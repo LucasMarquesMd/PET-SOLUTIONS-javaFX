@@ -43,8 +43,8 @@ public class ColaboradorFormController implements Initializable{
 // 						Atibutos do Colaborador	
 // =================================================================================
 	
-	@FXML
-	private TextField txtIdCol;
+	private Integer id_Col;
+	
 	@FXML
 	private TextField txtNome;
 	@FXML
@@ -67,8 +67,8 @@ public class ColaboradorFormController implements Initializable{
 //							Atibutos do Endereco	
 // =================================================================================
 
-	@FXML
-	private TextField txtIdEnd;
+	private Integer id_End;
+	
 	@FXML
 	private TextField txtRua;
 	@FXML
@@ -206,25 +206,23 @@ public class ColaboradorFormController implements Initializable{
 	//Restricoes
 	private void initializeNode() {
 		//Endereco
-		Constraints.setTextFieldInteger(txtIdEnd);
 		Constraints.setTextFieldInteger(txtNumero);
 		Constraints.setTextFieldMaxLength(txtNumero, 10);
 		Constraints.setTextFieldInteger(txtCep);
-		Constraints.setTextFieldMaxLength(txtCep, 10);
+		Constraints.setTextFieldMaxLength(txtCep, 8);
 		Constraints.setTextFieldMaxLength(txtRua, 45);
 		Constraints.setTextFieldMaxLength(txtBairro, 45);
 		Constraints.setTextFieldMaxLength(txtCidade, 45);
 		
 		//Colaborador
-		Constraints.setTextFieldInteger(txtIdCol);
 		Constraints.setTextFieldInteger(txtCelular);
-		Constraints.setTextFieldMaxLength(txtCelular, 10);
+		Constraints.setTextFieldMaxLength(txtCelular, 11);
 		Constraints.setTextFieldInteger(txtTelefone);
 		Constraints.setTextFieldMaxLength(txtTelefone, 10);
 		Constraints.setTextFieldMaxLength(txtNome, 45);
 		Constraints.setTextFieldMaxLength(txtEmail, 50);
 		Constraints.setTextFieldInteger(txtCpf);
-		Constraints.setTextFieldMaxLength(txtCpf, 14);
+		Constraints.setTextFieldMaxLength(txtCpf, 11);
 		Constraints.setTextFieldMaxLength(txtUsuario, 20);
 		Constraints.setTextFieldInteger(txtLevel);
 		Constraints.setTextFieldMaxLength(txtLevel, 1);
@@ -238,7 +236,10 @@ public class ColaboradorFormController implements Initializable{
 			throw new IllegalStateException("Entity (Colaborador) was null");
 		}
 		//Colaborador
-		txtIdCol.setText(String.valueOf(entityColab.getIdColab()));
+		if(entityColab.getIdColab() != null) {
+			id_Col = entityColab.getIdColab();
+		}
+
 		txtNome.setText(entityColab.getName());
 		txtEmail.setText(entityColab.getEmail());
 		txtCpf.setText(entityColab.getCnpj_cpf());
@@ -253,7 +254,9 @@ public class ColaboradorFormController implements Initializable{
 			throw new IllegalStateException("Entity (Endereco) was null");
 		}
 		//Endereco
-		txtIdEnd.setText(String.valueOf(entityEnd.getId_End()));
+		if(entityEnd.getId_End() != null) {
+			id_End = entityEnd.getId_End();
+		}
 		txtRua.setText(entityEnd.getRua_End());
 		txtBairro.setText(entityEnd.getBairro_End());
 		txtCidade.setText(entityEnd.getCidade_End());
@@ -276,12 +279,12 @@ public class ColaboradorFormController implements Initializable{
 	private Colaborador getFormDataColab(Endereco entity) {
 		Colaborador obj = new Colaborador();
 
-		obj.setIdColab(Utils.tryParseToInt(txtIdCol.getText()));//O tryParseInt() ja faz a verificacao
+		obj.setIdColab(id_Col);//O tryParseInt() ja faz a verificacao
 		obj.setName(txtNome.getText());
 		obj.setEmail(txtEmail.getText());
 		obj.setCnpj_cpf(txtCpf.getText());
-		obj.setTelefone(Utils.tryParseToInt(txtTelefone.getText()));
-		obj.setCelular(Utils.tryParseToInt(txtCelular.getText()));
+		obj.setTelefone(txtTelefone.getText());
+		obj.setCelular(txtCelular.getText());
 		obj.setUser_Col(txtUsuario.getText());
 		obj.setLevel_Access(Utils.tryParseToInt(txtLevel.getText()));
 
@@ -296,7 +299,7 @@ public class ColaboradorFormController implements Initializable{
 	private Endereco getFormDataEnd() {
 		Endereco obj = new Endereco();			
 		
-		obj.setId_End(Utils.tryParseToInt(txtIdEnd.getText()));
+		obj.setId_End(id_End);
 		obj.setRua_End(txtRua.getText());
 		obj.setBairro_End(txtBairro.getText());
 		obj.setCidade_End(txtCidade.getText());
@@ -310,65 +313,65 @@ public class ColaboradorFormController implements Initializable{
 		ValidationException exception = new ValidationException("Erro ao validar os dados do colaborador!");
 		
 		if(txtNome.getText() == null || txtNome.getText().trim().equals("")) {
-			exception.addErrors("Nome", "Field can't be empty!");
+			exception.addErrors("Nome", "Preencha o nome do colaborador!");
 		}
 
 		
 		if(txtEmail.getText() == null || txtEmail.getText().trim().equals("")) {
-			exception.addErrors("Email", "Field can't be empty!");
+			exception.addErrors("Email", "Preencha o email do colaborador!");
 		}
 
 		
 		if(txtCpf.getText() == null || txtCpf.getText().trim().equals("")) {
-			exception.addErrors("CPF", "Field can't be empty!");
+			exception.addErrors("CPF", "Informe o CPF!");
 		}
 
 		
 		if(txtTelefone.getText() == null || txtTelefone.getText().trim().equals("")) {
-			exception.addErrors("Telefone", "Field can't be empty!");
+			exception.addErrors("Telefone", "Informe o telefone!");
 		}
 
 		
 		if(txtCelular.getText() == null || txtCelular.getText().trim().equals("")) {
-			exception.addErrors("Celular", "Field can't be empty!");
+			exception.addErrors("Celular", "Informe o celular!");
 		}
 
 		
 		if(txtUsuario.getText() == null || txtUsuario.getText().trim().equals("")) {
-			exception.addErrors("Usuario", "Field can't be empty!");
+			exception.addErrors("Usuario", "Informe um usuario!");
 		}
 		
-		if(txtUsuario.getText() == null || txtUsuario.getText().trim().equals("")) {
-			exception.addErrors("Senha", "Field can't be empty!");
+		if(txtSenha.getText() == null || txtSenha.getText().trim().equals("")) {
+			exception.addErrors("Senha", "Informe a senha!");
 		}
 		
 		if(txtLevel.getText() == null || txtLevel.getText().trim().equals("")) {
-			exception.addErrors("Nivel", "Field can't be empty!");
+			exception.addErrors("Nivel", "Informe o nivel de acesso!");
 		}
 		
 		
 		if(txtRua.getText() == null || txtRua.getText().trim().equals("")) {
-			exception.addErrors("Rua", "Field can't be empty!");
+			exception.addErrors("Rua", "Informe a rua!");
 		}
 
 		
 		if(txtBairro.getText() == null || txtBairro.getText().trim().equals("")) {
-			exception.addErrors("Bairro", "Field can't be empty!");
+			exception.addErrors("Bairro", "Informe o bairro!");
 		}
 
 		
 		if(txtCidade.getText() == null || txtCidade.getText().trim().equals("")) {
-			exception.addErrors("Cidade", "Field can't be empty!");
+			exception.addErrors("Cidade", "Informe a cidade!");
 		}
 
 		
 		if(txtCep.getText() == null || txtCep.getText().trim().equals("")) {
-			exception.addErrors("CEP", "Field can't be empty!");
+			exception.addErrors("CEP", "Digite o CEP!");
 		}
 
 		
 		if(txtNumero.getText() == null || txtNumero.getText().trim().equals("")) {
-			exception.addErrors("Numero", "Field can't be empty!");
+			exception.addErrors("Numero", "Informe o numero!");
 		}
 
 
