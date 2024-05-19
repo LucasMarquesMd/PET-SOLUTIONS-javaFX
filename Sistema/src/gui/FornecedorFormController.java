@@ -43,8 +43,8 @@ public class FornecedorFormController implements Initializable{
 // 						Atibutos do Fornecedor	
 // =================================================================================
 	
-	@FXML
-	private TextField txtIdCol;
+	private Integer id_Forn;
+	
 	@FXML
 	private TextField txtNome;
 	@FXML
@@ -60,8 +60,8 @@ public class FornecedorFormController implements Initializable{
 //							Atibutos do Endereco	
 // =================================================================================
 
-	@FXML
-	private TextField txtIdEnd;
+	private Integer id_End;
+	
 	@FXML
 	private TextField txtRua;
 	@FXML
@@ -186,19 +186,21 @@ public class FornecedorFormController implements Initializable{
 	//Restricoes
 	private void initializeNode() {
 		//Endereco
-		Constraints.setTextFieldInteger(txtIdEnd);
+		
 		Constraints.setTextFieldInteger(txtNumero);
 		Constraints.setTextFieldInteger(txtCep);
+		Constraints.setTextFieldMaxLength(txtCep, 8);
 		Constraints.setTextFieldMaxLength(txtRua, 45);
 		Constraints.setTextFieldMaxLength(txtBairro, 45);
 		Constraints.setTextFieldMaxLength(txtCidade, 45);
 		
 		//Fornecedor
-		Constraints.setTextFieldInteger(txtIdCol);
 		Constraints.setTextFieldInteger(txtTelefone);
+		Constraints.setTextFieldMaxLength(txtTelefone, 11);
+		Constraints.setTextFieldInteger(txtCnpj);
+		Constraints.setTextFieldMaxLength(txtCnpj, 14);
 		Constraints.setTextFieldMaxLength(txtNome, 45);
 		Constraints.setTextFieldMaxLength(txtEmail, 50);
-		Constraints.setTextFieldMaxLength(txtCnpj, 14);
 		
 	}
 	
@@ -209,7 +211,9 @@ public class FornecedorFormController implements Initializable{
 			throw new IllegalStateException("Entity (Fornecedor) was null");
 		}
 		//Fornecedor
-		txtIdCol.setText(String.valueOf(entityForn.getId_Forn()));
+		if(entityForn.getId_Forn() != null) {
+			id_Forn = entityForn.getId_Forn();
+		}
 		txtNome.setText(entityForn.getNome_Forn());
 		txtEmail.setText(entityForn.getEmail_Forn());
 		txtCnpj.setText(entityForn.getCnpj_Forn());
@@ -220,7 +224,9 @@ public class FornecedorFormController implements Initializable{
 			throw new IllegalStateException("Entity (Endereco) was null");
 		}
 		//Endereco
-		txtIdEnd.setText(String.valueOf(entityEnd.getId_End()));
+		if(entityEnd.getId_End() != null) {
+			id_End = entityEnd.getId_End();
+		}
 		txtRua.setText(entityEnd.getRua_End());
 		txtBairro.setText(entityEnd.getBairro_End());
 		txtCidade.setText(entityEnd.getCidade_End());
@@ -244,11 +250,11 @@ public class FornecedorFormController implements Initializable{
 	private Fornecedor getFormDataColab(Endereco entity) {
 		Fornecedor obj = new Fornecedor();
 
-		obj.setId_Forn(Utils.tryParseToInt(txtIdCol.getText()));//O tryParseInt() ja faz a verificacao
+		obj.setId_Forn(id_Forn);//O tryParseInt() ja faz a verificacao
 		obj.setNome_Forn(txtNome.getText());
 		obj.setEmail_Forn(txtEmail.getText());
 		obj.setCnpj_Forn(txtCnpj.getText());
-		obj.setTel_Forn(Utils.tryParseToInt(txtTelefone.getText()));
+		obj.setTel_Forn(txtTelefone.getText());
 		
 		obj.setId_End(entity.getId_End());//Adiciona o id do endereco
 		obj.setEndereco(entity);//Adiciona adependencia do endereco
@@ -260,7 +266,7 @@ public class FornecedorFormController implements Initializable{
 	private Endereco getFormDataEnd() {
 		Endereco obj = new Endereco();			
 		
-		obj.setId_End(Utils.tryParseToInt(txtIdEnd.getText()));
+		obj.setId_End(id_End);
 		obj.setRua_End(txtRua.getText());
 		obj.setBairro_End(txtBairro.getText());
 		obj.setCidade_End(txtCidade.getText());
@@ -274,47 +280,47 @@ public class FornecedorFormController implements Initializable{
 		ValidationException exception = new ValidationException("Erro ao validar os dados do colaborador!");
 		
 		if(txtNome.getText() == null || txtNome.getText().trim().equals("")) {
-			exception.addErrors("Nome", "Field can't be empty!");
+			exception.addErrors("Nome", "Digite o nome do fornecedor!");
 		}
 
 		
 		if(txtEmail.getText() == null || txtEmail.getText().trim().equals("")) {
-			exception.addErrors("Email", "Field can't be empty!");
+			exception.addErrors("Email", "Informe o email!");
 		}
 
 		
 		if(txtCnpj.getText() == null || txtCnpj.getText().trim().equals("")) {
-			exception.addErrors("CNPJ", "Field can't be empty!");
+			exception.addErrors("CNPJ", "Informe o CNPJ!");
 		}
 
 		
 		if(txtTelefone.getText() == null || txtTelefone.getText().trim().equals("")) {
-			exception.addErrors("Telefone", "Field can't be empty!");
+			exception.addErrors("Telefone", "Informe o telefone!");
 		}
 		
 		
 		if(txtRua.getText() == null || txtRua.getText().trim().equals("")) {
-			exception.addErrors("Rua", "Field can't be empty!");
+			exception.addErrors("Rua", "Informe a rua!");
 		}
 
 		
 		if(txtBairro.getText() == null || txtBairro.getText().trim().equals("")) {
-			exception.addErrors("Bairro", "Field can't be empty!");
+			exception.addErrors("Bairro", "Informe o bairro!");
 		}
 
 		
 		if(txtCidade.getText() == null || txtCidade.getText().trim().equals("")) {
-			exception.addErrors("Cidade", "Field can't be empty!");
+			exception.addErrors("Cidade", "Informe a cidade!");
 		}
 
 		
 		if(txtCep.getText() == null || txtCep.getText().trim().equals("")) {
-			exception.addErrors("CEP", "Field can't be empty!");
+			exception.addErrors("CEP", "Digite o CEP!");
 		}
 
 		
 		if(txtNumero.getText() == null || txtNumero.getText().trim().equals("")) {
-			exception.addErrors("Numero", "Field can't be empty!");
+			exception.addErrors("Numero", "Informe o numero!");
 		}
 
 

@@ -36,7 +36,7 @@ public class FornecedorDaoJDBC implements FornecedorDao{
 			
 			st.setString(1, obj.getNome_Forn());
 			st.setString(2, obj.getCnpj_Forn());
-			st.setInt(3, obj.getTel_Forn());
+			st.setString(3, obj.getTel_Forn());
 			st.setString(4, obj.getEmail_Forn());
 			st.setInt(5, obj.getId_End());
 			
@@ -73,7 +73,7 @@ public class FornecedorDaoJDBC implements FornecedorDao{
 			
 			st.setString(1, obj.getNome_Forn());
 			st.setString(2, obj.getCnpj_Forn());
-			st.setInt(3, obj.getTel_Forn());
+			st.setString(3, obj.getTel_Forn());
 			st.setString(4, obj.getEmail_Forn());
 			
 			st.setInt(5, obj.getId_Forn());
@@ -233,7 +233,7 @@ public class FornecedorDaoJDBC implements FornecedorDao{
 		obj.setId_Forn(rs.getInt("id_Forn"));
 		obj.setNome_Forn(rs.getString("nome_Forn"));
 		obj.setCnpj_Forn(rs.getString("cnpj_Forn"));
-		obj.setTel_Forn(rs.getInt("tel_Forn"));
+		obj.setTel_Forn(rs.getString("tel_Forn"));
 		obj.setEmail_Forn(rs.getString("email_Forn"));
 		obj.setId_End(rs.getInt("id_End"));
 

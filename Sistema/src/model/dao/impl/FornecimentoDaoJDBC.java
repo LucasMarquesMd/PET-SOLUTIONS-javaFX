@@ -248,7 +248,7 @@ public class FornecimentoDaoJDBC implements FornecimentoDao {
 		obj.setId_Forn(rs.getInt("id_Forn"));
 		obj.setNome_Forn(rs.getString("nome_Forn"));
 		obj.setCnpj_Forn(rs.getString("cnpj_Forn"));
-		obj.setTel_Forn(rs.getInt("tel_Forn"));
+		obj.setTel_Forn(rs.getString("tel_Forn"));
 		obj.setEmail_Forn(rs.getString("email_Forn"));
 		obj.setId_End(rs.getInt("id_End"));
 

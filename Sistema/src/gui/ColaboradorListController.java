@@ -199,7 +199,7 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 			controller.subscribeDataChangeListener(this);//Incrissao para receber o evento do DataChangeListener
 			controller.updateFormData();
 			
-			dialogStage.setTitle("Entre com os dados do colaborador: ");
+			dialogStage.setTitle("Entre com os dados do fornecedor: ");
 			dialogStage.setScene(new Scene(pane));//Instanciar nova cena
 			//Bloquear o redimensionamento da janela
 			dialogStage.setResizable(false);

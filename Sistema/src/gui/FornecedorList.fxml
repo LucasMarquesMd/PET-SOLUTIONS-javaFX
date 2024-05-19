@@ -10,7 +10,7 @@
 
 <VBox prefHeight="405.0" prefWidth="685.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FornecedorListController">
    <children>
-      <Label text="Colaborador" />
+      <Label text="Fornecedor" />
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
           <Button fx:id="btnCadastrar" mnemonicParsing="false" onAction="#onBtnCadastrar" text="Cadastrar" />

@@ -9,7 +9,7 @@ public class Fornecedor {
 	private Integer id_Forn;
 	private String nome_Forn;
 	private String cnpj_Forn;
-	private Integer tel_Forn;
+	private String tel_Forn;
 	private String email_Forn;
 	private Integer id_End;
 	
@@ -19,7 +19,7 @@ public class Fornecedor {
 	public Fornecedor() {
 	}
 
-	public Fornecedor(Integer id_Forn, String nome_Forn, String cnpj_Forn, Integer tel_Forn, String email_Forn,
+	public Fornecedor(Integer id_Forn, String nome_Forn, String cnpj_Forn, String tel_Forn, String email_Forn,
 			Integer id_End, Endereco endereco) {
 		super();
 		this.id_Forn = id_Forn;
@@ -55,11 +55,11 @@ public class Fornecedor {
 		this.cnpj_Forn = cnpj_Forn;
 	}
 
-	public Integer getTel_Forn() {
+	public String getTel_Forn() {
 		return tel_Forn;
 	}
 
-	public void setTel_Forn(Integer tel_Forn) {
+	public void setTel_Forn(String tel_Forn) {
 		this.tel_Forn = tel_Forn;
 	}
 
