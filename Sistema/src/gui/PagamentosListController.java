@@ -38,28 +38,33 @@ import model.entities.Pagamentos;
 import model.entities.PedidoItems;
 import model.entities.Pedidos;
 import model.entities.Produto;
+import model.entities.Pagamentos;
 import model.entities.enums.PedidoStatus;
+import model.entities.enums.TipoDePagamento;
 import model.services.ClienteServices;
 import model.services.ColaboradorServices;
 import model.services.PagamentosServices;
 import model.services.PedidoItemsServices;
-import model.services.PedidosServices;
+import model.services.PagamentosServices;
 import model.services.ProdutoServices;
 
-public class PedidosListController implements Initializable, DataChangeListener{
+
+/*
+ * Ajustar a data
+ */
+public class PagamentosListController implements Initializable, DataChangeListener{
 
 /* ========================================================================
  * 			Declaracao das variaveis
  * ========================================================================
  */
-	//Sera utilizado para auxiliar a manipulacao da classe de Pedidoses
-	private PedidosServices service;
-	private PagamentosServices servicePag;
+	//Sera utilizado para auxiliar a manipulacao da classe de Pagamentoses
+	private PagamentosServices service;
 	
 
 	
 	//Observa a lista instanciada -> usada para atualizar a UI automaticamente de acordo com a mudanca dos dados na lista
-	private ObservableList<Pedidos> obsList;
+	private ObservableList<Pagamentos> obsList;
 
 	
 	
@@ -71,23 +76,21 @@ public class PedidosListController implements Initializable, DataChangeListener{
 	private TextField txtNumero;
 	
 	@FXML
-	private TableView<Pedidos> tableViewPedidos = new TableView<>();
+	private TableView<Pagamentos> tableViewPagamentos = new TableView<>();
 	@FXML
-	private TableColumn<Pedidos, Integer> tableCollumnId;
+	private TableColumn<Pagamentos, Integer> tableCollumnId;
 	@FXML
-	private TableColumn<Pedidos, Date> tableCollumnData;
+	private TableColumn<Pagamentos, Date> tableCollumnData;
 	@FXML
-	private TableColumn<Pedidos, Double> tableCollumnPreco;
+	private TableColumn<Pagamentos, Double> tableCollumnPreco;
 	@FXML
-	private TableColumn<Pedidos, PedidoStatus> tableCollumnStatus;
+	private TableColumn<Pagamentos, TipoDePagamento> tableCollumnTipo;
 	@FXML
-	private TableColumn<Pedidos, Colaborador> tableCollumnResponsavel;
+	private TableColumn<Pagamentos, Pagamentos> tableCollumnNroPed;
 	@FXML
-	private TableColumn<Pedidos, Pedidos> tableCollumnEDIT;//Alterar colaboradores
+	private TableColumn<Pagamentos, Pagamentos> tableCollumnEDIT;//Alterar colaboradores
 	@FXML
-	private TableColumn<Pedidos, Pedidos> tableColumnREMOVE;//Deletar colaboradores
-	@FXML
-	private TableColumn<Pedidos, Pedidos> tableColumnPAGAR;//Deletar colaboradores
+	private TableColumn<Pagamentos, Pagamentos> tableColumnREMOVE;//Deletar colaboradores
 
 
 	
@@ -102,10 +105,10 @@ public class PedidosListController implements Initializable, DataChangeListener{
 	public void onBtnNovo(ActionEvent event) {
 		//Stage parentStage = Utils.currentStage(event);
 		
-		Pedidos pedido = new Pedidos();
 		Pagamentos pag = new Pagamentos();
+		Pagamentos ped = new Pagamentos();
 		
-		createDialogForm(pedido, MainViewController.colaborador, pag, "/gui/PedidosForm.fxml", Utils.currentStage(event));
+		createDialogForm(ped, pag, "/gui/PagamentosForm.fxml", Utils.currentStage(event));
 	}
 	
 	@FXML
@@ -119,7 +122,7 @@ public class PedidosListController implements Initializable, DataChangeListener{
 // =================================================================================	
 	
 	//Inversao de controle - facilita a manutencao do codigo
-	public void setPedidosService(PedidosServices service) {
+	public void setPagamentosService(PagamentosServices service) {
 		this.service = service;
 	}
 	
@@ -137,83 +140,82 @@ public class PedidosListController implements Initializable, DataChangeListener{
 	private void initializeNode() {
 		//setCellValueFactory() -> Define como os valores dacoluna sao obtidos dos objetos associados da tabela
 		//PropertyValueFactory<>() -> Vincula os dados de um objeto a coluna da tabela
-		tableCollumnId.setCellValueFactory(new PropertyValueFactory<>("id_Ped"));
-		tableCollumnData.setCellValueFactory(new PropertyValueFactory<>("dt_Ped"));
-		tableCollumnPreco.setCellValueFactory(new PropertyValueFactory<>("preco_Ped"));
-		tableCollumnStatus.setCellValueFactory(new PropertyValueFactory<>("status_Ped"));
-		tableCollumnResponsavel.setCellValueFactory(new PropertyValueFactory<>("colaborador"));
+		tableCollumnId.setCellValueFactory(new PropertyValueFactory<>("id_Pag"));
+		tableCollumnData.setCellValueFactory(new PropertyValueFactory<>("dt_Pag"));
+		tableCollumnPreco.setCellValueFactory(new PropertyValueFactory<>("preco_Pag"));
+		tableCollumnTipo.setCellValueFactory(new PropertyValueFactory<>("tipo_Pag"));
+		tableCollumnNroPed.setCellValueFactory(new PropertyValueFactory<>("Pagamentos"));
 		
 		Constraints.setTextFieldInteger(txtNumero);
 		
-		initializeTbcColaborador();
+		//initializeTbcNroPagamentos();
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();//Referencia para o priaryStage
 		
 		//O table view acompanha a janela
-		tableViewPedidos.prefHeightProperty().bind(stage.heightProperty());
+		tableViewPagamentos.prefHeightProperty().bind(stage.heightProperty());
 
 	}
 	
-	private void initializeTbcColaborador() {
-		// Configurar a célula para exibir o nome do colaborador
-				tableCollumnResponsavel.setCellFactory(column -> {
-				    return new TableCell<Pedidos, Colaborador>() {
-				        @Override
-				        protected void updateItem(Colaborador colaborador, boolean empty) {
-				            super.updateItem(colaborador, empty);
-
-				            if (colaborador == null || empty) {
-				                setText(null);
-				            } else {
-				                setText(colaborador.getName());
-				            }
-				        }
-				    };
-				});
-	}
+//	private void initializeTbcNroPagamentos() {
+//		// Configurar a célula para exibir o nome do colaborador
+//				tableCollumnNroPed.setCellFactory(column -> {
+//				    return new TableCell<Pagamentos, Pagamentos>() {
+//				        @Override
+//				        protected void updateItem(Pagamentos pedidos, boolean empty) {
+//				            super.updateItem(pedidos, empty);
+//
+//				            if (pedidos == null || empty) {
+//				                setText(null);
+//				            } else {
+//				                setText(String.valueOf(pedidos.getId_Ped()));
+//				            }
+//				        }
+//				    };
+//				});
+//	}
 	
 
 	
 	//Metodo responsavel por acessar o servico -> carrgar os colaboradores e atualiza-los no ObservableList<>
 	public void updateTableView() {
 		if(service == null) {
-			throw new IllegalStateException("Service Pedidos was null!");
+			throw new IllegalStateException("Service Pagamentos was null!");
 		}
 		
-		//Recebe a lista de colaboradores gerada pelo PedidosServices
-		List<Pedidos> list = service.findAll();
+		//Recebe a lista de colaboradores gerada pelo PagamentosServices
+		List<Pagamentos> list = service.findAll();
 
 		
 		//Associar a list ao ObservableList para verificar atualizacoes de dados.
 		obsList = FXCollections.observableArrayList(list);//A classe e oriunda da javaFX
 		
 		//Carregar os dados no TableView
-		tableViewPedidos.setItems(obsList);
+		tableViewPagamentos.setItems(obsList);
 		
 		initEditButtons();
-		initRemoveButtons();
-		initPagarButtons();
+		
 	}//End updateTableView
 	
 	public void updateTableViewConsult(String numero) {
 		if(service == null) {
-			throw new IllegalStateException("Service Pedidos was null!");
+			throw new IllegalStateException("Service Pagamentos was null!");
 		}
 		
-		//Recebe a lista de colaboradores gerada pelo PedidosServices
-		List<Pedidos> list = service.consultPed(numero);
+		//Recebe a lista de colaboradores gerada pelo PagamentosServices
+		List<Pagamentos> list = service.consultPed(numero);
 		
 		//Associar a list ao ObservableList para verificar atualizacoes de dados.
 		obsList = FXCollections.observableArrayList(list);//A classe e oriunda da javaFX
 		
 		//Carregar os dados no TableView
-		tableViewPedidos.setItems(obsList);
+		tableViewPagamentos.setItems(obsList);
 		
 		initEditButtons();
-		initRemoveButtons();	
+	
 	}//End updateTableViewConsult
 	
-	private void createDialogForm(Pedidos ped, Colaborador col, Pagamentos pag, String absolutePath,Stage parentStage) {
+	public void createDialogForm(Pagamentos ped, Pagamentos pag, String absolutePath,Stage parentStage) {
 		try {
 			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutePath));
@@ -221,24 +223,16 @@ public class PedidosListController implements Initializable, DataChangeListener{
 			//Instanciar um novo Stage (Palco)
 			Stage dialogStage = new Stage();
 			
-			PedidosFormController controller = loader.getController();//Pega o controlador da tela do formulario
-			//entidades
-			controller.setPedidos(ped);
-			controller.setColaborador(col);
+			PagamentosFormController controller = loader.getController();//Pega o controlador da tela do formulario
+			
+			//Entidades
 			controller.setPagamentos(pag);
-			controller.setPedidoItems(new PedidoItems());
+			controller.setPagamentos(ped);
 			
-			controller.setListPedidoItems(new ArrayList<>());
-			controller.setListProdutosList(new ArrayList<>());
-			
-			controller.setColaboradorServices(new ColaboradorServices());
-			controller.setServicesCli(new ClienteServices());
-			controller.setServicesProd(new ProdutoServices());
-			controller.setPedidosServices(new PedidosServices());
-			controller.setPedidoItemsServices(new PedidoItemsServices());
+			//Servicos
+			controller.setPagamentosServices(new PagamentosServices());
 			controller.setPagamentosServices(new PagamentosServices());
 			
-			controller.loadAssociatedObjects();
 			controller.subscribeDataChangeListener(this);//Incrissao para receber o evento do DataChangeListener
 			controller.updateFormData();
 			
@@ -260,45 +254,6 @@ public class PedidosListController implements Initializable, DataChangeListener{
 			Alerts.showAlerts("IOException", "Erro ao carragar a tela!", e.getMessage(), AlertType.ERROR);
 		}
 	}
-	
-	private void createDialogFormPag(Pedidos ped, Colaborador col, Pagamentos pag, String absolutePath,Stage parentStage) {
-		try {
-			
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutePath));
-			Pane pane = loader.load();
-			//Instanciar um novo Stage (Palco)
-			Stage dialogStage = new Stage();
-			
-			PagamentosFormController controller = loader.getController();//Pega o controlador da tela do formulario
-			//entidades
-			controller.setPedidos(ped);
-			controller.setPagamentos(pag);
-			
-
-			controller.setPedidosServices(new PedidosServices());
-			controller.setPagamentosServices(new PagamentosServices());
-			
-			controller.subscribeDataChangeListener(this);//Incrissao para receber o evento do DataChangeListener
-			controller.updateFormData();
-			
-			dialogStage.setTitle("Entre com os dados do pedido: ");
-			dialogStage.setScene(new Scene(pane));//Instanciar nova cena
-			//Bloquear o redimensionamento da janela
-			dialogStage.setResizable(false);
-			//Definir o "Pai" da janela
-			dialogStage.initOwner(parentStage);
-			//Definir a janela como modal
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			//
-			//Chamar a janela
-			dialogStage.showAndWait();//Aguarda ser fechada pelo usuario
-			
-			
-		}catch (IOException e) {
-			e.printStackTrace();
-			Alerts.showAlerts("IOException", "Erro ao carragar a tela de pagamentos!", e.getMessage(), AlertType.ERROR);
-		}
-	}
 
 
 	@Override
@@ -309,11 +264,11 @@ public class PedidosListController implements Initializable, DataChangeListener{
 	//Adiciota o botao de alteracao
 	private void initEditButtons() {
 		tableCollumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableCollumnEDIT.setCellFactory(param -> new TableCell<Pedidos, Pedidos>() {
+		tableCollumnEDIT.setCellFactory(param -> new TableCell<Pagamentos, Pagamentos>() {
 			private final Button button = new Button("edit");
 
 			@Override
-			protected void updateItem(Pedidos obj, boolean empty) {
+			protected void updateItem(Pagamentos obj, boolean empty) {
 				super.updateItem(obj, empty);
 
 				if (obj == null) {
@@ -321,64 +276,24 @@ public class PedidosListController implements Initializable, DataChangeListener{
 					return;
 				}
 
-				ColaboradorServices service = new ColaboradorServices();
-				Colaborador col = service.findById(obj.getId_Col());
+				PagamentosServices service = new PagamentosServices();
+				Pagamentos pag = service.findById(obj.getId_Pag());
 				
-				PagamentosServices servicePag = new PagamentosServices();
-				Pagamentos pag;
-				if(obj.getId_Pag() != null) {
-					pag = servicePag.findById(obj.getId_Pag());
-				}else {
-					pag = new Pagamentos();
-				}
-
+				
 				setGraphic(button);
 				button.setOnAction(
-						event -> createDialogForm(obj, col, pag, "/gui/PedidosForm.fxml", Utils.currentStage(event)));
+						event -> createDialogForm(obj, pag, "/gui/PagamentosForm.fxml", Utils.currentStage(event)));
 			}
 		});
 	}// End initEditButtons
 	
-	private void initPagarButtons() {
-		tableColumnPAGAR.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnPAGAR.setCellFactory(param -> new TableCell<Pedidos, Pedidos>() {
-			private final Button button = new Button("Pagar");
-
-			@Override
-			protected void updateItem(Pedidos obj, boolean empty) {
-				super.updateItem(obj, empty);
-
-				if (obj == null) {
-					setGraphic(null);
-					return;
-				}
-
-				ColaboradorServices service = new ColaboradorServices();
-				Colaborador col = service.findById(obj.getId_Col());
-				
-				PagamentosServices servicePag = new PagamentosServices();
-				Pagamentos pag;
-				if(obj.getId_Pag() != null) {
-					pag = servicePag.findById(obj.getId_Pag());
-				}else {
-					pag = new Pagamentos();
-				}
-				
-				setGraphic(button);
-				button.setOnAction(
-						event -> createDialogFormPag(obj, col, pag, "/gui/PagamentosForm.fxml", Utils.currentStage(event)));
-			}
-		});
-	}// End initEditButtons
-	
-
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnREMOVE.setCellFactory(param -> new TableCell<Pedidos, Pedidos>() {
+		tableColumnREMOVE.setCellFactory(param -> new TableCell<Pagamentos, Pagamentos>() {
 			private final Button button = new Button("remove");
 
 			@Override
-			protected void updateItem(Pedidos obj, boolean empty) {
+			protected void updateItem(Pagamentos obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -391,7 +306,7 @@ public class PedidosListController implements Initializable, DataChangeListener{
 	}//end initRemoveButtons
 
 
-	private void removeEntity(Pedidos obj) {
+	private void removeEntity(Pagamentos obj) {
 		//Optional<> -> objeto que carraga outro objeto dentro dele
 		Optional<ButtonType> result = Alerts.showConfirmation("Confirmar", "Deletar Pedido ?");
 		
@@ -425,6 +340,9 @@ public class PedidosListController implements Initializable, DataChangeListener{
 			}
 		}
 	}
+
+
+
 	
 	
 }

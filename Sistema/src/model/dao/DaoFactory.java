@@ -9,6 +9,7 @@ import model.dao.impl.FornecedorDaoJDBC;
 import model.dao.impl.FornecimentoDaoJDBC;
 import model.dao.impl.LocalDeEstoqueDaoJDBC;
 import model.dao.impl.NotaEstoqueDaoJDBC;
+import model.dao.impl.PagamentosDaoJDBC;
 import model.dao.impl.PedidoItemsDaoJDBC;
 import model.dao.impl.PedidosDaoJDBC;
 import model.dao.impl.ProdutoDaoJDBC;
@@ -58,5 +59,9 @@ public class DaoFactory {
 	
 	public static FornecimentoDao createFornecimentoDao() {
 		return new FornecimentoDaoJDBC(DB.getConnection());
+	}
+	
+	public static PagamentosDao createPagamentosDao() {
+		return new PagamentosDaoJDBC(DB.getConnection());
 	}
 }

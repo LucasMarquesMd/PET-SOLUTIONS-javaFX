@@ -28,6 +28,7 @@
                   <Menu mnemonicParsing="false" text="Vendas">
                     <items>
                       <MenuItem fx:id="menuItemPedidos" mnemonicParsing="false" onAction="#onMenuItemPedidosAction" text="Pedidos" />
+                        <MenuItem fx:id="menuItemPagamentos" mnemonicParsing="false" onAction="#onMenuItemPagamentosAction" text="Pagamento" />
                     </items>
                   </Menu>
                 <Menu mnemonicParsing="false" text="Home">
@@ -37,8 +38,9 @@
                 </Menu>
                   <Menu mnemonicParsing="false" text="Estoque">
                     <items>
-                      <MenuItem fx:id="menuItemLocal" mnemonicParsing="false" onAction="#onMenuItemLocalAction" text="Local" />
+                        <MenuItem mnemonicParsing="false" text="Estoque" />
                         <MenuItem fx:id="menuItemNotas" mnemonicParsing="false" onAction="#onMenuItemNotasAction" text="Notas" />
+                      <MenuItem fx:id="menuItemLocal" mnemonicParsing="false" onAction="#onMenuItemLocalAction" text="Local" />
                     </items>
                   </Menu>
                 <Menu mnemonicParsing="false" text="Help">

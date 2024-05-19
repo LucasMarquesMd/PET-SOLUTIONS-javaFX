@@ -18,6 +18,10 @@ public class PedidosServices {
 	public List<Pedidos> findAll() {
 		return dao.findAll();
 	}
+	
+	public Pedidos findById(Integer id) {
+		return dao.findById(id);
+	}
 
 	public void saveOrUpdate(Pedidos entity) {
 		if(entity.getId_Ped() == null) {

@@ -27,6 +27,7 @@ import model.services.ColaboradorServices;
 import model.services.FornecedorServices;
 import model.services.LocalDeEstoqueServices;
 import model.services.NotaEstoqueServices;
+import model.services.PagamentosServices;
 import model.services.PedidosServices;
 import model.services.ProdutoServices;
 
@@ -77,6 +78,8 @@ public class MainViewController implements Initializable {
 	private MenuItem menuItemPedidos;
 	@FXML
 	private MenuItem menuItemNotas;
+	@FXML
+	private MenuItem menuItemPagamentos;
 
 	/*
 	 * ========================================================================
@@ -103,15 +106,15 @@ public class MainViewController implements Initializable {
 	 */
 
 	public void onBtnEntrarAction() {
-//		if(validarUsuario(txtUserName.getText(), txtPassworld.getText())) {
-//			loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia 
-//			mainMenuBar.setVisible(true);
-//		}else {
-//			Alerts.showAlerts("Erro", "Usuario e ou senha invalidos!", null, AlertType.ERROR);
-//		}
-		loadView("/gui/HomeScreen.fxml", x -> {
-		});// Lambda vazia
-		mainMenuBar.setVisible(true);
+		if(validarUsuario(txtUserName.getText(), txtPassworld.getText())) {
+			loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia 
+			mainMenuBar.setVisible(true);
+		}else {
+			Alerts.showAlerts("Erro", "Usuario e ou senha invalidos!", null, AlertType.ERROR);
+		}
+//		loadView("/gui/HomeScreen.fxml", x -> {
+//		});// Lambda vazia
+//		mainMenuBar.setVisible(true);
 
 	}
 
@@ -192,6 +195,14 @@ public class MainViewController implements Initializable {
 			// Atualizar a tabela
 			controller.updateTableView();
 		});// Acao de inicializaco do controller
+	}
+	
+	public void onMenuItemPagamentosAction() {
+
+		loadView("/gui/PagamentosList.fxml", (PagamentosListController controller) -> {
+			controller.setPagamentosService(new PagamentosServices());
+			controller.updateTableView();
+		});
 	}
 
 	/*

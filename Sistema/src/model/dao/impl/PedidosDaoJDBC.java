@@ -12,9 +12,11 @@ import db.DB;
 import db.DbException;
 import db.DbIntegrityException;
 import model.dao.PedidosDao;
+import model.entities.Colaborador;
+import model.entities.Pagamentos;
 import model.entities.Pedidos;
 import model.entities.enums.PedidoStatus;
-import model.entities.Colaborador;
+import model.entities.enums.TipoDePagamento;
 
 public class PedidosDaoJDBC implements PedidosDao{
 
@@ -30,14 +32,15 @@ public class PedidosDaoJDBC implements PedidosDao{
 		try {
 			st = conn.prepareStatement(
 					"INSERT INTO "
-					+ "Pedido (dt_Ped, preco_Ped, id_Col, status_Ped) "
+					+ "Pedido (dt_Ped, preco_Ped, id_Col, status_Ped, id_Pag) "
 					+ "VALUES "
-					+ "(?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
+					+ "(?, ?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
 			
 			st.setDate(1, new java.sql.Date(obj.getDt_Ped().getTime()));
 			st.setDouble(2, obj.getPreco_Ped());
 			st.setInt(3, obj.getId_Col());
 			st.setString(4, obj.getStatus_Ped().toString());
+			st.setInt(5, obj.getId_Pag());
 
 			
 			
@@ -116,18 +119,21 @@ public class PedidosDaoJDBC implements PedidosDao{
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT Pedido.*, Colaborador.* "
+					"SELECT Pedido.*, Colaborador.*, Pagamento.* "
 					+ "FROM Pedido "
 					+ "INNER JOIN Colaborador "
 					+ "ON Pedido.id_Col = Colaborador.id_Col "
+					+ "INNER JOIN Pagamento "
+					+ "ON Pedido.id_Pag = Pagamento.id_Pag"
 					+ "WHERE id_Ped = ? ");
 			
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			
 			if(rs.next()) {
+				Pagamentos pag = instantiatePagamentos(rs);
 				Colaborador col = instantiateColaborador(rs);
-				Pedidos obj = instantiatePedidos(rs, col);
+				Pedidos obj = instantiatePedidos(rs, col, pag);
 				return obj;
 			}
 			return null;
@@ -147,10 +153,13 @@ public class PedidosDaoJDBC implements PedidosDao{
 		
 		try {
 			//Cria a string sql eja define a conexao
-			st = conn.prepareStatement("SELECT *  "
+			st = conn.prepareStatement(
+					"SELECT Pedido.*, Colaborador.*, Pagamento.*  "
 					+ "FROM Pedido "
 					+ "INNER JOIN Colaborador "
 					+ "ON Pedido.id_Col = Colaborador.id_Col "
+					+ "INNER JOIN Pagamento "
+					+ "ON Pedido.id_Pag = Pagamento.id_Pag "
 					+ "ORDER BY id_Ped");
 			
 			//Executa a query e salva o resultado no ResultSet
@@ -159,8 +168,9 @@ public class PedidosDaoJDBC implements PedidosDao{
 			List<Pedidos> list = new ArrayList<>();
 			
 			while(rs.next()) {
+				Pagamentos pag = instantiatePagamentos(rs);
 				Colaborador col = instantiateColaborador(rs);
-				Pedidos obj = instantiatePedidos(rs, col);
+				Pedidos obj = instantiatePedidos(rs, col, pag);
 				
 				list.add(obj);
 			}//end while
@@ -177,6 +187,21 @@ public class PedidosDaoJDBC implements PedidosDao{
 		}
 
 	}//End findAll
+	
+	private Pagamentos instantiatePagamentos(ResultSet rs) throws SQLException{
+		Pagamentos obj = new Pagamentos();
+		
+		obj.setId_Pag(rs.getInt("id_Pag"));
+		obj.setDt_Pag(new java.util.Date(rs.getDate("dt_Pag").getTime()));
+		obj.setPreco_Pag(rs.getDouble("preco_Pag"));
+		obj.setTipo_Pag(TipoDePagamento.valueOf(rs.getString("tipo_Pag")));
+		
+		//obj.setEndereco(end);
+
+		return obj;
+	}
+	
+	
 	
 	private Colaborador instantiateColaborador(ResultSet rs) throws SQLException{
 		Colaborador obj = new Colaborador();
@@ -197,7 +222,7 @@ public class PedidosDaoJDBC implements PedidosDao{
 		return obj;
 	}
 	
-	private Pedidos instantiatePedidos(ResultSet rs, Colaborador col) throws SQLException{
+	private Pedidos instantiatePedidos(ResultSet rs, Colaborador col, Pagamentos pag) throws SQLException{
 		Pedidos obj = new Pedidos();
 		
 		obj.setId_Ped(rs.getInt("id_Ped"));
@@ -205,8 +230,10 @@ public class PedidosDaoJDBC implements PedidosDao{
 		obj.setPreco_Ped(rs.getDouble("preco_Ped"));
 		obj.setId_Col(rs.getInt("id_Col"));
 		obj.setStatus_Ped(PedidoStatus.valueOf(rs.getString("status_Ped")));
+		obj.setId_Pag(pag.getId_Pag());
 		
 		obj.setColaborador(col);
+		obj.setPagamento(pag);
 		
 		return obj;
 	}
@@ -222,6 +249,8 @@ public class PedidosDaoJDBC implements PedidosDao{
 					+ "FROM Pedido "
 					+ "INNER JOIN Colaborador "
 					+ "ON Pedido.id_Col = Colaborador.id_Col "
+					+ "INNER JOIN Pagamento "
+					+ "ON Pedido.id_Pag = Pagamento.id_Pag "
 					+ "WHERE id_Ped LIKE ? ");
 		
 			st.setString(1, numero + "%");
@@ -230,8 +259,9 @@ public class PedidosDaoJDBC implements PedidosDao{
 			List<Pedidos> list = new ArrayList<>();
 			
 			while(rs.next()) {
+				Pagamentos pag = instantiatePagamentos(rs);
 				Colaborador col = instantiateColaborador(rs);
-				Pedidos obj = instantiatePedidos(rs, col);
+				Pedidos obj = instantiatePedidos(rs, col, pag);
 				
 				list.add(obj);
 			}//end while
