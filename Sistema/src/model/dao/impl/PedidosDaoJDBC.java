@@ -144,6 +144,37 @@ public class PedidosDaoJDBC implements PedidosDao{
 		
 	}
 	
+	@Override
+	public Pedidos findByPag(Integer id) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT Pedido.*, Colaborador.*, Pagamento.* "
+					+ "FROM Pedido "
+					+ "INNER JOIN Colaborador "
+					+ "ON Pedido.id_Col = Colaborador.id_Col "
+					+ "INNER JOIN Pagamento "
+					+ "ON Pedido.id_Pag = Pagamento.id_Pag"
+					+ "WHERE Pedido.id_Pag = ?");
+			
+			st.setInt(1, id);
+			rs = st.executeQuery();
+			
+			if(rs.next()) {
+				Pagamentos pag = instantiatePagamentos(rs);
+				Colaborador col = instantiateColaborador(rs);
+				Pedidos obj = instantiatePedidos(rs, col, pag);
+				return obj;
+			}
+			return null;
+			
+		}catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		
+	}
+	
 	
 	@Override
 	public List<Pedidos> findAll() {

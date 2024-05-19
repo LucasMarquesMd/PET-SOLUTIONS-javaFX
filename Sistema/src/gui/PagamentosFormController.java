@@ -271,6 +271,8 @@ public class PagamentosFormController implements Initializable {
 		LocalDate selectedDate = dpData.getValue();
 		Instant instant = Instant.from(selectedDate.atStartOfDay(ZoneId.systemDefault()));
 		obj.setDt_Pag(Date.from(instant));
+		
+		obj.setNro_Ped(entityPed.getId_Ped());
 
 		obj.setTipo_Pag(TipoDePagamento.valueOf(cboTipo.getValue().toString()));
 

@@ -71,13 +71,19 @@ public class PagamentosDaoJDBC implements PagamentosDao{
 		try {
 			st = conn.prepareStatement(
 					"UPDATE Pagamento  "
-					+ "SET dt_Pag = ?, preco_Pag = ?, tipo_Pag = ? "
+					+ "SET dt_Pag = ?, preco_Pag = ?, tipo_Pag = ?, nro_Ped = ? "
 					+ "WHERE id_Pag = ?");
 			
 			st.setDate(1, new java.sql.Date(obj.getDt_Pag().getTime()));
 			st.setDouble(2, obj.getPreco_Pag());
 			st.setString(3, obj.getTipo_Pag().toString());
-			st.setInt(4, obj.getId_Pag());
+			if(obj.getNro_Ped() == null) {
+				st.setNull(4, java.sql.Types.INTEGER);
+			}else {
+				st.setInt(4, obj.getNro_Ped());
+			}
+			
+			st.setInt(5, obj.getId_Pag());
 
 			st.executeUpdate();
 
@@ -134,6 +140,8 @@ public class PagamentosDaoJDBC implements PagamentosDao{
 		}
 		
 	}
+	
+	
 	
 	
 	@Override
@@ -208,22 +216,22 @@ public class PagamentosDaoJDBC implements PagamentosDao{
 		}
 	}
 	
-	private Pedidos instantiatePedidos(ResultSet rs) throws SQLException {
-		Pedidos obj = new Pedidos();
-		
-		obj.setId_Ped(rs.getInt("id_Ped"));
-		obj.setDt_Ped(new java.util.Date(rs.getDate("dt_Ped").getTime()));
-		obj.setPreco_Ped(rs.getDouble("preco_Ped"));
-		obj.setId_Col(rs.getInt("id_Col"));
-		obj.setStatus_Ped(PedidoStatus.valueOf(rs.getString("status_Ped")));
-		
-		ColaboradorServices service = new ColaboradorServices();
-		Colaborador col = service.findById(obj.getId_Col());
-		
-		obj.setColaborador(col);
-		
-		return obj;
-	}
+//	private Pedidos instantiatePedidos(ResultSet rs) throws SQLException {
+//		Pedidos obj = new Pedidos();
+//		
+//		obj.setId_Ped(rs.getInt("id_Ped"));
+//		obj.setDt_Ped(new java.util.Date(rs.getDate("dt_Ped").getTime()));
+//		obj.setPreco_Ped(rs.getDouble("preco_Ped"));
+//		obj.setId_Col(rs.getInt("id_Col"));
+//		obj.setStatus_Ped(PedidoStatus.valueOf(rs.getString("status_Ped")));
+//		
+//		ColaboradorServices service = new ColaboradorServices();
+//		Colaborador col = service.findById(obj.getId_Col());
+//		
+//		obj.setColaborador(col);
+//		
+//		return obj;
+//	}
 	
 	private Pagamentos instantiatePagamentos(ResultSet rs) throws SQLException{
 		Pagamentos obj = new Pagamentos();
@@ -232,6 +240,7 @@ public class PagamentosDaoJDBC implements PagamentosDao{
 		obj.setPreco_Pag(rs.getDouble("preco_Pag"));
 		obj.setDt_Pag(new java.util.Date(rs.getDate("dt_Pag").getTime()));
 		obj.setTipo_Pag(TipoDePagamento.valueOf(rs.getString("tipo_Pag")));
+		obj.setNro_Ped(rs.getInt("nro_Ped"));
 		
 		return obj;
 	}

@@ -2,7 +2,6 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -38,14 +37,11 @@ import model.entities.Pagamentos;
 import model.entities.PedidoItems;
 import model.entities.Pedidos;
 import model.entities.Produto;
-import model.entities.Pagamentos;
 import model.entities.enums.PedidoStatus;
 import model.entities.enums.TipoDePagamento;
-import model.services.ClienteServices;
-import model.services.ColaboradorServices;
 import model.services.PagamentosServices;
 import model.services.PedidoItemsServices;
-import model.services.PagamentosServices;
+import model.services.PedidosServices;
 import model.services.ProdutoServices;
 
 
@@ -69,8 +65,6 @@ public class PagamentosListController implements Initializable, DataChangeListen
 	
 	
 	@FXML
-	private Button btnNovo;
-	@FXML
 	private Button btnConsultar;
 	@FXML
 	private TextField txtNumero;
@@ -86,7 +80,7 @@ public class PagamentosListController implements Initializable, DataChangeListen
 	@FXML
 	private TableColumn<Pagamentos, TipoDePagamento> tableCollumnTipo;
 	@FXML
-	private TableColumn<Pagamentos, Pagamentos> tableCollumnNroPed;
+	private TableColumn<Pagamentos, Integer> tableCollumnNroPed;
 	@FXML
 	private TableColumn<Pagamentos, Pagamentos> tableCollumnEDIT;//Alterar colaboradores
 	@FXML
@@ -101,15 +95,6 @@ public class PagamentosListController implements Initializable, DataChangeListen
  * ========================================================================
 */
 
-	@FXML
-	public void onBtnNovo(ActionEvent event) {
-		//Stage parentStage = Utils.currentStage(event);
-		
-		Pagamentos pag = new Pagamentos();
-		Pagamentos ped = new Pagamentos();
-		
-		createDialogForm(ped, pag, "/gui/PagamentosForm.fxml", Utils.currentStage(event));
-	}
 	
 	@FXML
 	public void onBtnConsultar() {
@@ -144,11 +129,11 @@ public class PagamentosListController implements Initializable, DataChangeListen
 		tableCollumnData.setCellValueFactory(new PropertyValueFactory<>("dt_Pag"));
 		tableCollumnPreco.setCellValueFactory(new PropertyValueFactory<>("preco_Pag"));
 		tableCollumnTipo.setCellValueFactory(new PropertyValueFactory<>("tipo_Pag"));
-		tableCollumnNroPed.setCellValueFactory(new PropertyValueFactory<>("Pagamentos"));
+		tableCollumnNroPed.setCellValueFactory(new PropertyValueFactory<>("nro_Ped"));
 		
 		Constraints.setTextFieldInteger(txtNumero);
 		
-		//initializeTbcNroPagamentos();
+//		initializeTbcNroPagamentos();
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();//Referencia para o priaryStage
 		
@@ -160,9 +145,9 @@ public class PagamentosListController implements Initializable, DataChangeListen
 //	private void initializeTbcNroPagamentos() {
 //		// Configurar a célula para exibir o nome do colaborador
 //				tableCollumnNroPed.setCellFactory(column -> {
-//				    return new TableCell<Pagamentos, Pagamentos>() {
+//				    return new TableCell<Pagamentos, Pedidos>() {
 //				        @Override
-//				        protected void updateItem(Pagamentos pedidos, boolean empty) {
+//				        protected void updateItem(Pedidos pedidos, boolean empty) {
 //				            super.updateItem(pedidos, empty);
 //
 //				            if (pedidos == null || empty) {
@@ -174,7 +159,7 @@ public class PagamentosListController implements Initializable, DataChangeListen
 //				    };
 //				});
 //	}
-	
+//	
 
 	
 	//Metodo responsavel por acessar o servico -> carrgar os colaboradores e atualiza-los no ObservableList<>
@@ -193,7 +178,8 @@ public class PagamentosListController implements Initializable, DataChangeListen
 		//Carregar os dados no TableView
 		tableViewPagamentos.setItems(obsList);
 		
-		initEditButtons();
+		//initEditButtons();
+		initRemoveButtons();
 		
 	}//End updateTableView
 	
@@ -210,12 +196,10 @@ public class PagamentosListController implements Initializable, DataChangeListen
 		
 		//Carregar os dados no TableView
 		tableViewPagamentos.setItems(obsList);
-		
-		initEditButtons();
 	
 	}//End updateTableViewConsult
 	
-	public void createDialogForm(Pagamentos ped, Pagamentos pag, String absolutePath,Stage parentStage) {
+	private void createDialogForm(Pagamentos pag, String absolutePath,Stage parentStage) {
 		try {
 			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutePath));
@@ -224,13 +208,12 @@ public class PagamentosListController implements Initializable, DataChangeListen
 			Stage dialogStage = new Stage();
 			
 			PagamentosFormController controller = loader.getController();//Pega o controlador da tela do formulario
-			
-			//Entidades
+			//entidades
+			controller.setPedidos(new Pedidos());
 			controller.setPagamentos(pag);
-			controller.setPagamentos(ped);
 			
-			//Servicos
-			controller.setPagamentosServices(new PagamentosServices());
+
+			controller.setPedidosServices(new PedidosServices());
 			controller.setPagamentosServices(new PagamentosServices());
 			
 			controller.subscribeDataChangeListener(this);//Incrissao para receber o evento do DataChangeListener
@@ -251,7 +234,7 @@ public class PagamentosListController implements Initializable, DataChangeListen
 			
 		}catch (IOException e) {
 			e.printStackTrace();
-			Alerts.showAlerts("IOException", "Erro ao carragar a tela!", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlerts("IOException", "Erro ao carragar a tela de pagamentos!", e.getMessage(), AlertType.ERROR);
 		}
 	}
 
@@ -261,31 +244,31 @@ public class PagamentosListController implements Initializable, DataChangeListen
 		updateTableView();
 	}
 
-	//Adiciota o botao de alteracao
-	private void initEditButtons() {
-		tableCollumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableCollumnEDIT.setCellFactory(param -> new TableCell<Pagamentos, Pagamentos>() {
-			private final Button button = new Button("edit");
-
-			@Override
-			protected void updateItem(Pagamentos obj, boolean empty) {
-				super.updateItem(obj, empty);
-
-				if (obj == null) {
-					setGraphic(null);
-					return;
-				}
-
-				PagamentosServices service = new PagamentosServices();
-				Pagamentos pag = service.findById(obj.getId_Pag());
-				
-				
-				setGraphic(button);
-				button.setOnAction(
-						event -> createDialogForm(obj, pag, "/gui/PagamentosForm.fxml", Utils.currentStage(event)));
-			}
-		});
-	}// End initEditButtons
+//	//Adiciota o botao de alteracao
+//	private void initEditButtons() {
+//		tableCollumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+//		tableCollumnEDIT.setCellFactory(param -> new TableCell<Pagamentos, Pagamentos>() {
+//			private final Button button = new Button("edit");
+//
+//			@Override
+//			protected void updateItem(Pagamentos obj, boolean empty) {
+//				super.updateItem(obj, empty);
+//
+//				if (obj == null) {
+//					setGraphic(null);
+//					return;
+//				}
+//
+////				PedidosServices service = new PedidosServices();
+////				Pedidos ped = service.findByPag(obj.getId_Pag());
+//				
+//				
+//				setGraphic(button);
+//				button.setOnAction(
+//						event -> createDialogForm( obj, "/gui/PagamentosForm.fxml", Utils.currentStage(event)));
+//			}
+//		});
+//	}// End initEditButtons
 	
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
@@ -316,21 +299,7 @@ public class PagamentosListController implements Initializable, DataChangeListen
 				throw new IllegalStateException("Service was null");
 			}
 			try {
-				PedidoItemsServices servicesItems = new PedidoItemsServices();
-				ProdutoServices servicesProd = new ProdutoServices();
-				List<PedidoItems> list = servicesItems.findItemsProd(obj.getId_Ped());
-				//Remover os items atuais
-				for(PedidoItems item: list) {
-					
-					if(obj.getStatus_Ped() != PedidoStatus.CANCELADO) {
-						Produto prod = servicesProd.findById(item.getId_Prod());
-						prod.sumProduct(item.getQt_PedIt());
-						servicesProd.saveOrUpdate(prod);
-					}
-					
-					
-					servicesItems.remove(item);
-				}
+				
 				
 				service.remove(obj);
 				updateTableView();

@@ -181,6 +181,8 @@ public class PedidosFormController implements Initializable {
 
 			pedidoItemsList = listItems();
 			entityPed = getFormData(pedidoItemsList, entityPag);
+			entityPag.setNro_Ped(entityPed.getId_Ped());
+			servicePag.saveOrUpdate(entityPag);
 
 			if(cboStatus.getSelectionModel().getSelectedItem() == PedidoStatus.CANCELADO || entityPed.getId_Ped() != null) {
 				retomarEstoque(pedidoItemsList);

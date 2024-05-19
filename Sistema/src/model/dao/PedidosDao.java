@@ -12,6 +12,7 @@ public interface PedidosDao {
 	void update(Pedidos obj);
 	void deleteById(Integer id);
 	Pedidos findById(Integer id);
+	Pedidos findByPag(Integer id);
 	List<Pedidos> findAll();
 	List<Pedidos> consultPed(String numero);
 }

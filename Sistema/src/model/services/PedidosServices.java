@@ -22,6 +22,10 @@ public class PedidosServices {
 	public Pedidos findById(Integer id) {
 		return dao.findById(id);
 	}
+	
+	public Pedidos findByPag(Integer id) {
+		return dao.findByPag(id);
+	}
 
 	public void saveOrUpdate(Pedidos entity) {
 		if(entity.getId_Ped() == null) {
