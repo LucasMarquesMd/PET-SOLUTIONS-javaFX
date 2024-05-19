@@ -113,8 +113,7 @@ public class PedidosFormController implements Initializable {
 	private TextField txtQuantidade;
 	@FXML
 	private ComboBox<PedidoStatus> cboStatus;
-	@FXML
-	private ComboBox<Cliente> cboCliente;
+
 	@FXML
 	private ComboBox<Produto> cboProduto;
 
@@ -184,12 +183,13 @@ public class PedidosFormController implements Initializable {
 			entityPag.setNro_Ped(entityPed.getId_Ped());
 			servicePag.saveOrUpdate(entityPag);
 
-			if(cboStatus.getSelectionModel().getSelectedItem() == PedidoStatus.CANCELADO || entityPed.getId_Ped() != null) {
+			if(cboStatus.getSelectionModel().getSelectedItem() == PedidoStatus.CANCELADO) {
 				retomarEstoque(pedidoItemsList);
-			}else {
-				baixarEstoque(pedidoItemsList);
 			}
 			
+			if(cboStatus.getSelectionModel().getSelectedItem() == PedidoStatus.PAGO) {
+				baixarEstoque(pedidoItemsList);
+			}
 			
 			servicesPed.saveOrUpdate(entityPed);
 			savePedidosItems(entityPed.getId_Ped());
@@ -311,7 +311,6 @@ public class PedidosFormController implements Initializable {
 	private void initializeNode() {
 		// ComboBox
 		cboStatus.setItems(pedidoStatus);
-		cboCliente.setItems(clienteList);
 		cboProduto.setItems(obsListProd);
 		cboProduto.getSelectionModel().selectFirst();
 		cboStatus.getSelectionModel().selectFirst();
@@ -334,10 +333,10 @@ public class PedidosFormController implements Initializable {
 		Constraints.setTextFieldInteger(txtId);
 		Constraints.setTextFieldInteger(txtQuantidade);
 
-		initializeComboBoxCliente();
 		initializeComboBoxProduto();
 
 		if (entityPag != null) {
+			System.out.println(entityPag.getId_Pag());
 			id_Pag = entityPag.getId_Pag();
 		}
 
@@ -371,6 +370,15 @@ public class PedidosFormController implements Initializable {
 	}// End updateTableView
 
 	public void updateFormData() {
+		if(entityPed.getStatus_Ped() != null && entityPed.getStatus_Ped() == PedidoStatus.CANCELADO) {
+			btnSalvar.setVisible(false);
+		}
+		
+		if(entityPed.getStatus_Ped() != null && entityPed.getStatus_Ped() == PedidoStatus.PAGO) {
+			btnSalvar.setVisible(false);
+		}
+		
+		
 		if (entityPed == null) {
 			throw new IllegalStateException("Entity (Pedidos) was null");
 		}
@@ -430,7 +438,6 @@ public class PedidosFormController implements Initializable {
 		}
 		List<Cliente> listCli = servicesCli.findAll();
 		clienteList = FXCollections.observableArrayList(listCli);
-		cboCliente.setItems(clienteList);
 
 		if (servicesProd == null) {
 			throw new IllegalStateException("servicesProd was null!");
@@ -440,17 +447,7 @@ public class PedidosFormController implements Initializable {
 		cboProduto.setItems(obsListProd);
 	}
 
-	private void initializeComboBoxCliente() {
-		Callback<ListView<Cliente>, ListCell<Cliente>> factory = lv -> new ListCell<Cliente>() {
-			@Override
-			protected void updateItem(Cliente item, boolean empty) {
-				super.updateItem(item, empty);
-				setText(empty ? "" : item.getNome_Cli());
-			}
-		};
-		cboCliente.setCellFactory(factory);
-		cboCliente.setButtonCell(factory.call(null));
-	}// end initializeComboBoxCliente
+
 
 	private void initializeComboBoxProduto() {
 		Callback<ListView<Produto>, ListCell<Produto>> factory = lv -> new ListCell<Produto>() {

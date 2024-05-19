@@ -258,7 +258,7 @@ public class NotasListController implements Initializable, DataChangeListener {
 	private void initEditButtons() {
 		tableCollumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableCollumnEDIT.setCellFactory(param -> new TableCell<NotaEstoque, NotaEstoque>() {
-			private final Button button = new Button("edit");
+			private final Button button = new Button("Visualizar");
 
 			@Override
 			protected void updateItem(NotaEstoque obj, boolean empty) {

@@ -43,8 +43,6 @@
                   <TableColumn fx:id="tableColumnREMOVE" prefWidth="75.0" />
               </columns>
             </TableView>
-            <Label layoutX="348.0" layoutY="58.0" text="Cliente" />
-            <ComboBox fx:id="cboCliente" layoutX="416.0" layoutY="54.0" prefHeight="25.0" prefWidth="161.0" promptText="Cliente..." />
             <TextField fx:id="txtQuantidade" layoutX="281.0" layoutY="141.0" prefHeight="25.0" prefWidth="67.0" promptText="Nro" />
             <Label fx:id="lblErrorStatus" layoutX="225.0" layoutY="95.0" textFill="RED" />
             <Label fx:id="lblProdutos" layoutX="430.0" layoutY="145.0" textFill="#ff0101" />

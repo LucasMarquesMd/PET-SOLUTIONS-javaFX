@@ -329,6 +329,10 @@ public class NotasFiscaisFormController implements Initializable {
 
 	// Atualiza os valores do formulario com os dados da entidade
 	public void updateFormData() {
+		if(entityNota.getNro_Nota() != null) {
+			btnSalvar.setVisible(false);
+		}
+		
 		if (entityNota == null) {
 			throw new IllegalStateException("Entity (Colaborador) was null");
 		}

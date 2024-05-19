@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +35,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Colaborador;
+import model.entities.Fornecimento;
+import model.entities.NotaEstoque;
 import model.entities.Pagamentos;
 import model.entities.PedidoItems;
 import model.entities.Pedidos;
@@ -145,6 +148,8 @@ public class PedidosListController implements Initializable, DataChangeListener{
 		
 		Constraints.setTextFieldInteger(txtNumero);
 		
+		
+		initializeTbcData();
 		initializeTbcColaborador();
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();//Referencia para o priaryStage
@@ -152,6 +157,25 @@ public class PedidosListController implements Initializable, DataChangeListener{
 		//O table view acompanha a janela
 		tableViewPedidos.prefHeightProperty().bind(stage.heightProperty());
 
+	}
+	
+	private void initializeTbcData() {
+	    tableCollumnData.setCellFactory(column -> {
+	        return new TableCell<Pedidos, Date>() {
+	            private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");//Define o formato da data
+
+	            @Override
+	            protected void updateItem(Date date, boolean empty) {//Atualiza o item da tabela
+	                super.updateItem(date, empty);
+
+	                if (date == null || empty) {
+	                    setText(null);
+	                } else {
+	                    setText(dateFormat.format(date));
+	                }
+	            }
+	        };
+	    });
 	}
 	
 	private void initializeTbcColaborador() {
@@ -326,11 +350,8 @@ public class PedidosListController implements Initializable, DataChangeListener{
 				
 				PagamentosServices servicePag = new PagamentosServices();
 				Pagamentos pag;
-				if(obj.getId_Pag() != null) {
-					pag = servicePag.findById(obj.getId_Pag());
-				}else {
-					pag = new Pagamentos();
-				}
+				pag = servicePag.findById(obj.getId_Pag());
+				
 
 				setGraphic(button);
 				button.setOnAction(
@@ -352,7 +373,7 @@ public class PedidosListController implements Initializable, DataChangeListener{
 					setGraphic(null);
 					return;
 				}
-
+		
 				ColaboradorServices service = new ColaboradorServices();
 				Colaborador col = service.findById(obj.getId_Col());
 				
@@ -406,14 +427,7 @@ public class PedidosListController implements Initializable, DataChangeListener{
 				List<PedidoItems> list = servicesItems.findItemsProd(obj.getId_Ped());
 				//Remover os items atuais
 				for(PedidoItems item: list) {
-					
-					if(obj.getStatus_Ped() != PedidoStatus.CANCELADO) {
-						Produto prod = servicesProd.findById(item.getId_Prod());
-						prod.sumProduct(item.getQt_PedIt());
-						servicesProd.saveOrUpdate(prod);
-					}
-					
-					
+
 					servicesItems.remove(item);
 				}
 				

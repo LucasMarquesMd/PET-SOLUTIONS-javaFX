@@ -213,6 +213,7 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 			
 			
 		}catch (IOException e) {
+			e.printStackTrace();
 			Alerts.showAlerts("IOException", "Erro ao carragar a tela!", e.getMessage(), AlertType.ERROR);
 		}
 	}
@@ -278,6 +279,7 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 			try {
 				EnderecoService serviceEnd = new EnderecoService();
 				Endereco end = serviceEnd.findById(obj.getId_End());
+				
 				
 				service.remove(obj);
 				serviceEnd.remove(end);

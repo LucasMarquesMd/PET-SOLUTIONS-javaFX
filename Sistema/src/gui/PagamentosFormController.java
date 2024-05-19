@@ -8,18 +8,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import application.Main;
 import db.DbException;
-import db.DbIntegrityException;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Constraints;
 import gui.util.Utils;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,19 +23,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
-import javafx.util.Callback;
-import model.entities.Cliente;
-import model.entities.Colaborador;
 import model.entities.Pagamentos;
 import model.entities.PedidoItems;
 import model.entities.Pedidos;
@@ -47,8 +34,6 @@ import model.entities.Produto;
 import model.entities.enums.PedidoStatus;
 import model.entities.enums.TipoDePagamento;
 import model.exceptions.ValidationException;
-import model.services.ClienteServices;
-import model.services.ColaboradorServices;
 import model.services.PagamentosServices;
 import model.services.PedidoItemsServices;
 import model.services.PedidosServices;
@@ -125,18 +110,37 @@ public class PagamentosFormController implements Initializable {
 		try {
 
 			fieldesValidation();
-
-			entityPed.setStatus_Ped(PedidoStatus.PAGO);
+			if(entityPed.getStatus_Ped() == PedidoStatus.CANCELADO) {
+				Alerts.showAlerts("Aviso", "Pagamentos", "Pedido Cancelado!\n Operacao interrompida!", AlertType.WARNING);
+				Utils.currentStage(event).close();
+				return;
+			}
+			if(entityPed.getStatus_Ped() == PedidoStatus.PAGO) {
+				Alerts.showAlerts("Aviso", "Pagamentos", "Pedido Pago!\n Operacao interrompida!", AlertType.WARNING);
+				Utils.currentStage(event).close();
+				return;
+			}
 			
-			entityPag = getFormDataPagamentos(entityPed);
-			servicePag.saveOrUpdate(entityPag);
-			entityPed.setId_Pag(entityPag.getId_Pag());
+			if(entityPed.getStatus_Ped() == PedidoStatus.PAGO) {
+				Utils.currentStage(event).close();
+
+			}else {
+				entityPed.setStatus_Ped(PedidoStatus.PAGO);
+				entityPag = getFormDataPagamentos(entityPed);
+				
+				List<PedidoItems> list = getFormDataItems(entityPed);
+				baixarEstoque(list);
+				
+				servicePag.saveOrUpdate(entityPag);
+				entityPed.setId_Pag(entityPag.getId_Pag());
+				
+				servicePed.saveOrUpdate(entityPed);
+
+				notifyDataChangeListeners();
+
+				Utils.currentStage(event).close();// Fecha o formulario
+			}
 			
-			servicePed.saveOrUpdate(entityPed);
-
-			notifyDataChangeListeners();
-
-			Utils.currentStage(event).close();// Fecha o formulario
 
 		} catch (ValidationException e) {
 			setErrorMessages(e.getErrors());// Envia a colecao de erros
@@ -292,4 +296,32 @@ public class PagamentosFormController implements Initializable {
 		Set<String> fields = errors.keySet();
 		lblErrorNroPed.setText(fields.contains("Produto") ? errors.get("Produto") : "");
 	}//
+	
+	private List<PedidoItems> getFormDataItems(Pedidos ped){
+		List<PedidoItems> list = new ArrayList<>();
+		
+		PedidoItemsServices serviceItems = new PedidoItemsServices();
+		list = serviceItems.findItemsProd(ped.getId_Ped());
+		
+		return list;
+	}
+	
+	
+	private void baixarEstoque(List<PedidoItems> items) {
+		for (PedidoItems item : items) {
+			ProdutoServices servicesProd = new ProdutoServices();
+			Produto prod = servicesProd.findById(item.getId_Prod());
+			prod.subtractProduct(item.getQt_PedIt());
+			servicesProd.saveOrUpdate(prod);
+		}
+	}
+	
+	private void retomarEstoque(List<PedidoItems> items) {
+		for (PedidoItems item : items) {
+			ProdutoServices servicesProd = new ProdutoServices();
+			Produto prod = servicesProd.findById(item.getId_Prod());
+			prod.sumProduct(item.getQt_PedIt());
+			servicesProd.saveOrUpdate(prod);
+		}
+	}
 }

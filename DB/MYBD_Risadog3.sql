@@ -67,63 +67,11 @@ CREATE TABLE Produto
 	id_Prod INT PRIMARY KEY AUTO_INCREMENT,
 	nome_Prod VARCHAR(45) NOT NULL,
 	desc_Prod VARCHAR(45) NOT NULL,
-	preco_Forn DECIMAL(5,2) NOT NULL,
-	preco_Cli DECIMAL(5,2) NOT NULL
+	preco_Forn DECIMAL(20,2) NOT NULL,
+	preco_Cli DECIMAL(20,2) NOT NULL,
+    qtd_Estocado INT NOT NULL,
+    qtd_Min INT NOT NULL
 )DEFAULT CHARSET utf8;
-
-CREATE TABLE Fornecimento
-(
-	id_Forne INT PRIMARY KEY AUTO_INCREMENT,
-	dt_Forne  DATE,
-	preco_Forne DECIMAL(5,2) NOT NULL
-)DEFAULT CHARSET utf8;
-
-ALTER TABLE Fornecimento ADD COLUMN id_Forn INT;
-ALTER TABLE Fornecimento ADD CONSTRAINT fk_Forn FOREIGN KEY (id_Forn) REFERENCES Fornecedor(id_Forn);
-ALTER TABLE Fornecimento ADD COLUMN id_Prod INT;
-ALTER TABLE Fornecimento ADD CONSTRAINT fk_Prod_Forne FOREIGN KEY (id_Prod) REFERENCES Produto(id_Prod);
-
-
-CREATE TABLE Pagamento
-(
-	id_Pag INT PRIMARY KEY AUTO_INCREMENT,
-	preco_Pag DECIMAL(5,2) NOT NULL,
-    dt_Pag DATE,
-    tipo_Pag VARCHAR(45) NOT NULL
-)DEFAULT CHARSET utf8;
-
-ALTER TABLE Pagamento ADD COLUMN id_Cli INT;
-ALTER TABLE Pagamento ADD CONSTRAINT fk_Cli_Pag FOREIGN KEY (id_Cli) REFERENCES Cliente(id_Cli);
-
-CREATE TABLE Pedido
-(
-	id_Ped INT PRIMARY KEY AUTO_INCREMENT,
-    dt_Ped DATE,
-	preco_Ped DECIMAL(5,2) NOT NULL,
-    status_Ped ENUM('PROCESSANDO', 'AGUARDANDO_PAGAMENTO', 'PAGO', 'CANCELADO') NOT NULL
-)DEFAULT CHARSET utf8;
-
--- ALTER TABLE Pedido ADD COLUMN id_Cli INT;
--- ALTER TABLE Pedido ADD CONSTRAINT fk_Cli_Ped FOREIGN KEY (id_Cli) REFERENCES Cliente(id_Cli);
--- ALTER TABLE Pedido ADD COLUMN id_PedIt INT;
--- ALTER TABLE Pedido ADD CONSTRAINT fk_Ped_itens FOREIGN KEY (id_PedIt) REFERENCES PedidoItems(id_PedIt);
-ALTER TABLE Pedido ADD COLUMN id_Col INT;
-ALTER TABLE Pedido ADD CONSTRAINT fk_Col FOREIGN KEY (id_Col) REFERENCES Colaborador(id_Col);
--- ALTER TABLE Pedido ADD COLUMN id_Pag INT;
--- ALTER TABLE Pedido ADD CONSTRAINT fk_Pag FOREIGN KEY (id_Pag) REFERENCES Pagamento(id_Pag);
-
-CREATE TABLE PedidoItems
-(
-	id_PedIt INT PRIMARY KEY AUTO_INCREMENT,
-    id_Prod INT NOT NULL,
-    id_Ped INT NOT NULL,
-    qt_PedIt INT NOT NULL,
-    preco_PedIt DECIMAL(5,2) NOT NULL
-    
-);
-
-ALTER TABLE PedidoItems ADD CONSTRAINT fk_Prod_It FOREIGN KEY (id_Prod) REFERENCES Produto(id_Prod);
-ALTER TABLE PedidoItems ADD CONSTRAINT fk_Ped_It FOREIGN KEY (id_Ped) REFERENCES Pedido(id_Ped);
 
 
 CREATE TABLE Local_Estoque
@@ -151,13 +99,89 @@ ALTER TABLE Estoque ADD COLUMN id_Prod INT;
 ALTER TABLE Estoque ADD CONSTRAINT fk_Prod_Est FOREIGN KEY (id_Prod) REFERENCES Produto(id_Prod);
 
 
+
+CREATE TABLE Fornecimento
+(
+	id_Forne INT PRIMARY KEY AUTO_INCREMENT,
+	dt_Forne  DATE,
+	preco_Forne DECIMAL(20,2) NOT NULL
+)DEFAULT CHARSET utf8;
+
+ALTER TABLE Fornecimento ADD COLUMN id_Forn INT;
+ALTER TABLE Fornecimento ADD CONSTRAINT fk_Forn FOREIGN KEY (id_Forn) REFERENCES Fornecedor(id_Forn);
+ALTER TABLE Fornecimento ADD COLUMN id_Est INT;
+ALTER TABLE Fornecimento ADD CONSTRAINT fk_Est FOREIGN KEY (id_Est) REFERENCES Estoque(id_Est);
+ALTER TABLE Fornecimento ADD COLUMN id_Prod INT;
+ALTER TABLE Fornecimento ADD CONSTRAINT fk_Prod_Forne FOREIGN KEY (id_Prod) REFERENCES Produto(id_Prod);
+
+
+CREATE TABLE Pedido
+(
+	id_Ped INT PRIMARY KEY AUTO_INCREMENT,
+    dt_Ped DATE,
+	preco_Ped DECIMAL(20,2) NOT NULL,
+    status_Ped ENUM('AGUARDANDO_PAGAMENTO', 'PAGO', 'CANCELADO') NOT NULL
+)DEFAULT CHARSET utf8;
+
+-- ALTER TABLE Pedido ADD COLUMN id_Cli INT;
+-- ALTER TABLE Pedido ADD CONSTRAINT fk_Cli_Ped FOREIGN KEY (id_Cli) REFERENCES Cliente(id_Cli);
+-- ALTER TABLE Pedido ADD COLUMN id_PedIt INT;
+-- ALTER TABLE Pedido ADD CONSTRAINT fk_Ped_itens FOREIGN KEY (id_PedIt) REFERENCES PedidoItems(id_PedIt);
+ALTER TABLE Pedido ADD COLUMN id_Col INT;
+ALTER TABLE Pedido ADD CONSTRAINT fk_Col FOREIGN KEY (id_Col) REFERENCES Colaborador(id_Col);
+
+
+CREATE TABLE PedidoItems
+(
+	id_PedIt INT PRIMARY KEY AUTO_INCREMENT,
+    id_Prod INT NOT NULL,
+    id_Ped INT NOT NULL,
+    qt_PedIt INT NOT NULL,
+    preco_PedIt DECIMAL(20,2) NOT NULL
+    
+);
+
+ALTER TABLE PedidoItems ADD CONSTRAINT fk_Prod_It FOREIGN KEY (id_Prod) REFERENCES Produto(id_Prod);
+ALTER TABLE PedidoItems ADD CONSTRAINT fk_Ped_It FOREIGN KEY (id_Ped) REFERENCES Pedido(id_Ped);
+
+
+
 CREATE TABLE Nota_Estoque
 (
 	id_Nota INT PRIMARY KEY AUTO_INCREMENT,
-    valor DECIMAL(5,2) NOT NULL
+    valor DECIMAL(20,2) NOT NULL,
+    nro_Nota INT NOT NULL
 )DEFAULT CHARSET utf8;
 
-ALTER TABLE Nota_Estoque ADD COLUMN id_Est INT;
-ALTER TABLE Nota_Estoque ADD CONSTRAINT fk_Est FOREIGN KEY (id_Est) REFERENCES Estoque(id_Est);
+ALTER TABLE Nota_Estoque ADD COLUMN id_Forne INT;
+ALTER TABLE Nota_Estoque ADD CONSTRAINT fk_Forne FOREIGN KEY (id_Forne) REFERENCES Fornecimento(id_Forne);
+
+
+CREATE TABLE Pagamento
+(
+	id_Pag INT PRIMARY KEY AUTO_INCREMENT,
+	preco_Pag DECIMAL(20,2) NOT NULL,
+    dt_Pag DATE,
+    tipo_Pag ENUM ('DEBITO', 'CREDITO', 'PIX') NOT NULL,
+    nro_Ped INT
+)DEFAULT CHARSET utf8;
+
+
+ALTER TABLE Pedido ADD COLUMN id_Pag INT;
+ALTER TABLE Pedido ADD CONSTRAINT fk_Pag FOREIGN KEY (id_Pag) REFERENCES Pagamento(id_Pag);
+
+
+USE Risadog;
+
+-- Insert data into Endereco
+INSERT INTO Endereco (cep_End, num_End, rua_End, bairro_End, cidade_End) VALUES 
+(12345678, 10, 'Rua A', 'Bairro A', 'Cidade A');
+
+
+-- Insert data into Colaborador
+INSERT INTO Colaborador (nome_Col, cpf_Col, tel_Col, cel_Col, email_Col, id_End, user_Col, user_Senha, level_Access) VALUES 
+('adm', '111.111.111-11', 11111111, 911111111, 'colaborador1@example.com', 1, 'adm', '123', 1);
+
+
 
 -- drop database Risadog;

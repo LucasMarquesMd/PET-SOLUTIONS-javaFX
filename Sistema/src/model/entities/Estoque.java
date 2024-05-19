@@ -1,7 +1,6 @@
 package model.entities;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 public class Estoque {
@@ -11,6 +10,7 @@ public class Estoque {
 	private Date dt_Est;
 	private Integer id_Local;
 	private Integer id_Prod;
+	
 	
 	private LocalDeEstoque localDeEstoque;
 	private Produto produto;

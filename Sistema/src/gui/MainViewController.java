@@ -79,8 +79,6 @@ public class MainViewController implements Initializable {
 	@FXML
 	private MenuItem menuItemNotas;
 	@FXML
-	private MenuItem menuItemPagamentos;
-	@FXML
 	private MenuItem menuItemEstoque;
 
 	/*
@@ -197,14 +195,6 @@ public class MainViewController implements Initializable {
 			// Atualizar a tabela
 			controller.updateTableView();
 		});// Acao de inicializaco do controller
-	}
-	
-	public void onMenuItemPagamentosAction() {
-
-		loadView("/gui/PagamentosList.fxml", (PagamentosListController controller) -> {
-			controller.setPagamentosService(new PagamentosServices());
-			controller.updateTableView();
-		});
 	}
 	
 	public void onMenuItemEstoqueAction() {

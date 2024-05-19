@@ -223,6 +223,7 @@ public class ColaboradorFormController implements Initializable{
 		Constraints.setTextFieldMaxLength(txtTelefone, 10);
 		Constraints.setTextFieldMaxLength(txtNome, 45);
 		Constraints.setTextFieldMaxLength(txtEmail, 50);
+		Constraints.setTextFieldInteger(txtCpf);
 		Constraints.setTextFieldMaxLength(txtCpf, 14);
 		Constraints.setTextFieldMaxLength(txtUsuario, 20);
 		Constraints.setTextFieldInteger(txtLevel);
