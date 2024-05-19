@@ -80,6 +80,8 @@ public class MainViewController implements Initializable {
 	private MenuItem menuItemNotas;
 	@FXML
 	private MenuItem menuItemPagamentos;
+	@FXML
+	private MenuItem menuItemEstoque;
 
 	/*
 	 * ========================================================================
@@ -201,6 +203,14 @@ public class MainViewController implements Initializable {
 
 		loadView("/gui/PagamentosList.fxml", (PagamentosListController controller) -> {
 			controller.setPagamentosService(new PagamentosServices());
+			controller.updateTableView();
+		});
+	}
+	
+	public void onMenuItemEstoqueAction() {
+
+		loadView("/gui/EstoqueList.fxml", (EstoqueListController controller) -> {
+			controller.setProdutoService(new ProdutoServices());
 			controller.updateTableView();
 		});
 	}
