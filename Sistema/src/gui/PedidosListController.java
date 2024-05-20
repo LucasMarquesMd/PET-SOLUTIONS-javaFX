@@ -251,7 +251,7 @@ public class PedidosListController implements Initializable, DataChangeListener 
 			controller.setListPedidoItems(new ArrayList<>());
 			controller.setListProdutosList(new ArrayList<>());
 
-			controller.setColaboradorServices(new ColaboradorServices());
+			//controller.setColaboradorServices(new ColaboradorServices());
 			controller.setServicesCli(new ClienteServices());
 			controller.setServicesProd(new ProdutoServices());
 			controller.setPedidosServices(new PedidosServices());

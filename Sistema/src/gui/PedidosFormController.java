@@ -71,7 +71,6 @@ public class PedidosFormController implements Initializable {
 
 	// Servicos
 	private PedidosServices servicesPed;
-	private ColaboradorServices servicesCol;
 	private PedidoItemsServices servicesItems;
 	private ProdutoServices servicesProd;
 	private ClienteServices servicesCli;
@@ -101,8 +100,8 @@ public class PedidosFormController implements Initializable {
 // 						Atibutos do Pedido	
 // =================================================================================
 
-	@FXML
-	private TextField txtId;
+	private Integer id_Ped;
+	
 	@FXML
 	private DatePicker dpData;
 	@FXML
@@ -269,10 +268,6 @@ public class PedidosFormController implements Initializable {
 		this.servicesPed = servicesPed;
 	}
 
-	public void setColaboradorServices(ColaboradorServices servicesCol) {
-		this.servicesCol = servicesCol;
-	}
-
 	public void setServicesProd(ProdutoServices servicesProd) {
 		this.servicesProd = servicesProd;
 	}
@@ -335,7 +330,6 @@ public class PedidosFormController implements Initializable {
 		txtQuantidade.setText(n.toString());
 
 		// Constraints
-		Constraints.setTextFieldInteger(txtId);
 		Constraints.setTextFieldInteger(txtQuantidade);
 	
 		initializeComboBoxProduto();
@@ -388,7 +382,9 @@ public class PedidosFormController implements Initializable {
 			throw new IllegalStateException("Entity (Pedidos) was null");
 		}
 
-		txtId.setText(String.valueOf(entityPed.getId_Ped()));
+		if(entityPed.getId_Ped() != null) {
+			id_Ped = entityPed.getId_Ped();
+		}
 		Utils.formatDatePicker(dpData, "dd/MM/yyyy");
 
 		// LocalDate.ofInstant() -> Converte a data do objeto para a data local
@@ -501,7 +497,7 @@ public class PedidosFormController implements Initializable {
 			exception.addErrors("Data", "informar a data");
 		}
 
-		obj.setId_Ped(Utils.tryParseToInt(txtId.getText()));
+		obj.setId_Ped(id_Ped);
 		obj.setPreco_Ped(Utils.tryParseToDouble(txtPreco.getText()));
 		obj.setStatus_Ped(PedidoStatus.valueOf(cboStatus.getValue().toString()));
 		obj.setId_Col(entityCol.getIdColab());
