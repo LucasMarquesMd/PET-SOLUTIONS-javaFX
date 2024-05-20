@@ -148,7 +148,7 @@ public class NotasListController implements Initializable, DataChangeListener {
 	    // Configurar a célula para exibir o nome do colaborador
 	    tableCollumnData.setCellFactory(column -> {
 	        return new TableCell<NotaEstoque, Fornecimento>() {
-	            private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	            private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 	            @Override
 	            protected void updateItem(Fornecimento forne, boolean empty) {

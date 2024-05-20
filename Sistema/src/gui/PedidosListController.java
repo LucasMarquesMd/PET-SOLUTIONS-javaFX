@@ -165,7 +165,7 @@ public class PedidosListController implements Initializable, DataChangeListener 
 	private void initializeTbcData() {
 		tableCollumnData.setCellFactory(column -> {
 			return new TableCell<Pedidos, Date>() {
-				private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");// Define o
+				private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");// Define o
 																										// formato da
 																										// data
 
@@ -335,7 +335,7 @@ public class PedidosListController implements Initializable, DataChangeListener 
 	private void initEditButtons() {
 		tableCollumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableCollumnEDIT.setCellFactory(param -> new TableCell<Pedidos, Pedidos>() {
-			private final Button button = new Button("edit");
+			private final Button button = new Button("Editar");
 
 			@Override
 			protected void updateItem(Pedidos obj, boolean empty) {
@@ -395,7 +395,7 @@ public class PedidosListController implements Initializable, DataChangeListener 
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnREMOVE.setCellFactory(param -> new TableCell<Pedidos, Pedidos>() {
-			private final Button button = new Button("remove");
+			private final Button button = new Button("Remover");
 
 			@Override
 			protected void updateItem(Pedidos obj, boolean empty) {

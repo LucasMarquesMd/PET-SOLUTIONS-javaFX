@@ -191,7 +191,7 @@ public class ClienteFormController implements Initializable{
 	
 	//Restricoes
 	private void initializeNode() {
-		
+		//Endeco
 		Constraints.setTextFieldInteger(txtNumero);
 		Constraints.setTextFieldInteger(txtCep);
 		Constraints.setTextFieldMaxLength(txtCep, 8);

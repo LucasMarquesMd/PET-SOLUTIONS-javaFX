@@ -174,7 +174,7 @@ public class PedidosFormController implements Initializable {
 		try {
 
 			fieldesValidation();
-
+			
 			entityPag = getFormDataPag();
 			servicePag.saveOrUpdate(entityPag);
 
@@ -217,6 +217,11 @@ public class PedidosFormController implements Initializable {
 	// Adiciona o produto na tabela
 	public void onBtnAdicionarAction() {
 		Produto prod = cboProduto.getSelectionModel().getSelectedItem();
+		
+		if(cboProduto.getSelectionModel().getSelectedItem() == null) {
+			Alerts.showAlerts("Adicinar", "pedidos", "Nenhum produto selecionado!", AlertType.ERROR);
+			return;
+		}
 
 		if (produtosList.contains(prod)) {
 			Alerts.showAlerts("Aviso", "Pedido", "O produto ja consta na lista de items!", AlertType.WARNING);

@@ -110,6 +110,7 @@ public class PagamentosFormController implements Initializable {
 		try {
 
 			fieldesValidation();
+			
 			if(entityPed.getStatus_Ped() == PedidoStatus.CANCELADO) {
 				Alerts.showAlerts("Aviso", "Pagamentos", "Pedido Cancelado!\n Operacao interrompida!", AlertType.WARNING);
 				Utils.currentStage(event).close();
