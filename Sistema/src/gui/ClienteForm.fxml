@@ -1,161 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="555.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ClienteFormController">
+<AnchorPane prefHeight="572.0" prefWidth="501.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ClienteFormController">
    <children>
-      <Label layoutX="-1.0" layoutY="6.0" text="Cadastro de clientes" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
+      <Label layoutX="10.0" layoutY="4.0" text="Cadastro de clientes" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="4.0">
          <font>
             <Font name="Arial Bold" size="18.0" />
          </font>
       </Label>
-      <GridPane layoutX="20.0" layoutY="40.0" prefHeight="253.0" prefWidth="673.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="30.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="10.0" prefWidth="84.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="455.0" minWidth="10.0" prefWidth="448.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" minWidth="10.0" prefWidth="141.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="34.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label text="Nome" GridPane.rowIndex="1">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtNome" prefHeight="25.0" prefWidth="358.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="Dados do cliente" textFill="#110de0" GridPane.columnIndex="1">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label text="Email" GridPane.rowIndex="2">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtEmail" prefHeight="25.0" prefWidth="358.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="CPF" GridPane.rowIndex="3">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtCpf" prefHeight="25.0" prefWidth="214.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label text="Telefone" GridPane.rowIndex="4">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtTelefone" prefHeight="25.0" prefWidth="214.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="Celular" GridPane.rowIndex="5">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtCelular" prefHeight="25.0" prefWidth="214.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="2">
-               <children>
-                  <Label prefHeight="17.0" prefWidth="19.0" text="ID" />
-                  <TextField fx:id="txtIdCli" editable="false" prefHeight="25.0" prefWidth="74.0" />
-               </children>
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
-            </HBox>
-            <Label fx:id="lblErrorNome" textFill="#f50000" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Label fx:id="lblErrorEmail" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Label fx:id="lblErrorCPF" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Label fx:id="lblErrorTelefone" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <Label fx:id="lblErrorCelular" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-         </children>
-      </GridPane>
-      <GridPane layoutX="35.0" layoutY="296.0" prefHeight="241.0" prefWidth="663.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="15.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="10.0" prefWidth="80.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="455.0" minWidth="10.0" prefWidth="443.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="130.0" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label text="Rua" GridPane.rowIndex="1">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtRua" prefHeight="25.0" prefWidth="358.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="Bairro" GridPane.rowIndex="2">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtBairro" prefHeight="25.0" prefWidth="358.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="Endereco do cliente" textFill="#110de0" GridPane.columnIndex="1">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label text="Cidade" GridPane.rowIndex="3">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtCidade" prefHeight="25.0" prefWidth="358.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label text="CEP" GridPane.rowIndex="4">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtCep" prefHeight="25.0" prefWidth="198.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="Numero" GridPane.rowIndex="5">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtNumero" prefHeight="25.0" prefWidth="74.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-               <children>
-                  <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#onBtnSaveAction" text="Salvar" />
-                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#onBtnCancelAction" text="Cancelar" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="2">
-               <children>
-                  <Label text="ID" />
-                  <TextField fx:id="txtIdEnd" editable="false" prefHeight="25.0" prefWidth="80.0" />
-               </children>
-               <padding>
-                  <Insets left="5.0" top="5.0" />
-               </padding>
-            </HBox>
-            <Label fx:id="lblErrorRua" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Label fx:id="lblErrorBairro" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Label fx:id="lblErrorCidade" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Label fx:id="lblErrorCEP" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <Label fx:id="lblErrorNumero" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-         </children>
-      </GridPane>
+      <Separator layoutX="-4.0" layoutY="34.0" prefHeight="3.0" prefWidth="499.0" />
+      <Label layoutX="10.0" layoutY="34.0" text="Dados do cliente" textFill="#110de0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtNome" layoutX="85.0" layoutY="75.0" prefHeight="25.0" prefWidth="358.0" promptText="Nome do cliente" />
+      <Label layoutX="23.0" layoutY="77.0" text="Nome">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="27.0" layoutY="123.0" text="Email">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtEmail" layoutX="86.0" layoutY="120.0" prefHeight="25.0" prefWidth="358.0" promptText="Email" />
+      <TextField fx:id="txtCpf" layoutX="86.0" layoutY="162.0" prefHeight="25.0" prefWidth="214.0" promptText="CPF" />
+      <Label layoutX="32.0" layoutY="165.0" text="CPF">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtTelefone" layoutX="84.0" layoutY="203.0" prefHeight="25.0" prefWidth="214.0" promptText="Apenas numeros (XX) XXXX-XXXX" />
+      <Label layoutX="15.0" layoutY="207.0" text="Telefone">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtCelular" layoutX="84.0" layoutY="246.0" prefHeight="25.0" prefWidth="214.0" promptText="Apenas numeros (XX) XXXXX-XXXX" />
+      <Label layoutX="24.0" layoutY="247.0" text="Celular">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Separator layoutX="1.0" layoutY="295.0" prefHeight="3.0" prefWidth="499.0" />
+      <Label layoutX="14.0" layoutY="305.0" text="Endereco do cliente" textFill="#110de0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtRua" layoutX="85.0" layoutY="345.0" prefHeight="25.0" prefWidth="358.0" promptText="Rua" />
+      <Label layoutX="30.0" layoutY="348.0" text="Rua">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblErrorNome" layoutX="85.0" layoutY="61.0" textFill="RED" />
+      <Label fx:id="lblErrorEmail" layoutX="85.0" layoutY="100.0" textFill="RED" />
+      <Label fx:id="lblErrorCPF" layoutX="85.0" layoutY="145.0" textFill="RED" />
+      <Label fx:id="lblErrorTelefone" layoutX="85.0" layoutY="187.0" textFill="RED" />
+      <Label fx:id="lblErrorCelular" layoutX="85.0" layoutY="228.0" textFill="RED" />
+      <TextField fx:id="txtBairro" layoutX="86.0" layoutY="393.0" prefHeight="25.0" prefWidth="358.0" promptText="Bairro" />
+      <Label layoutX="23.0" layoutY="395.0" text="Bairro">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtCidade" layoutX="85.0" layoutY="443.0" prefHeight="25.0" prefWidth="358.0" promptText="Ciadade" />
+      <Label layoutX="20.0" layoutY="446.0" text="Cidade">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtCep" layoutX="84.0" layoutY="492.0" prefHeight="25.0" prefWidth="157.0" promptText="CEP - Apenas numeros" />
+      <Label layoutX="32.0" layoutY="494.0" text="CEP">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtNumero" layoutX="370.0" layoutY="492.0" prefHeight="25.0" prefWidth="74.0" />
+      <Label layoutX="298.0" layoutY="494.0" text="Numero">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnSalvar" layoutX="18.0" layoutY="531.0" mnemonicParsing="false" onAction="#onBtnSaveAction" text="Salvar" />
+      <Button fx:id="btnCancelar" layoutX="85.0" layoutY="531.0" mnemonicParsing="false" onAction="#onBtnCancelAction" text="Cancelar" />
+      <Label fx:id="lblErrorRua" layoutX="85.0" layoutY="332.0" textFill="RED" />
+      <Label fx:id="lblErrorBairro" layoutX="85.0" layoutY="376.0" textFill="RED" />
+      <Label fx:id="lblErrorCidade" layoutX="85.0" layoutY="426.0" textFill="RED" />
+      <Label fx:id="lblErrorCEP" layoutX="85.0" layoutY="477.0" textFill="RED" />
+      <Label fx:id="lblErrorNumero" layoutX="370.0" layoutY="477.0" textFill="RED" />
    </children>
 </AnchorPane>

@@ -36,8 +36,8 @@ public class ClienteDaoJDBC implements ClienteDao{
 			
 			st.setString(1, obj.getNome_Cli());
 			st.setString(2, obj.getCpf_Cli());
-			st.setInt(3, obj.getTel_Cli());
-			st.setInt(4, obj.getCel_Cli());
+			st.setString(3, obj.getTel_Cli());
+			st.setString(4, obj.getCel_Cli());
 			st.setString(5, obj.getEmail_Cli());
 			st.setInt(6, obj.getId_End());
 			
@@ -74,8 +74,8 @@ public class ClienteDaoJDBC implements ClienteDao{
 			
 			st.setString(1, obj.getNome_Cli());
 			st.setString(2, obj.getCpf_Cli());
-			st.setInt(3, obj.getTel_Cli());
-			st.setInt(4, obj.getCel_Cli());
+			st.setString(3, obj.getTel_Cli());
+			st.setString(4, obj.getCel_Cli());
 			st.setString(5, obj.getEmail_Cli());
 			
 			st.setInt(6, obj.getId_Cli());
@@ -235,8 +235,8 @@ public class ClienteDaoJDBC implements ClienteDao{
 		obj.setId_Cli(rs.getInt("id_Cli"));
 		obj.setNome_Cli(rs.getString("nome_Cli"));
 		obj.setCpf_Cli(rs.getString("cpf_Cli"));
-		obj.setTel_Cli(rs.getInt("tel_Cli"));
-		obj.setCel_Cli(rs.getInt("cel_Cli"));
+		obj.setTel_Cli(rs.getString("tel_Cli"));
+		obj.setCel_Cli(rs.getString("cel_Cli"));
 		obj.setEmail_Cli(rs.getString("email_Cli"));
 		obj.setId_End(rs.getInt("id_End"));
 

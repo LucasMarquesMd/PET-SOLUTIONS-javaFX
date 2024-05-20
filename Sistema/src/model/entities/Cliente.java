@@ -7,8 +7,8 @@ public class Cliente {
 	private Integer id_Cli;
 	private String nome_Cli;
 	private String cpf_Cli;
-	private Integer tel_Cli;
-	private Integer cel_Cli;
+	private String tel_Cli;
+	private String cel_Cli;
 	private String email_Cli;
 	
 	private Integer id_End;
@@ -17,7 +17,7 @@ public class Cliente {
 	public Cliente() {
 	}
 
-	public Cliente(Integer id_Cli, String nome_Cli, String cpf_Cli, Integer tel_Cli, Integer cel_Cli, String email_Cli,
+	public Cliente(Integer id_Cli, String nome_Cli, String cpf_Cli, String tel_Cli, String cel_Cli, String email_Cli,
 			Integer id_End, Endereco endereco) {
 		this.id_Cli = id_Cli;
 		this.nome_Cli = nome_Cli;
@@ -53,19 +53,19 @@ public class Cliente {
 		this.cpf_Cli = cpf_Cli;
 	}
 
-	public Integer getTel_Cli() {
+	public String getTel_Cli() {
 		return tel_Cli;
 	}
 
-	public void setTel_Cli(Integer tel_Cli) {
+	public void setTel_Cli(String tel_Cli) {
 		this.tel_Cli = tel_Cli;
 	}
 
-	public Integer getCel_Cli() {
+	public String getCel_Cli() {
 		return cel_Cli;
 	}
 
-	public void setCel_Cli(Integer cel_Cli) {
+	public void setCel_Cli(String cel_Cli) {
 		this.cel_Cli = cel_Cli;
 	}
 

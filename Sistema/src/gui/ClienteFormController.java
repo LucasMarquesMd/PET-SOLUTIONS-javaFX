@@ -43,8 +43,8 @@ public class ClienteFormController implements Initializable{
 // 						Atibutos do Cliente	
 // =================================================================================
 	
-	@FXML
-	private TextField txtIdCli;
+	private Integer id_Cli;
+	
 	@FXML
 	private TextField txtNome;
 	@FXML
@@ -61,8 +61,8 @@ public class ClienteFormController implements Initializable{
 //							Atibutos do Endereco	
 // =================================================================================
 
-	@FXML
-	private TextField txtIdEnd;
+	private Integer id_End;
+	
 	@FXML
 	private TextField txtRua;
 	@FXML
@@ -191,21 +191,23 @@ public class ClienteFormController implements Initializable{
 	
 	//Restricoes
 	private void initializeNode() {
-		//Endereco
-		Constraints.setTextFieldInteger(txtIdEnd);
+		
 		Constraints.setTextFieldInteger(txtNumero);
 		Constraints.setTextFieldInteger(txtCep);
+		Constraints.setTextFieldMaxLength(txtCep, 8);
 		Constraints.setTextFieldMaxLength(txtRua, 45);
 		Constraints.setTextFieldMaxLength(txtBairro, 45);
 		Constraints.setTextFieldMaxLength(txtCidade, 45);
 		
 		//Cliente
-		Constraints.setTextFieldInteger(txtIdCli);
 		Constraints.setTextFieldInteger(txtCelular);
+		Constraints.setTextFieldMaxLength(txtCelular, 11);
 		Constraints.setTextFieldInteger(txtTelefone);
+		Constraints.setTextFieldMaxLength(txtTelefone, 10);
 		Constraints.setTextFieldMaxLength(txtNome, 45);
 		Constraints.setTextFieldMaxLength(txtEmail, 50);
-		Constraints.setTextFieldMaxLength(txtCpf, 14);
+		Constraints.setTextFieldInteger(txtCpf);
+		Constraints.setTextFieldMaxLength(txtCpf, 11);
 		
 	}
 	
@@ -215,7 +217,9 @@ public class ClienteFormController implements Initializable{
 			throw new IllegalStateException("Entity (Cliente) was null");
 		}
 		//Cliente
-		txtIdCli.setText(String.valueOf(entityCli.getId_Cli()));
+		if(entityCli.getId_Cli() != null) {
+			id_Cli = entityCli.getId_Cli();
+		}
 		txtNome.setText(entityCli.getNome_Cli());
 		txtEmail.setText(entityCli.getEmail_Cli());
 		txtCpf.setText(entityCli.getCpf_Cli());
@@ -227,7 +231,9 @@ public class ClienteFormController implements Initializable{
 			throw new IllegalStateException("Entity (Endereco) was null");
 		}
 		//Endereco
-		txtIdEnd.setText(String.valueOf(entityEnd.getId_End()));
+		if(entityEnd.getId_End() != null) {
+			id_Cli = entityEnd.getId_End();
+		}
 		txtRua.setText(entityEnd.getRua_End());
 		txtBairro.setText(entityEnd.getBairro_End());
 		txtCidade.setText(entityEnd.getCidade_End());
@@ -250,12 +256,12 @@ public class ClienteFormController implements Initializable{
 	private Cliente getFormDataCli(Endereco entity) {
 		Cliente obj = new Cliente();
 
-		obj.setId_Cli(Utils.tryParseToInt(txtIdCli.getText()));//O tryParseInt() ja faz a verificacao
+		obj.setId_Cli(id_Cli);//O tryParseInt() ja faz a verificacao
 		obj.setNome_Cli(txtNome.getText());
 		obj.setEmail_Cli(txtEmail.getText());
 		obj.setCpf_Cli(txtCpf.getText());
-		obj.setTel_Cli(Utils.tryParseToInt(txtTelefone.getText()));
-		obj.setCel_Cli(Utils.tryParseToInt(txtCelular.getText()));
+		obj.setTel_Cli(txtTelefone.getText());
+		obj.setCel_Cli(txtCelular.getText());
 		
 		obj.setId_End(entity.getId_End());//Adiciona o id do endereco
 		obj.setEndereco(entity);//Adiciona adependencia do endereco
@@ -266,7 +272,7 @@ public class ClienteFormController implements Initializable{
 	private Endereco getFormDataEnd() {
 		Endereco obj = new Endereco();			
 		
-		obj.setId_End(Utils.tryParseToInt(txtIdEnd.getText()));
+		obj.setId_End(id_End);
 		obj.setRua_End(txtRua.getText());
 		obj.setBairro_End(txtBairro.getText());
 		obj.setCidade_End(txtCidade.getText());
@@ -277,55 +283,55 @@ public class ClienteFormController implements Initializable{
 	}
 	
 	private void fieldesValidation() {
-		ValidationException exception = new ValidationException("Erro ao validar os dados do colaborador!");
+		ValidationException exception = new ValidationException("Erro ao validar os dados do Cliente!");
 		
 		if(txtNome.getText() == null || txtNome.getText().trim().equals("")) {
-			exception.addErrors("Nome", "Field can't be empty!");
+			exception.addErrors("Nome", " Informe nome do cliente!");
 		}
 
 		
 		if(txtEmail.getText() == null || txtEmail.getText().trim().equals("")) {
-			exception.addErrors("Email", "Field can't be empty!");
+			exception.addErrors("Email", "Informe o email!");
 		}
 
 		
 		if(txtCpf.getText() == null || txtCpf.getText().trim().equals("")) {
-			exception.addErrors("CPF", "Field can't be empty!");
+			exception.addErrors("CPF", "Informe o CPF!");
 		}
 
 		
 		if(txtTelefone.getText() == null || txtTelefone.getText().trim().equals("")) {
-			exception.addErrors("Telefone", "Field can't be empty!");
+			exception.addErrors("Telefone", "Informe o telefone!");
 		}
 
 		
 		if(txtCelular.getText() == null || txtCelular.getText().trim().equals("")) {
-			exception.addErrors("Celular", "Field can't be empty!");
+			exception.addErrors("Celular", "Informe o celular!");
 		}
 		
 		
 		if(txtRua.getText() == null || txtRua.getText().trim().equals("")) {
-			exception.addErrors("Rua", "Field can't be empty!");
+			exception.addErrors("Rua", "Informe a rua!");
 		}
 
 		
 		if(txtBairro.getText() == null || txtBairro.getText().trim().equals("")) {
-			exception.addErrors("Bairro", "Field can't be empty!");
+			exception.addErrors("Bairro", "Informe o bairro!");
 		}
 
 		
 		if(txtCidade.getText() == null || txtCidade.getText().trim().equals("")) {
-			exception.addErrors("Cidade", "Field can't be empty!");
+			exception.addErrors("Cidade", "Informe a cidade!");
 		}
 
 		
 		if(txtCep.getText() == null || txtCep.getText().trim().equals("")) {
-			exception.addErrors("CEP", "Field can't be empty!");
+			exception.addErrors("CEP", "Digite o CEP!");
 		}
 
 		
 		if(txtNumero.getText() == null || txtNumero.getText().trim().equals("")) {
-			exception.addErrors("Numero", "Field can't be empty!");
+			exception.addErrors("Numero", "Digite o numero!");
 		}
 
 

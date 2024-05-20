@@ -139,9 +139,7 @@ public class ClienteListController implements Initializable, DataChangeListener{
 		tableViewCliente.prefHeightProperty().bind(stage.heightProperty());
 
 	}
-	
 
-	
 	//Metodo responsavel por acessar o servico -> carrgar os colaboradores e atualiza-los no ObservableList<>
 	public void updateTableView() {
 		if(service == null) {
@@ -196,7 +194,7 @@ public class ClienteListController implements Initializable, DataChangeListener{
 			controller.subscribeDataChangeListener(this);//Incrissao para receber o evento do DataChangeListener
 			controller.updateFormData();
 			
-			dialogStage.setTitle("Entre com os dados do colaborador: ");
+			dialogStage.setTitle("Entre com os dados do cliente: ");
 			dialogStage.setScene(new Scene(pane));//Instanciar nova cena
 			//Bloquear o redimensionamento da janela
 			dialogStage.setResizable(false);
@@ -204,7 +202,7 @@ public class ClienteListController implements Initializable, DataChangeListener{
 			dialogStage.initOwner(parentStage);
 			//Definir a janela como modal
 			dialogStage.initModality(Modality.WINDOW_MODAL);
-			//
+			
 			//Chamar a janela
 			dialogStage.showAndWait();//Aguarda ser fechada pelo usuario
 			
