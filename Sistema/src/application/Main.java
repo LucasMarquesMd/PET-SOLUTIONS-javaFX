@@ -42,7 +42,7 @@ public class Main extends Application {
 			scrollPane.setFitToWidth(true);
 			
 			//Instancia uma imagem
-			Image image = new Image("/resource/Dog-icon.ico");
+			Image image = new Image("/resource/DogIcon.png");
 			primaryStage.getIcons().add(image);//Adiciona a imagem como icone da aplicacao
 			
 			// Define a cena no palco principal (Stage)
