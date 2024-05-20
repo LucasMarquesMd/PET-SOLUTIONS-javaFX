@@ -40,18 +40,16 @@ public class ProdutoFormController implements Initializable{
 // 						Atibutos do Produto	
 // =================================================================================
 	
-	@FXML
-	private TextField txtIdProd;
+	private Integer id_Prod;
+	private Integer qt_Min = 0;
+	private Double preco_Forn = 0.0;
+	
 	@FXML
 	private TextField txtNome;
 	@FXML
 	private TextArea txtDescricao;
 	@FXML
 	private TextField txtPreco;
-	@FXML
-	private TextField txtPrecoForn;
-	@FXML
-	private TextField txtQtdMin;
 	@FXML
 	private TextField txtEstoque;
 
@@ -77,10 +75,6 @@ public class ProdutoFormController implements Initializable{
 	private Label lblErrorDescricao;
 	@FXML
 	private Label lblErrorPreco;
-	@FXML
-	private Label lblErrorPrecoForn;
-	@FXML
-	private Label lblErrorQtdMin;
 	@FXML
 	private Label lblErrorEstoque;
 
@@ -145,13 +139,12 @@ public class ProdutoFormController implements Initializable{
 	private void initializeNode() {
 		
 		//Produto
-		Constraints.setTextFieldInteger(txtIdProd);
 		Constraints.setTextFieldMaxLength(txtNome, 45);
 		Constraints.setTextAreaMaxLength(txtDescricao, 50);
 		Constraints.setTextFieldDouble(txtPreco);
-		Constraints.setTextFieldDouble(txtPrecoForn);
+		Constraints.setTextFieldMaxLength(txtPreco, 10);
 		Constraints.setTextFieldInteger(txtEstoque);
-		Constraints.setTextFieldInteger(txtQtdMin);
+		Constraints.setTextFieldMaxLength(txtEstoque, 10);
 		
 		
 	}
@@ -162,13 +155,13 @@ public class ProdutoFormController implements Initializable{
 			throw new IllegalStateException("Entity (Produto) was null");
 		}
 		//Produto
-		txtIdProd.setText(String.valueOf(entity.getId_Prod()));
+		if(entity.getId_Prod() != null) {
+			id_Prod = entity.getId_Prod();
+		}
 		txtNome.setText(entity.getNome_Prod());
 		txtDescricao.setText(entity.getDesc_Prod());
 		txtPreco.setText(String.valueOf(entity.getPreco_Prod()));
-		txtPrecoForn.setText(String.valueOf(entity.getPreco_Forn()));
 		txtEstoque.setText(String.valueOf(entity.getQtd_Estocado()));
-		txtQtdMin.setText(String.valueOf(entity.getQtd_Min()));
 	}
 	
 	//Quais quer objetos que implementarem a inteface, podem se inscrever para receber o evento do controller
@@ -186,37 +179,27 @@ public class ProdutoFormController implements Initializable{
 	private Produto getFormData() {
 		Produto obj = new Produto();
 		
-		ValidationException exception = new ValidationException("Erro ao validar os dados do colaborador!");
+		ValidationException exception = new ValidationException("Erro ao validar os dados do Produto!");
 		
-		obj.setId_Prod(Utils.tryParseToInt(txtIdProd.getText()));//O tryParseInt() ja faz a verificacao
+		obj.setId_Prod(id_Prod);//O tryParseInt() ja faz a verificacao
 		
 		if(txtNome.getText() == null || txtNome.getText().trim().equals("")) {
-			exception.addErrors("Nome", "Field can't be empty!");
+			exception.addErrors("Nome", "Preencha o nome do produto!");
 		}
 		obj.setNome_Prod(txtNome.getText());
 		
 		if(txtDescricao.getText() == null || txtDescricao.getText().trim().equals("")) {
-			exception.addErrors("Descricao", "Field can't be empty!");
+			exception.addErrors("Descricao", "Insira uma descicao!");
 		}
 		obj.setDesc_Prod(txtDescricao.getText());
 		
 		if(txtPreco.getText() == null || txtPreco.getText().trim().equals("")) {
-			exception.addErrors("Preco", "Field can't be empty!");
+			exception.addErrors("Preco", "Informe o preco!");
 		}
 		obj.setPreco_Prod(Utils.tryParseToDouble(txtPreco.getText()));
 		
-		if(txtPrecoForn.getText() == null || txtPrecoForn.getText().trim().equals("")) {
-			exception.addErrors("PrecoForn", "Field can't be empty!");
-		}
-		obj.setPreco_Forn(Utils.tryParseToDouble(txtPrecoForn.getText()));
-		
-		if(txtQtdMin.getText() == null || txtQtdMin.getText().trim().equals("")) {
-			exception.addErrors("QtdMin", "Field can't be empty!");
-		}
-		obj.setQtd_Min(Utils.tryParseToInt(txtQtdMin.getText()));
-		
 		if(txtEstoque.getText() == null || txtEstoque.getText().trim().equals("")) {
-			exception.addErrors("Estoque", "Field can't be empty!");
+			exception.addErrors("Estoque", "Informe um valor (zero ou +)!");
 		}
 		obj.setQtd_Estocado(Utils.tryParseToInt(txtEstoque.getText()));
 		
@@ -234,10 +217,7 @@ public class ProdutoFormController implements Initializable{
 		lblErrorNome.setText(fields.contains("Nome") ? errors.get("Nome") : "");
 		lblErrorDescricao.setText(fields.contains("Descricao") ? errors.get("Descricao") : "");
 		lblErrorPreco.setText(fields.contains("Preco") ? errors.get("Preco") : "");
-		lblErrorPrecoForn.setText(fields.contains("PrecoForn") ? errors.get("PrecoForn") : "");
 		lblErrorEstoque.setText(fields.contains("Estoque") ? errors.get("Estoque") : "");
-		lblErrorQtdMin.setText(fields.contains("QtdMin") ? errors.get("QtdMin") : "");
-		
 		
 	}//
 

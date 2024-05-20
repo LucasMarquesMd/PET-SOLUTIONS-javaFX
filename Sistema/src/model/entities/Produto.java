@@ -8,9 +8,9 @@ public class Produto {
 	private String nome_Prod;
 	private String desc_Prod;
 	private Double preco_Prod;//Preco_Cli
-	private Double preco_Forn;
+	private Double preco_Forn = 0.0;
 	private Integer qtd_Estocado;
-	private Integer qtd_Min;
+	private Integer qtd_Min = 0;
 	
 	private Integer qt_Prod;
 	

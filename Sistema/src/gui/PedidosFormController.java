@@ -337,7 +337,7 @@ public class PedidosFormController implements Initializable {
 		// Constraints
 		Constraints.setTextFieldInteger(txtId);
 		Constraints.setTextFieldInteger(txtQuantidade);
-
+	
 		initializeComboBoxProduto();
 
 		if (entityPag != null) {
@@ -615,7 +615,7 @@ public class PedidosFormController implements Initializable {
 	}
 
 	private void fieldesValidation() {
-		ValidationException exception = new ValidationException("Erro ao validar os dados do colaborador!");
+		ValidationException exception = new ValidationException("Erro ao validar os dados do pedido!");
 
 		if (produtosList.size() == 0) {
 			exception.addErrors("Produto", "Lista de produtos vazia!");

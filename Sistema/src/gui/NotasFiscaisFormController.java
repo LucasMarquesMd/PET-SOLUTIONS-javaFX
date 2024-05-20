@@ -522,11 +522,11 @@ public class NotasFiscaisFormController implements Initializable {
 		ValidationException exception = new ValidationException("Erro ao validar os dados da Nota!");
 
 		if (txtNro.getText() == null || txtNro.getText().trim().equals("")) {
-			exception.addErrors("Nro", "Field can't be empty!");
+			exception.addErrors("Nro", "Insira o Numero da nota!");
 		}
 
 		if (txtPreco.getText() == null || txtPreco.getText().trim().equals("")) {
-			exception.addErrors("Preco", "Field can't be empty!");
+			exception.addErrors("Preco", "Informe o valor total da compra!");
 		}
 
 		if (txtQuantidade.getText() == null || txtQuantidade.getText().trim().equals("")) {
@@ -534,15 +534,15 @@ public class NotasFiscaisFormController implements Initializable {
 		}
 
 		if (cboProduto.getSelectionModel().getSelectedItem() == null) {
-			exception.addErrors("Produto", "Field can't be empty!");
+			exception.addErrors("Produto", "Selecione um produto!");
 		}
 
 		if (cboFornecedor.getSelectionModel().getSelectedItem() == null) {
-			exception.addErrors("Fornecedor", "Field can't be empty!");
+			exception.addErrors("Fornecedor", "Selecione um fornecedor!");
 		}
 
 		if (cboLocal.getSelectionModel().getSelectedItem() == null) {
-			exception.addErrors("Local", "Field can't be empty!");
+			exception.addErrors("Local", "Selecione um local!");
 		}
 
 		if (exception.getErrors().size() > 0) {
