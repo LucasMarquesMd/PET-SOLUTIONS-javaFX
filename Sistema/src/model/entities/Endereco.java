@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Endereco {
 
 	private Integer id_End;
-	private Integer cep_End;
+	private String cep_End;
 	private Integer num_End;
 	private String rua_End;
 	private String bairro_End;
@@ -14,7 +14,7 @@ public class Endereco {
 	public Endereco() {
 	}
 
-	public Endereco(Integer id_End, Integer cep_End, Integer num_End, String rua_End, String bairro_End, String cidade_End) {
+	public Endereco(Integer id_End, String cep_End, Integer num_End, String rua_End, String bairro_End, String cidade_End) {
 		this.id_End = id_End;
 		this.cep_End = cep_End;
 		this.num_End = num_End;
@@ -31,11 +31,11 @@ public class Endereco {
 		this.id_End = id_End;
 	}
 
-	public Integer getCep_End() {
+	public String getCep_End() {
 		return cep_End;
 	}
 
-	public void setCep_End(Integer cep_End) {
+	public void setCep_End(String cep_End) {
 		this.cep_End = cep_End;
 	}
 

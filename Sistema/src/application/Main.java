@@ -18,56 +18,60 @@ import javafx.stage.Stage;
  * O metodo start e um metodo abstrato da classe Application.
  */
 
-
 //A classe principal (main) que herda a classe aplication e inicializa a aplicacao javaFX
 public class Main extends Application {
 
-	private static Scene mainScene;//Sera utilizada no carregamento de outras telas
+	private static Scene mainScene;// Sera utilizada no carregamento de outras telas
 
-
-	// Metodo abstrato que precisa ser implementado para inicializar a aplicação javaFX
+	// Metodo abstrato que precisa ser implementado para inicializar a aplicação
+	// javaFX
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			
+
 			// Carrega o arquivo FXML que define a interface do usuário
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/MainView.fxml"));//Permite a manipulacao da tela antes de carrega-la
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/MainView.fxml"));// Permite a manipulacao da
+																								// tela antes de
+																								// carrega-la
 			// Carrega e instancia o layout principal da cena a partir do arquivo FXML
-			ScrollPane scrollPane = loader.load();//Instancia o layout do palco
-			//Cria uma cena com o layout principal definido no ScrollPane
-			mainScene = new Scene(scrollPane);//Cria uma cena dentro do layout definido no ScrollPane (parent)
-			
-			//Ajusta o ScrollPane para se ajustar à largura e à altura da cena
+			ScrollPane scrollPane = loader.load();// Instancia o layout do palco
+			// Cria uma cena com o layout principal definido no ScrollPane
+			mainScene = new Scene(scrollPane);// Cria uma cena dentro do layout definido no ScrollPane (parent)
+
+			// Ajusta o ScrollPane para se ajustar à largura e à altura da cena
 			scrollPane.setFitToHeight(true);
 			scrollPane.setFitToWidth(true);
-			
-			//Instancia uma imagem
+
+			// Instancia uma imagem
 			Image image = new Image("/resource/DogIcon.png");
-			primaryStage.getIcons().add(image);//Adiciona a imagem como icone da aplicacao
-			
+			primaryStage.getIcons().add(image);// Adicion a a imagem como icone da aplicacao
+
 			// Define a cena no palco principal (Stage)
-			primaryStage.setScene(mainScene);//Define a cena dentro do palco (A cena e do tipo ScrollPane)
+			primaryStage.setScene(mainScene);// Define a cena dentro do palco (A cena e do tipo ScrollPane)
 			// Define o título da janela
-			primaryStage.setTitle("PET SOLUTIONS");//Adiciona um titulo
-			
-			
-			
-			
-			 // Exibe a interface gráfica
+			primaryStage.setTitle("PET SOLUTIONS");// Adiciona um titulo
+
+			// Define a janela para abrir maximizada
+			primaryStage.setMaximized(true);
+
+			// Define a janela para abrir em tela cheia (sem bordas de janela)
+			// primaryStage.setFullScreen(true);
+
+			// Exibe a interface gráfica
 			primaryStage.show();
 		} catch (IOException e) {
-			
-			//Adicionar alerta na tela.
+
+			// Adicionar alerta na tela.
 			e.printStackTrace();
 		}
-		
-	}//end start
-	
+
+	}// end start
+
 	public static void main(String[] args) {
 		launch(args);// Metodo estatico que inicai a aplicacao do javaFX
-	}//end main
-	
-	public static Scene getMainScene(){
+	}// end main
+
+	public static Scene getMainScene() {
 		return mainScene;
 	}
 }

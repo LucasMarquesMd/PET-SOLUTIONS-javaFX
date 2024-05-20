@@ -13,9 +13,9 @@
       <Label text="Pedidos" />
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button fx:id="btnNovo" mnemonicParsing="false" onAction="#onBtnNovo" text="Novo" />
-            <TextField fx:id="txtNumero" prefHeight="25.0" prefWidth="343.0" promptText="Numero do pedido..." />
-            <Button fx:id="btnConsultar" mnemonicParsing="false" onAction="#onBtnConsultar" text="Consultar" />
+          <Button fx:id="btnNovo" mnemonicParsing="false" onAction="#onBtnNovo" style="-fx-background-color: FFB6C1;" text="Novo" />
+            <TextField fx:id="txtNumero" prefHeight="25.0" prefWidth="343.0" promptText="Consultar pedido (numero do pedido)" />
+            <Button fx:id="btnConsultar" mnemonicParsing="false" onAction="#onBtnConsultar" style="-fx-background-color: FFB6C1;" text="Consultar" />
         </items>
       </ToolBar>
       <TableView fx:id="tableViewPedidos" prefHeight="200.0" prefWidth="200.0">

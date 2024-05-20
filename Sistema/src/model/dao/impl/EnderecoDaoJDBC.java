@@ -36,7 +36,7 @@ public class EnderecoDaoJDBC implements EnderecoDao{
 					+ "VALUES "
 					+ "(?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);//retorna a chave primaria
 			
-			st.setInt(1, obj.getCep_End());
+			st.setString(1, obj.getCep_End());
 			st.setInt(2, obj.getNum_End());
 			st.setString(3, obj.getRua_End());
 			st.setString(4, obj.getBairro_End());
@@ -75,7 +75,7 @@ public class EnderecoDaoJDBC implements EnderecoDao{
 					+ "SET cep_End = ?, num_End = ?, rua_End = ?, bairro_End = ?, cidade_End = ? "
 					+ "WHERE id_End = ?");
 			
-			st.setInt(1, obj.getCep_End());
+			st.setString(1, obj.getCep_End());
 			st.setInt(2, obj.getNum_End());
 			st.setString(3, obj.getRua_End());
 			st.setString(4, obj.getBairro_End());
@@ -156,7 +156,7 @@ public class EnderecoDaoJDBC implements EnderecoDao{
 				
 				Endereco end = new Endereco();
 				end.setId_End(rs.getInt("id_End"));
-				end.setCep_End(rs.getInt("cep_End"));
+				end.setCep_End(rs.getString("cep_End"));
 				end.setNum_End(rs.getInt("num_End"));
 				end.setRua_End(rs.getString("rua_End"));
 				end.setBairro_End(rs.getString("bairro_End"));
@@ -184,7 +184,7 @@ public class EnderecoDaoJDBC implements EnderecoDao{
 		obj.setRua_End(rs.getString("rua_End"));
 		obj.setBairro_End(rs.getNString("bairro_End"));
 		obj.setCidade_End(rs.getString("cidade_End"));
-		obj.setCep_End(rs.getInt("cep_End"));
+		obj.setCep_End(rs.getString("cep_End"));
 		obj.setNum_End(rs.getInt("num_End"));
 
 		

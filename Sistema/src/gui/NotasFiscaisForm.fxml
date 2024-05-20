@@ -4,21 +4,13 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="280.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.NotasFiscaisFormController">
+<VBox prefHeight="228.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.NotasFiscaisFormController">
    <children>
-      <ToolBar prefHeight="40.0" prefWidth="200.0">
-         <items>
-            <Label text="ID" />
-            <Separator prefHeight="30.0" prefWidth="2.0" />
-            <TextField fx:id="txtIdNota" editable="false" prefHeight="25.0" prefWidth="78.0" promptText="Id" />
-         </items>
-      </ToolBar>
       <AnchorPane prefHeight="186.0" prefWidth="615.0">
          <children>
             <DatePicker fx:id="dpData" editable="false" layoutX="53.0" layoutY="47.0" promptText="dd/MM/yyyy" />
@@ -27,13 +19,13 @@
             <Label layoutX="18.0" layoutY="19.0" text="Nro" />
             <TextField fx:id="txtPreco" layoutX="53.0" layoutY="87.0" prefHeight="25.0" prefWidth="188.0" promptText="Preco " />
             <Label layoutX="14.0" layoutY="145.0" text="Produto" />
-            <ComboBox fx:id="cboProduto" layoutX="71.0" layoutY="141.0" prefHeight="25.0" prefWidth="200.0" promptText="Produto..." />
+            <ComboBox fx:id="cboProduto" layoutX="71.0" layoutY="141.0" prefHeight="25.0" prefWidth="200.0" promptText="Produto..." style="-fx-background-color: FFB6C1;" />
             <Label layoutX="330.0" layoutY="28.0" text="Fornecedor" />
-            <ComboBox fx:id="cboFornecedor" layoutX="414.0" layoutY="24.0" prefHeight="25.0" prefWidth="161.0" promptText="Fornecedor..." />
+            <ComboBox fx:id="cboFornecedor" layoutX="414.0" layoutY="24.0" prefHeight="25.0" prefWidth="161.0" promptText="Fornecedor..." style="-fx-background-color: FFB6C1;" />
             <TextField fx:id="txtQuantidade" layoutX="281.0" layoutY="141.0" prefHeight="25.0" prefWidth="133.0" promptText="Quantidade" />
             <TextField fx:id="txtNro" layoutX="53.0" layoutY="15.0" promptText="Nro da nota" />
             <Label layoutX="348.0" layoutY="72.0" text="Local" />
-            <ComboBox fx:id="cboLocal" layoutX="414.0" layoutY="68.0" prefHeight="25.0" prefWidth="161.0" promptText="Local" />
+            <ComboBox fx:id="cboLocal" layoutX="414.0" layoutY="68.0" prefHeight="25.0" prefWidth="161.0" promptText="Local" style="-fx-background-color: FFB6C1;" />
             <Label fx:id="lblErrorNro" layoutX="202.0" layoutY="19.0" textFill="RED" />
             <Label fx:id="lblErrorPreco" layoutX="241.0" layoutY="91.0" textFill="#fc0000" />
             <Label fx:id="lblErrorQuantidade" layoutX="416.0" layoutY="145.0" textFill="#f50303" />
@@ -44,8 +36,8 @@
       </AnchorPane>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#onBtnSaveAction" text="Salvar" />
-            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#onBtnCancelAction" text="Cancelar" />
+          <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#onBtnSaveAction" style="-fx-background-color: FFB6C1;" text="Salvar" />
+            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#onBtnCancelAction" style="-fx-background-color: FFB6C1;" text="Cancelar" />
         </items>
       </ToolBar>
    </children>

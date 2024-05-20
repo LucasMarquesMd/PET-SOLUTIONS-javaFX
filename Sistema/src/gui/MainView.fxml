@@ -11,11 +11,12 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="643.0" prefWidth="999.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
    <content>
-      <VBox prefHeight="377.0" prefWidth="552.0">
+      <VBox prefHeight="644.0" prefWidth="997.0">
          <children>
             <MenuBar fx:id="mainMenuBar" style="-fx-background-color: FFB6C1;">
               <menus>
@@ -44,6 +45,11 @@
                       <MenuItem fx:id="menuItemLocal" mnemonicParsing="false" onAction="#onMenuItemLocalAction" text="Local" />
                     </items>
                   </Menu>
+                  <Menu mnemonicParsing="false" text="Sair">
+                    <items>
+                      <MenuItem fx:id="menuItemSair" mnemonicParsing="false" onAction="#onMenuItemSairAction" text="Sair" />
+                    </items>
+                  </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
                     <MenuItem mnemonicParsing="false" text="About" />
@@ -51,22 +57,27 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <AnchorPane prefHeight="315.0" prefWidth="552.0">
-               <children>
-                  <Button fx:id="btnEntrar" layoutX="462.0" layoutY="198.0" mnemonicParsing="false" onAction="#onBtnEntrarAction" style="-fx-background-color: FFB6C1;" text="Entrar" />
-                  <Button fx:id="btnSair" layoutX="395.0" layoutY="198.0" mnemonicParsing="false" onAction="#onBtnSairAction" prefHeight="25.0" prefWidth="49.0" style="-fx-background-color: FFB6C1;" text="Sair" />
-                  <Label layoutX="293.0" layoutY="91.0" text="Usuario" />
-                  <Label layoutX="293.0" layoutY="122.0" text="Senha" />
-                  <TextField fx:id="txtUserName" layoutX="343.0" layoutY="87.0" prefHeight="25.0" prefWidth="199.0" />
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" />
-                  <PasswordField fx:id="txtPassworld" layoutX="344.0" layoutY="118.0" prefHeight="25.0" prefWidth="197.0" />
-                  <ImageView fitHeight="272.0" fitWidth="258.0" layoutX="14.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+            <BorderPane prefHeight="441.0" prefWidth="613.0">
+               <left>
+                  <ImageView fitHeight="288.0" fitWidth="310.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                      <image>
                         <Image url="@../resource/dogIcon.png" />
                      </image>
                   </ImageView>
-               </children>
-            </AnchorPane>
+               </left>
+               <center>
+                  <AnchorPane prefHeight="441.0" prefWidth="367.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <TextField fx:id="txtUserName" layoutX="106.0" layoutY="199.0" prefHeight="30.0" prefWidth="250.0" promptText="Usuario" />
+                        <PasswordField fx:id="txtPassworld" layoutX="106.0" layoutY="237.0" prefHeight="30.0" prefWidth="250.0" promptText="Senha" />
+                        <Label layoutX="49.0" layoutY="206.0" text="Usuario" />
+                        <Label layoutX="53.0" layoutY="244.0" text="Senha" />
+                        <Button fx:id="btnEntrar" layoutX="307.0" layoutY="283.0" mnemonicParsing="false" onAction="#onBtnEntrarAction" prefHeight="25.0" prefWidth="50.0" style="-fx-background-color: FFB6C1;" text="Entrar" />
+                        <Button fx:id="btnSair" layoutX="247.0" layoutY="283.0" mnemonicParsing="false" onAction="#onBtnSairAction" prefHeight="25.0" prefWidth="50.0" style="-fx-background-color: FFB6C1;" text="Sair" />
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
          </children>
       </VBox>
    </content>

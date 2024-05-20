@@ -205,6 +205,7 @@ public class ClienteFormController implements Initializable{
 		Constraints.setTextFieldInteger(txtTelefone);
 		Constraints.setTextFieldMaxLength(txtTelefone, 10);
 		Constraints.setTextFieldMaxLength(txtNome, 45);
+		Constraints.setTextFieldOnlyLetters(txtNome);
 		Constraints.setTextFieldMaxLength(txtEmail, 50);
 		Constraints.setTextFieldInteger(txtCpf);
 		Constraints.setTextFieldMaxLength(txtCpf, 11);
@@ -276,7 +277,7 @@ public class ClienteFormController implements Initializable{
 		obj.setRua_End(txtRua.getText());
 		obj.setBairro_End(txtBairro.getText());
 		obj.setCidade_End(txtCidade.getText());
-		obj.setCep_End(Utils.tryParseToInt(txtCep.getText()));
+		obj.setCep_End(txtCep.getText());
 		obj.setNum_End(Utils.tryParseToInt(txtNumero.getText()));
 		
 		return obj;

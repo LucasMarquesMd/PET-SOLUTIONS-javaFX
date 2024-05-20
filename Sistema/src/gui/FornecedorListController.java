@@ -200,8 +200,8 @@ public class FornecedorListController implements Initializable, DataChangeListen
 			dialogStage.initOwner(parentStage);
 			//Definir a janela como modal
 			dialogStage.initModality(Modality.WINDOW_MODAL);
-			//
-			//Chamar a janela
+			
+
 			dialogStage.showAndWait();//Aguarda ser fechada pelo usuario
 			
 			

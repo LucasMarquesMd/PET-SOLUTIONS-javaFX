@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import application.Main;
 import db.DbException;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
@@ -19,32 +20,33 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import model.entities.Colaborador;
 import model.entities.Endereco;
 import model.exceptions.ValidationException;
 import model.services.ColaboradorServices;
 import model.services.EnderecoService;
 
-public class ColaboradorFormController implements Initializable{
+public class ColaboradorFormController implements Initializable {
 
 // =================================================================================
 //								Dependencias	
 // =================================================================================	
-	
+
 	private Colaborador entityColab;
 	private Endereco entityEnd;
 	private ColaboradorServices servicesColab;
 	private EnderecoService servicesEnd;
-	
+
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
-	
-	
+
 // =================================================================================
 // 						Atibutos do Colaborador	
 // =================================================================================
-	
+
 	private Integer id_Col;
-	
+
 	@FXML
 	private TextField txtNome;
 	@FXML
@@ -61,14 +63,13 @@ public class ColaboradorFormController implements Initializable{
 	private TextField txtSenha;
 	@FXML
 	private TextField txtLevel;
-	
 
 // =================================================================================
 //							Atibutos do Endereco	
 // =================================================================================
 
 	private Integer id_End;
-	
+
 	@FXML
 	private TextField txtRua;
 	@FXML
@@ -79,24 +80,23 @@ public class ColaboradorFormController implements Initializable{
 	private TextField txtCep;
 	@FXML
 	private TextField txtNumero;
-	
-	
+
 // =================================================================================
 //							Atibutos controles genericos	
 //=================================================================================
-	
+
 	@FXML
 	private Button btnSalvar;
 	@FXML
 	private Button btnCancelar;
 	@FXML
 	private Button btnSenha;
-	
+
 // =================================================================================
 //							Atributos dos Labels errors	
 //=================================================================================
 
-	//Colaborador
+	// Colaborador
 	@FXML
 	private Label lblErrorNome;
 	@FXML
@@ -109,9 +109,8 @@ public class ColaboradorFormController implements Initializable{
 	private Label lblErrorCelular;
 	@FXML
 	private Label lblErrorUsuario;
-	
-	
-	//Endereco
+
+	// Endereco
 	@FXML
 	private Label lblErrorRua;
 	@FXML
@@ -126,69 +125,67 @@ public class ColaboradorFormController implements Initializable{
 	private Label lblErrorLevel;
 	@FXML
 	private Label lblErrorSenha;
-	
+
 // =================================================================================
 //							Funcoes dos controles	
 // =================================================================================
-	
+
 	@FXML
 	public void onBtnSaveAction(ActionEvent event) {
-		if(entityEnd == null) {
+		if (entityEnd == null) {
 			throw new IllegalStateException("Entity (entityEnd) was null");
-		}		
-		if(entityColab == null) {
+		}
+		if (entityColab == null) {
 			throw new IllegalStateException("Entity (entityColab) was null");
 		}
 		try {
-			fieldesValidation();//Validacao dos campos
-			//Endereco
+			fieldesValidation();// Validacao dos campos
+			// Endereco
 			entityEnd = getFormDataEnd();
 			servicesEnd.saveOrUpdate(entityEnd);
-			//Colaborador
+			// Colaborador
 			entityColab = getFormDataColab(entityEnd);
 			servicesColab.saveOrUpdate(entityColab);
-			
-			notifyDataChangeListeners();
-			
-			Utils.currentStage(event).close();//Fecha o formulario
-			
-		}
-		catch(ValidationException e) {
-			setErrorMessages(e.getErrors());//Envia a colecao de erros
 
-		}
-		catch(DbException e) {
+			notifyDataChangeListeners();
+
+			Utils.currentStage(event).close();// Fecha o formulario
+
+		} catch (ValidationException e) {
+			setErrorMessages(e.getErrors());// Envia a colecao de erros
+
+		} catch (DbException e) {
 			e.printStackTrace();
 			Alerts.showAlerts("Error saving object", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
-	
+
 	@FXML
 	public void onBtnCancelAction(ActionEvent event) {
 		Utils.currentStage(event).close();
 	}
-	
+
 	@FXML
 	public void onBtnSenhaAction() {
 		System.out.println("onBtnSenhaAction - clik");
 	}
-	
+
 // =================================================================================
 //						Funcoes para injecao de dependencia	
 // =================================================================================
-	
+
 	public void setColaborador(Colaborador entity) {
 		this.entityColab = entity;
 	}
-	
+
 	public void setEndereco(Endereco entity) {
 		this.entityEnd = entity;
 	}
-	
+
 	public void setColaboradorServices(ColaboradorServices servicesColab) {
 		this.servicesColab = servicesColab;
 	}
-	
+
 	public void setEnderecoService(EnderecoService servicesEnd) {
 		this.servicesEnd = servicesEnd;
 	}
@@ -200,12 +197,11 @@ public class ColaboradorFormController implements Initializable{
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		initializeNode();
-		
 	}
-	
-	//Restricoes
+
+	// Restricoes
 	private void initializeNode() {
-		//Endereco
+		// Endereco
 		Constraints.setTextFieldInteger(txtNumero);
 		Constraints.setTextFieldMaxLength(txtNumero, 10);
 		Constraints.setTextFieldInteger(txtCep);
@@ -213,13 +209,14 @@ public class ColaboradorFormController implements Initializable{
 		Constraints.setTextFieldMaxLength(txtRua, 45);
 		Constraints.setTextFieldMaxLength(txtBairro, 45);
 		Constraints.setTextFieldMaxLength(txtCidade, 45);
-		
-		//Colaborador
+
+		// Colaborador
 		Constraints.setTextFieldInteger(txtCelular);
 		Constraints.setTextFieldMaxLength(txtCelular, 11);
 		Constraints.setTextFieldInteger(txtTelefone);
 		Constraints.setTextFieldMaxLength(txtTelefone, 10);
 		Constraints.setTextFieldMaxLength(txtNome, 45);
+		Constraints.setTextFieldOnlyLetters(txtNome);
 		Constraints.setTextFieldMaxLength(txtEmail, 50);
 		Constraints.setTextFieldInteger(txtCpf);
 		Constraints.setTextFieldMaxLength(txtCpf, 11);
@@ -227,16 +224,18 @@ public class ColaboradorFormController implements Initializable{
 		Constraints.setTextFieldInteger(txtLevel);
 		Constraints.setTextFieldMaxLength(txtLevel, 1);
 		Constraints.setTextFieldMaxLength(txtSenha, 20);
+
+		// Instancia uma imagem
 		
+
 	}
-	
-	
+
 	public void updateFormData() {
-		if(entityColab == null) {
+		if (entityColab == null) {
 			throw new IllegalStateException("Entity (Colaborador) was null");
 		}
-		//Colaborador
-		if(entityColab.getIdColab() != null) {
+		// Colaborador
+		if (entityColab.getIdColab() != null) {
 			id_Col = entityColab.getIdColab();
 		}
 
@@ -248,38 +247,38 @@ public class ColaboradorFormController implements Initializable{
 		txtUsuario.setText(entityColab.getUser_Col());
 		txtLevel.setText(String.valueOf(entityColab.getLevel_Access()));
 		txtSenha.setText(entityColab.getUser_Senha());
-		
-		
-		if(entityEnd == null) {
+
+		if (entityEnd == null) {
 			throw new IllegalStateException("Entity (Endereco) was null");
 		}
-		//Endereco
-		if(entityEnd.getId_End() != null) {
+		// Endereco
+		if (entityEnd.getId_End() != null) {
 			id_End = entityEnd.getId_End();
 		}
 		txtRua.setText(entityEnd.getRua_End());
 		txtBairro.setText(entityEnd.getBairro_End());
 		txtCidade.setText(entityEnd.getCidade_End());
-		txtCep.setText(String.valueOf(entityEnd.getCep_End()));
+		txtCep.setText(entityEnd.getCep_End());
 		txtNumero.setText(String.valueOf(entityEnd.getNum_End()));
 	}
-	
-	//Quais quer objetos que implementarem a inteface, podem se inscrever para receber o evento do controller
+
+	// Quais quer objetos que implementarem a inteface, podem se inscrever para
+	// receber o evento do controller
 	public void subscribeDataChangeListener(DataChangeListener listener) {
 		dataChangeListeners.add(listener);
 	}
-	
+
 	private void notifyDataChangeListeners() {
 		for (DataChangeListener listener : dataChangeListeners) {
-			listener.onDataChanged();//Invoca o metodo nas classes que implementaram a interface
+			listener.onDataChanged();// Invoca o metodo nas classes que implementaram a interface
 		}
 	}
-	
-	//Preenche ou atualiza os dados do objeto colaborador
+
+	// Preenche ou atualiza os dados do objeto colaborador
 	private Colaborador getFormDataColab(Endereco entity) {
 		Colaborador obj = new Colaborador();
 
-		obj.setIdColab(id_Col);//O tryParseInt() ja faz a verificacao
+		obj.setIdColab(id_Col);// O tryParseInt() ja faz a verificacao
 		obj.setName(txtNome.getText());
 		obj.setEmail(txtEmail.getText());
 		obj.setCnpj_cpf(txtCpf.getText());
@@ -289,97 +288,86 @@ public class ColaboradorFormController implements Initializable{
 		obj.setLevel_Access(Utils.tryParseToInt(txtLevel.getText()));
 
 		obj.setUser_Senha(txtSenha.getText());
-		
-		obj.setId_End(entity.getId_End());//Adiciona o id do endereco
-		obj.setEndereco(entity);//Adiciona adependencia do endereco
-		
+
+		obj.setId_End(entity.getId_End());// Adiciona o id do endereco
+		obj.setEndereco(entity);// Adiciona adependencia do endereco
+
 		return obj;
 	}
-	
+
 	private Endereco getFormDataEnd() {
-		Endereco obj = new Endereco();			
-		
+		Endereco obj = new Endereco();
+
 		obj.setId_End(id_End);
 		obj.setRua_End(txtRua.getText());
 		obj.setBairro_End(txtBairro.getText());
 		obj.setCidade_End(txtCidade.getText());
-		obj.setCep_End(Utils.tryParseToInt(txtCep.getText()));
+		obj.setCep_End(txtCep.getText());
 		obj.setNum_End(Utils.tryParseToInt(txtNumero.getText()));
-		
+
 		return obj;
 	}
-	
+
 	private void fieldesValidation() {
 		ValidationException exception = new ValidationException("Erro ao validar os dados do colaborador!");
-		
-		if(txtNome.getText() == null || txtNome.getText().trim().equals("")) {
+
+		if (txtNome.getText() == null || txtNome.getText().trim().equals("")) {
 			exception.addErrors("Nome", "Preencha o nome do colaborador!");
 		}
 
-		
-		if(txtEmail.getText() == null || txtEmail.getText().trim().equals("")) {
+		if (txtEmail.getText() == null || txtEmail.getText().trim().equals("")) {
 			exception.addErrors("Email", "Preencha o email do colaborador!");
 		}
 
-		
-		if(txtCpf.getText() == null || txtCpf.getText().trim().equals("")) {
+		if (txtCpf.getText() == null || txtCpf.getText().trim().equals("")) {
 			exception.addErrors("CPF", "Informe o CPF!");
 		}
 
-		
-		if(txtTelefone.getText() == null || txtTelefone.getText().trim().equals("")) {
+		if (txtTelefone.getText() == null || txtTelefone.getText().trim().equals("")) {
 			exception.addErrors("Telefone", "Informe o telefone!");
 		}
 
-		
-		if(txtCelular.getText() == null || txtCelular.getText().trim().equals("")) {
+		if (txtCelular.getText() == null || txtCelular.getText().trim().equals("")) {
 			exception.addErrors("Celular", "Informe o celular!");
 		}
 
-		
-		if(txtUsuario.getText() == null || txtUsuario.getText().trim().equals("")) {
+		if (txtUsuario.getText() == null || txtUsuario.getText().trim().equals("")) {
 			exception.addErrors("Usuario", "Informe um usuario!");
 		}
-		
-		if(txtSenha.getText() == null || txtSenha.getText().trim().equals("")) {
+
+		if (txtSenha.getText() == null || txtSenha.getText().trim().equals("")) {
 			exception.addErrors("Senha", "Informe a senha!");
 		}
-		
-		if(txtLevel.getText() == null || txtLevel.getText().trim().equals("")) {
+
+		if (txtLevel.getText() == null || txtLevel.getText().trim().equals("")) {
 			exception.addErrors("Nivel", "Informe o nivel de acesso!");
 		}
-		
-		
-		if(txtRua.getText() == null || txtRua.getText().trim().equals("")) {
+
+		if (txtRua.getText() == null || txtRua.getText().trim().equals("")) {
 			exception.addErrors("Rua", "Informe a rua!");
 		}
 
-		
-		if(txtBairro.getText() == null || txtBairro.getText().trim().equals("")) {
+		if (txtBairro.getText() == null || txtBairro.getText().trim().equals("")) {
 			exception.addErrors("Bairro", "Informe o bairro!");
 		}
 
-		
-		if(txtCidade.getText() == null || txtCidade.getText().trim().equals("")) {
+		if (txtCidade.getText() == null || txtCidade.getText().trim().equals("")) {
 			exception.addErrors("Cidade", "Informe a cidade!");
 		}
 
-		
-		if(txtCep.getText() == null || txtCep.getText().trim().equals("")) {
+		if (txtCep.getText() == null || txtCep.getText().trim().equals("")) {
 			exception.addErrors("CEP", "Digite o CEP!");
 		}
 
-		
-		if(txtNumero.getText() == null || txtNumero.getText().trim().equals("")) {
+		if (txtNumero.getText() == null || txtNumero.getText().trim().equals("")) {
 			exception.addErrors("Numero", "Informe o numero!");
 		}
 
-
-		if(exception.getErrors().size() > 0) {
-			throw exception;//Lanca a excessao
+		if (exception.getErrors().size() > 0) {
+			throw exception;// Lanca a excessao
 		}
 	}
-	
+
 	private void setErrorMessages(Map<String, String> errors) {
 		Set<String> fields = errors.keySet();
 
@@ -389,28 +377,15 @@ public class ColaboradorFormController implements Initializable{
 		lblErrorTelefone.setText(fields.contains("Telefone") ? errors.get("Telefone") : "");
 		lblErrorCelular.setText(fields.contains("Celular") ? errors.get("Celular") : "");
 		lblErrorUsuario.setText(fields.contains("Usuario") ? errors.get("Usuario") : "");
-		lblErrorLevel.setText(fields.contains("Nivel") ? errors.get("Usuario") : "");
-		
+		lblErrorLevel.setText(fields.contains("Nivel") ? errors.get("Nivel") : "");
+		lblErrorSenha.setText(fields.contains("Senha") ? errors.get("Senha") : "");
+
 		lblErrorRua.setText(fields.contains("Rua") ? errors.get("Rua") : "");
 		lblErrorBairro.setText(fields.contains("Bairro") ? errors.get("Bairro") : "");
 		lblErrorCidade.setText(fields.contains("Cidade") ? errors.get("Cidade") : "");
 		lblErrorCEP.setText(fields.contains("CEP") ? errors.get("CEP") : "");
 		lblErrorNumero.setText(fields.contains("Numero") ? errors.get("Numero") : "");
-		lblErrorSenha.setText(fields.contains("Senha") ? errors.get("Senha") : "");
-		
+
 	}//
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -27,14 +28,14 @@
       <TextField fx:id="txtTelefone" layoutX="83.0" layoutY="258.0" prefHeight="25.0" prefWidth="202.0" promptText="(XX) XXXX-XXXX" />
       <TextField fx:id="txtUsuario" layoutX="83.0" layoutY="300.0" prefHeight="25.0" prefWidth="202.0" promptText="Usuario" />
       <TextField fx:id="txtSenha" layoutX="83.0" layoutY="353.0" promptText="Senha" />
-      <TextField fx:id="txtLevel" layoutX="303.0" layoutY="353.0" prefHeight="25.0" prefWidth="39.0" promptText="Nivel de acesso" />
+      <TextField fx:id="txtLevel" layoutX="303.0" layoutY="353.0" prefHeight="25.0" prefWidth="43.0" promptText="Nivel " />
       <TextField fx:id="txtRua" layoutX="67.0" layoutY="433.0" prefHeight="25.0" prefWidth="358.0" promptText="Rua" />
       <TextField fx:id="txtBairro" layoutX="67.0" layoutY="477.0" prefHeight="25.0" prefWidth="358.0" promptText="Bairro" />
       <TextField fx:id="txtCidade" layoutX="67.0" layoutY="525.0" prefHeight="25.0" prefWidth="358.0" promptText="Cidade" />
       <TextField fx:id="txtCep" layoutX="69.0" layoutY="565.0" prefHeight="25.0" prefWidth="198.0" promptText="Apenas numeros" />
       <TextField fx:id="txtNumero" layoutX="374.0" layoutY="565.0" prefHeight="25.0" prefWidth="74.0" promptText="Numero" />
-      <Button fx:id="btnSalvar" layoutX="15.0" layoutY="613.0" mnemonicParsing="false" onAction="#onBtnSaveAction" text="Salvar" />
-      <Button fx:id="btnCancelar" layoutX="77.0" layoutY="613.0" mnemonicParsing="false" onAction="#onBtnCancelAction" text="Cancelar" />
+      <Button fx:id="btnSalvar" layoutX="15.0" layoutY="613.0" mnemonicParsing="false" onAction="#onBtnSaveAction" style="-fx-background-color: FFB6C1;" text="Salvar" />
+      <Button fx:id="btnCancelar" layoutX="77.0" layoutY="613.0" mnemonicParsing="false" onAction="#onBtnCancelAction" style="-fx-background-color: FFB6C1;" text="Cancelar" />
       <Label layoutX="19.0" layoutY="88.0" text="Nome">
          <font>
             <Font size="14.0" />
@@ -65,7 +66,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="20.0" layoutY="355.0" text="Senha">
+      <Label layoutX="14.0" layoutY="355.0" text="Senha">
          <font>
             <Font size="14.0" />
          </font>
@@ -109,19 +110,23 @@
       <Separator layoutX="5.0" layoutY="60.0" prefHeight="20.0" prefWidth="543.0" />
       <Separator layoutX="-8.0" layoutY="15.0" prefHeight="20.0" prefWidth="553.0" />
       <Separator layoutX="-13.0" layoutY="593.0" prefHeight="20.0" prefWidth="570.0" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="325.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="lblErrorEmail" layoutX="376.0" layoutY="135.0" textFill="#f80606" />
-      <Label fx:id="lblErrorNome" layoutX="376.0" layoutY="90.0" textFill="RED" />
-      <Label fx:id="lblErrorCPF" layoutX="294.0" layoutY="180.0" textFill="RED" />
-      <Label fx:id="lblErrorCelular" layoutX="294.0" layoutY="224.0" textFill="RED" />
-      <Label fx:id="lblErrorTelefone" layoutX="294.0" layoutY="262.0" textFill="RED" />
-      <Label fx:id="lblErrorUsuario" layoutX="294.0" layoutY="304.0" textFill="RED" />
       <Label fx:id="lblErrorSenha" layoutX="83.0" layoutY="335.0" textFill="RED" />
-      <Label fx:id="lblErrorLevel" layoutX="322.0" layoutY="335.0" textFill="RED" />
       <Label fx:id="lblErrorRua" layoutX="69.0" layoutY="413.0" textFill="RED" />
       <Label fx:id="lblErrorBairro" layoutX="69.0" layoutY="458.0" textFill="RED" />
       <Label fx:id="lblErrorCidade" layoutX="69.0" layoutY="510.0" textFill="RED" />
       <Label fx:id="lblErrorCEP" layoutX="69.0" layoutY="549.0" textFill="RED" />
       <Label fx:id="lblErrorNumero" layoutX="377.0" layoutY="549.0" textFill="RED" />
+      <ImageView fitHeight="170.0" fitWidth="202.0" layoutX="363.0" layoutY="159.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resource/Employee.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblErrorNome" layoutX="83.0" layoutY="72.0" textFill="RED" />
+      <Label fx:id="lblErrorEmail" layoutX="83.0" layoutY="111.0" textFill="RED" />
+      <Label fx:id="lblErrorCPF" layoutX="83.0" layoutY="159.0" textFill="RED" />
+      <Label fx:id="lblErrorCelular" layoutX="83.0" layoutY="201.0" textFill="RED" />
+      <Label fx:id="lblErrorTelefone" layoutX="83.0" layoutY="243.0" textFill="RED" />
+      <Label fx:id="lblErrorUsuario" layoutX="83.0" layoutY="283.0" textFill="RED" />
+      <Label fx:id="lblErrorLevel" layoutX="290.0" layoutY="335.0" textFill="RED" />
    </children>
 </AnchorPane>

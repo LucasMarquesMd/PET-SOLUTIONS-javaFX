@@ -11,40 +11,40 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="463.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PedidosFormController">
+<VBox prefHeight="447.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PedidosFormController">
    <children>
-      <AnchorPane prefHeight="428.0" prefWidth="615.0">
+      <AnchorPane maxHeight="428.0" maxWidth="615.0" prefHeight="171.0" prefWidth="615.0">
          <children>
             <DatePicker fx:id="dpData" editable="false" layoutX="51.0" layoutY="14.0" promptText="dd/MM/yyyy" />
             <Label layoutX="14.0" layoutY="18.0" text="Data" />
             <Label layoutX="12.0" layoutY="58.0" text="Preco" />
             <Label layoutX="10.0" layoutY="95.0" text="Status" />
             <Label layoutX="329.0" layoutY="18.0" text="Colaborador" />
-            <TextField fx:id="txtPreco" editable="false" layoutX="51.0" layoutY="54.0" prefHeight="25.0" prefWidth="188.0" promptText="\$$$$$$$" />
-            <TextField fx:id="txtColaborador" editable="false" layoutX="416.0" layoutY="14.0" />
-            <ComboBox fx:id="cboStatus" layoutX="65.0" layoutY="91.0" prefHeight="25.0" prefWidth="161.0" promptText="Situcao" />
+            <TextField fx:id="txtPreco" editable="false" layoutX="51.0" layoutY="54.0" prefHeight="25.0" prefWidth="188.0" promptText="Total do pedido (R$)" />
+            <TextField fx:id="txtColaborador" editable="false" layoutX="416.0" layoutY="14.0" promptText="Colaborador" />
+            <ComboBox fx:id="cboStatus" layoutX="65.0" layoutY="91.0" prefHeight="25.0" prefWidth="161.0" promptText="Situcao" style="-fx-background-color: FFB6C1;" />
             <Label layoutX="14.0" layoutY="145.0" text="Produto" />
-            <ComboBox fx:id="cboProduto" layoutX="71.0" layoutY="141.0" prefHeight="25.0" prefWidth="200.0" promptText="Produto..." />
-            <Button fx:id="btnAdicionar" layoutX="363.0" layoutY="141.0" mnemonicParsing="false" onAction="#onBtnAdicionarAction" text="Adicionar" />
-            <TableView fx:id="tableViewPedidos" layoutX="12.0" layoutY="176.0" prefHeight="238.0" prefWidth="592.0">
-              <columns>
-                <TableColumn fx:id="tbcId" prefWidth="63.0" text="ID" />
-                <TableColumn fx:id="tbcNome" prefWidth="126.0" text="Nome" />
-                  <TableColumn fx:id="tbcQuantidade" prefWidth="79.0" text="Quantidade" />
-                  <TableColumn fx:id="tbcPreco" prefWidth="115.0" text="Sub totais" />
-                  <TableColumn fx:id="tableColumnREMOVE" prefWidth="75.0" />
-              </columns>
-            </TableView>
+            <ComboBox fx:id="cboProduto" layoutX="71.0" layoutY="141.0" prefHeight="25.0" prefWidth="200.0" promptText="Produto..." style="-fx-background-color: FFB6C1;" />
+            <Button fx:id="btnAdicionar" layoutX="363.0" layoutY="141.0" mnemonicParsing="false" onAction="#onBtnAdicionarAction" style="-fx-background-color: FFB6C1;" text="Adicionar" />
             <TextField fx:id="txtQuantidade" layoutX="281.0" layoutY="141.0" prefHeight="25.0" prefWidth="67.0" promptText="Nro" />
             <Label fx:id="lblErrorStatus" layoutX="225.0" layoutY="95.0" textFill="RED" />
             <Label fx:id="lblProdutos" layoutX="430.0" layoutY="145.0" textFill="#ff0101" />
             <Label fx:id="lblErrorData" layoutX="225.0" layoutY="18.0" textFill="RED" />
          </children>
       </AnchorPane>
+      <TableView fx:id="tableViewPedidos" prefHeight="235.0" prefWidth="615.0">
+        <columns>
+          <TableColumn fx:id="tbcId" prefWidth="63.0" text="ID" />
+          <TableColumn fx:id="tbcNome" prefWidth="126.0" text="Nome" />
+            <TableColumn fx:id="tbcQuantidade" prefWidth="79.0" text="Quantidade" />
+            <TableColumn fx:id="tbcPreco" prefWidth="115.0" text="Sub totais" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="108.0" />
+        </columns>
+      </TableView>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#onBtnSaveAction" text="Salvar" />
-            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#onBtnCancelAction" text="Cancelar" />
+          <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#onBtnSaveAction" style="-fx-background-color: FFB6C1;" text="Salvar" />
+            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#onBtnCancelAction" style="-fx-background-color: FFB6C1;" text="Cancelar" />
         </items>
       </ToolBar>
    </children>

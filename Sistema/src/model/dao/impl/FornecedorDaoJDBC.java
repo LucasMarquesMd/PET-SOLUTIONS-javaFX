@@ -220,7 +220,7 @@ public class FornecedorDaoJDBC implements FornecedorDao{
 		obj.setRua_End(rs.getString("rua_End"));
 		obj.setBairro_End(rs.getNString("bairro_End"));
 		obj.setCidade_End(rs.getString("cidade_End"));
-		obj.setCep_End(rs.getInt("cep_End"));
+		obj.setCep_End(rs.getString("cep_End"));
 		obj.setNum_End(rs.getInt("num_End"));
 
 		

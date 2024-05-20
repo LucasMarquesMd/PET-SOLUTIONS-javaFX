@@ -14,15 +14,15 @@
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
             <TextField fx:id="txtNome" prefHeight="25.0" prefWidth="238.0" promptText="Nome do produto" />
-            <Button fx:id="btnConsultar" mnemonicParsing="false" onAction="#onBtnConsultar" text="Consultar" />
+            <Button fx:id="btnConsultar" mnemonicParsing="false" onAction="#onBtnConsultar" style="-fx-background-color: FFB6C1;" text="Consultar" />
         </items>
       </ToolBar>
       <TableView fx:id="tableViewProduto" prefHeight="260.0" prefWidth="462.0">
         <columns>
           <TableColumn fx:id="tableCollumnId" prefWidth="70.0" text="ID" />
-          <TableColumn fx:id="tableCollumnName" prefWidth="158.0" text="Nome" />
-            <TableColumn fx:id="tableCollumnDescricao" prefWidth="180.0" text="Descricao" />
-            <TableColumn fx:id="tableCollumnQuantidade" minWidth="0.0" prefWidth="111.0" text="Quantidade" />
+          <TableColumn fx:id="tableCollumnName" prefWidth="172.0" text="Nome" />
+            <TableColumn fx:id="tableCollumnDescricao" prefWidth="177.0" text="Descricao" />
+            <TableColumn fx:id="tableCollumnQuantidade" minWidth="0.0" prefWidth="114.0" text="Quantidade" />
         </columns>
       </TableView>
    </children>

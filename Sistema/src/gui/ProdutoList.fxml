@@ -8,14 +8,14 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="344.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ProdutoListController">
+<VBox prefHeight="344.0" prefWidth="548.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ProdutoListController">
    <children>
       <Label text="Produtos" />
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button fx:id="btnCadastrar" mnemonicParsing="false" onAction="#onBtnCadastrar" text="Cadastrar" />
-            <TextField fx:id="txtNome" prefHeight="25.0" prefWidth="238.0" promptText="Nome do produto" />
-            <Button fx:id="btnConsultar" mnemonicParsing="false" onAction="#onBtnConsultar" text="Consultar" />
+          <Button fx:id="btnCadastrar" mnemonicParsing="false" onAction="#onBtnCadastrar" style="-fx-background-color: FFB6C1;" text="Cadastrar" />
+            <TextField fx:id="txtNome" prefHeight="25.0" prefWidth="238.0" promptText="Consultar produto (Nome do produto)" />
+            <Button fx:id="btnConsultar" mnemonicParsing="false" onAction="#onBtnConsultar" style="-fx-background-color: FFB6C1;" text="Consultar" />
         </items>
       </ToolBar>
       <TableView fx:id="tableViewProduto" prefHeight="260.0" prefWidth="462.0">
@@ -24,8 +24,8 @@
           <TableColumn fx:id="tableCollumnName" text="Nome" />
             <TableColumn fx:id="tableCollumnDescricao" prefWidth="165.0" text="Descricao" />
             <TableColumn fx:id="tableCollumnPreco" minWidth="0.0" prefWidth="88.0" text="Preco" />
-            <TableColumn fx:id="tableCollumnEDIT" prefWidth="61.0" />
-            <TableColumn fx:id="tableColumnREMOVE" prefWidth="67.0" />
+            <TableColumn fx:id="tableCollumnEDIT" prefWidth="63.0" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="73.0" />
         </columns>
       </TableView>
    </children>

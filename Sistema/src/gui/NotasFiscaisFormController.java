@@ -85,8 +85,8 @@ public class NotasFiscaisFormController implements Initializable {
 // 						Atibutos do Colaborador	
 // =================================================================================
 
-	@FXML
-	private TextField txtIdNota;
+	private Integer id_Nota;
+	
 	@FXML
 	private TextField txtNro;
 	@FXML
@@ -271,13 +271,13 @@ public class NotasFiscaisFormController implements Initializable {
 		}
 		
 
-		Constraints.setTextFieldInteger(txtIdNota);
+		
 		Constraints.setTextFieldInteger(txtNro);
+		Constraints.setTextFieldMaxLength(txtNro, 10);
 		Constraints.setTextFieldInteger(txtQuantidade);
+		Constraints.setTextFieldMaxLength(txtQuantidade, 10);
 		Constraints.setTextFieldDouble(txtPreco);
-		Constraints.setTextFieldMaxLength(txtNro, 45);
-		Constraints.setTextFieldMaxLength(txtPreco, 50);
-		Constraints.setTextFieldMaxLength(txtQuantidade, 50);
+		Constraints.setTextFieldMaxLength(txtPreco, 10);
 
 		Utils.formatDatePicker(dpData, "dd/MM/yyyy");
 		dpData.setValue(null);
@@ -341,7 +341,10 @@ public class NotasFiscaisFormController implements Initializable {
 			throw new IllegalStateException("Entity (Colaborador) was null");
 		}
 		// Nota
-		txtIdNota.setText(String.valueOf(entityNota.getId_Nota()));
+		if(entityNota.getId_Nota() != null) {
+			id_Nota = entityNota.getId_Nota();
+		}
+		
 		txtNro.setText(String.valueOf(entityNota.getNro_Nota()));
 
 		if (entityForn == null) {
@@ -440,7 +443,7 @@ public class NotasFiscaisFormController implements Initializable {
 	private NotaEstoque getFormDataNota(Fornecimento forne) {
 		NotaEstoque obj = new NotaEstoque();
 
-		obj.setId_Nota(Utils.tryParseToInt(txtIdNota.getText()));
+		obj.setId_Nota(id_Nota);
 		obj.setValor(Utils.tryParseToDouble(txtPreco.getText()));
 		obj.setNro_Nota(Utils.tryParseToInt(txtNro.getText()));
 		obj.setId_Forne(forne.getId_Forne());
@@ -530,7 +533,7 @@ public class NotasFiscaisFormController implements Initializable {
 		}
 
 		if (txtQuantidade.getText() == null || txtQuantidade.getText().trim().equals("")) {
-			exception.addErrors("Quantidade", "Field can't be empty!");
+			exception.addErrors("Quantidade", "Informe a quantidade!");
 		}
 
 		if (cboProduto.getSelectionModel().getSelectedItem() == null) {

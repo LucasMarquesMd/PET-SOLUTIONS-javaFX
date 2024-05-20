@@ -44,8 +44,8 @@ public class LocalDeEstoqueFormController implements Initializable{
 // 						Atibutos do LocalDeEstoque	
 // =================================================================================
 	
-	@FXML
-	private TextField txtIdLocal;
+	private Integer id_Local;
+	
 	@FXML
 	private TextField txtNome;
 	@FXML
@@ -139,7 +139,7 @@ public class LocalDeEstoqueFormController implements Initializable{
 	private void initializeNode() {
 		
 		//LocalDeEstoque
-		Constraints.setTextFieldInteger(txtIdLocal);
+		
 		Constraints.setTextFieldMaxLength(txtNome, 45);
 		Constraints.setTextAreaMaxLength(txtDescricao, 50);
 
@@ -155,7 +155,9 @@ public class LocalDeEstoqueFormController implements Initializable{
 			throw new IllegalStateException("Entity (LocalDeEstoque) was null");
 		}
 		//LocalDeEstoque
-		txtIdLocal.setText(String.valueOf(entity.getId_Local()));
+		if(entity.getId_Local() != null) {
+			id_Local = entity.getId_Local();
+		}
 		txtNome.setText(entity.getNome_Local());
 		txtDescricao.setText(entity.getDesc_Local());
 		cboStatus.setValue(entity.getSit_Local());
@@ -178,20 +180,20 @@ public class LocalDeEstoqueFormController implements Initializable{
 		
 		ValidationException exception = new ValidationException("Erro ao validar os dados do Local!");
 		
-		obj.setId_Local(Utils.tryParseToInt(txtIdLocal.getText()));//O tryParseInt() ja faz a verificacao
+		obj.setId_Local(id_Local);
 		
 		if(txtNome.getText() == null || txtNome.getText().trim().equals("")) {
-			exception.addErrors("Nome", "Field can't be empty!");
+			exception.addErrors("Nome", "Informe o nome do local");
 		}
 		obj.setNome_Local(txtNome.getText());
 		
 		if(txtDescricao.getText() == null || txtDescricao.getText().trim().equals("")) {
-			exception.addErrors("Descricao", "Field can't be empty!");
+			exception.addErrors("Descricao", "Informe a descricao");
 		}
 		obj.setDesc_Local(txtDescricao.getText());
 		
 		if (cboStatus.getSelectionModel().getSelectedItem() == null) {//Verifica se e nulo
-		    exception.addErrors("Status", "Field can't be empty!");
+		    exception.addErrors("Status", "Informe o status!");
 		} 
 		obj.setSit_Local(cboStatus.getValue());
 		 
