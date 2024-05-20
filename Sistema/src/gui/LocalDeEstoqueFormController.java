@@ -144,7 +144,7 @@ public class LocalDeEstoqueFormController implements Initializable{
 		Constraints.setTextAreaMaxLength(txtDescricao, 50);
 
 		cboStatus.setItems(statusLis);//Define os items do comboBox de acordo com a observableList
-		cboStatus.setValue(LocalStatus.A);
+		cboStatus.setValue(LocalStatus.ATIVADO);
 		cboStatus.getSelectionModel().selectFirst();
 		
 	}
