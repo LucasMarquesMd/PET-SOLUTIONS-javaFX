@@ -1,6 +1,5 @@
 package gui;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -9,13 +8,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
 
 import application.Main;
 import db.DbIntegrityException;

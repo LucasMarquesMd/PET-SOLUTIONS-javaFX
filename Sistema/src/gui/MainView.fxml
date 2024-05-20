@@ -8,6 +8,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -20,7 +21,7 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Registrar">
                   <items>
-                    <MenuItem fx:id="menuItemColaboradores" mnemonicParsing="false" onAction="#onMenuItemColaboradoresAction" text="Colaborador" />
+                    <MenuItem fx:id="menuItemColabList" mnemonicParsing="false" onAction="#onMenuItemColaboradoresAction" text="Colaborador" />
                         <MenuItem fx:id="menuItemProduto" mnemonicParsing="false" onAction="#onMenuItemProdutoAction" text="Produto" />
                         <MenuItem fx:id="menuItemFornecedor" mnemonicParsing="false" onAction="#onMenuItemFornecedorAction" text="Fornecedor" />
                         <MenuItem fx:id="menuItemCliente" mnemonicParsing="false" onAction="#onMenuItemClienteAction" text="Cliente" />
@@ -59,6 +60,11 @@
                   <TextField fx:id="txtUserName" layoutX="343.0" layoutY="87.0" prefHeight="25.0" prefWidth="199.0" />
                   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" />
                   <PasswordField fx:id="txtPassworld" layoutX="344.0" layoutY="118.0" prefHeight="25.0" prefWidth="197.0" />
+                  <ImageView fitHeight="272.0" fitWidth="258.0" layoutX="14.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resource/dogIcon.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
          </children>

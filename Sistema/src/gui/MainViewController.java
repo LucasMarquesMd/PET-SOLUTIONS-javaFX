@@ -109,6 +109,9 @@ public class MainViewController implements Initializable {
 		if(validarUsuario(txtUserName.getText(), txtPassworld.getText())) {
 			loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia 
 			mainMenuBar.setVisible(true);
+			
+			validarColaborador();
+			
 		}else {
 			Alerts.showAlerts("Erro", "Usuario e ou senha invalidos!", null, AlertType.ERROR);
 		}
@@ -213,7 +216,24 @@ public class MainViewController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		mainMenuBar.setVisible(false);
+	
 	}
+	
+	private void validarColaborador() {
+		if(colaborador.getLevel_Access() > 1) {
+			bloquearControles();
+		}
+	}
+	
+	private void bloquearControles() {
+		menuItemColabList.setVisible(false);
+		menuItemFornecedor.setVisible(false);
+		menuItemLocal.setVisible(false);
+		menuItemNotas.setVisible(false);
+		menuItemProduto.setVisible(false);
+	}
+	
+	
 
 	private synchronized <T> void loadView(String absolutPath, Consumer<T> initializingAction) {
 
