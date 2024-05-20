@@ -331,6 +331,10 @@ public class NotasFiscaisFormController implements Initializable {
 	public void updateFormData() {
 		if(entityNota.getNro_Nota() != null) {
 			btnSalvar.setVisible(false);
+			//Bloqueia os comboboxs
+			cboProduto.setDisable(true);
+		    cboFornecedor.setDisable(true);
+		    cboLocal.setDisable(true);
 		}
 		
 		if (entityNota == null) {

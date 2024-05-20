@@ -231,7 +231,7 @@ public class NotasListController implements Initializable, DataChangeListener {
 			controller.subscribeDataChangeListener(this);// Inscricao para receber o evento do DataChangeListener
 			controller.updateFormData();
 
-			dialogStage.setTitle("Entre com os dados do pedido: ");
+			dialogStage.setTitle("Entre com os dados da nota fiscal: ");
 			dialogStage.setScene(new Scene(pane));// Instanciar nova cena
 			// Bloquear o redimensionamento da janela
 			dialogStage.setResizable(false);
