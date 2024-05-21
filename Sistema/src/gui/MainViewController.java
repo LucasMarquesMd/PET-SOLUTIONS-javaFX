@@ -95,11 +95,6 @@ public class MainViewController implements Initializable {
 	@FXML
 	private Button btnSair;
 
-	@FXML
-	private TextField txtUserName;
-
-	@FXML
-	private TextField txtPassworld;
 
 	/*
 	 * ========================================================================
@@ -107,24 +102,14 @@ public class MainViewController implements Initializable {
 	 * ========================================================================
 	 */
 
-	public void onBtnEntrarAction() {
-		if(validarUsuario(txtUserName.getText(), txtPassworld.getText())) {
-			loadView("/gui/HomeScreen.fxml", x -> {});//Lambda vazia 
-			mainMenuBar.setVisible(true);
-			
-			validarColaborador();
-			
-		}else {
-			Alerts.showAlerts("Erro", "Usuario e ou senha invalidos!", null, AlertType.ERROR);
-		}
-//		loadView("/gui/HomeScreen.fxml", x -> {
-//		});// Lambda vazia
-//		mainMenuBar.setVisible(true);
+	public void onBtnEntrarAction() {	
+		loadView("/gui/Login.fxml", (LoginController controller) -> {
+			controller.setColaboradorServices(new ColaboradorServices());
+		});
 
 	}
 
 	public void onBtnSairAction(ActionEvent event) {
-		// Platform.exit();
 		Utils.currentStage(event).close();
 	}
 
@@ -211,13 +196,12 @@ public class MainViewController implements Initializable {
 	}
 	
 	public void onMenuItemSairAction() {
-		
-		// Limpar dados de sessão
-	    colaborador = null;
-	    mainMenuBar.setVisible(false);
-
-
-	    loadViewMain("/gui/MainView.fxml", x -> {});
+		colaborador = null;
+		mainMenuBar.setVisible(false);
+		loadView("/gui/Login.fxml", (LoginController controller) -> {
+			controller.setColaboradorServices(new ColaboradorServices());
+		});
+ 
 	}
 
 	/*
@@ -228,59 +212,7 @@ public class MainViewController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		mainMenuBar.setVisible(false);
-	
-	}
-	
-	private void validarColaborador() {
-		if(colaborador.getLevel_Access() > 1) {
-			bloquearControles();
-		}
-	}
-	
-	private void bloquearControles() {
-		menuItemColabList.setVisible(false);
-		menuItemFornecedor.setVisible(false);
-		menuItemLocal.setVisible(false);
-		menuItemNotas.setVisible(false);
-		menuItemProduto.setVisible(false);
-	}
-	
-	private synchronized <T> void loadViewMain(String absolutePath, Consumer<T> initializingAction) {
-	    try {
-	        // Carrega o novo arquivo FXML que define a interface do usuário
-	        FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutePath));
-	        // Carrega e instancia o novo layout principal da cena a partir do arquivo FXML
-	        ScrollPane newScrollPane = loader.load();
 
-	        // Obtém a cena principal da aplicação
-	        Scene mainScene = Main.getMainScene();
-
-	        // Obtém o ScrollPane que contém o conteúdo da cena principal
-	        ScrollPane mainScrollPane = (ScrollPane) mainScene.getRoot();
-
-	        // Obtém o VBox que contém o conteúdo do ScrollPane
-	        VBox mainVBox = (VBox) mainScrollPane.getContent();
-
-	        // Obtém o nó do menu principal da cena principal
-	        Node mainMenu = mainVBox.getChildren().get(0);
-
-	        // Limpar o conteúdo inteiro do VBox da tela principal
-	        mainVBox.getChildren().clear();
-
-	        // Adicionar o menuBar novamente na tela
-	        mainVBox.getChildren().add(mainMenu);
-
-	        // Adicionar os conteúdos da nova tela no VBox principal
-	        mainVBox.getChildren().add(((VBox) newScrollPane.getContent()).getChildren().get(0));
-
-	        // Ação de inicialização
-	        T controller = loader.getController(); // Retorna o controlador do tipo T
-	        initializingAction.accept(controller); // Executa a função passada como argumento
-
-	    } catch (IOException e) {
-	        e.printStackTrace(); // Adicionar a classe Alerts para mostrar erros
-	        Alerts.showAlerts("IOException", "Erro ao carregar a view", e.getMessage(), AlertType.ERROR);
-	    }
 	}
 	
 	
@@ -327,17 +259,5 @@ public class MainViewController implements Initializable {
 
 	}// end loadView
 
-	private boolean validarUsuario(String userName, String UserSenha) {
-		service = new ColaboradorServices();
-		if (service == null) {
-			throw new IllegalStateException("Service was null");
-		}
-		colaborador = service.validatingUser(userName, UserSenha);
-
-		if (colaborador == null) {
-			return false;
-		}
-
-		return true;
-	}
+	
 }
