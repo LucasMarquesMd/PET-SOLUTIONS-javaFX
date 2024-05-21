@@ -7,6 +7,8 @@ import java.util.function.Consumer;
 
 import application.Main;
 import gui.util.Alerts;
+import gui.util.Utils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -84,6 +86,11 @@ public class LoginController implements Initializable{
 			Alerts.showAlerts("Erro", "Usuario e ou senha invalidos!", null, AlertType.ERROR);
 		}
 		
+	}
+	
+	@FXML
+	public void onBtnSairAction(ActionEvent event) {
+		Utils.currentStage(event).close();
 	}
 	
 	

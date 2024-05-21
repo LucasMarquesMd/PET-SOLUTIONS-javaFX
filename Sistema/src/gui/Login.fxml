@@ -10,28 +10,28 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="657.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoginController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="991.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoginController">
    <children>
       <BorderPane prefHeight="360.0" prefWidth="600.0">
-         <center>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <right>
+            <AnchorPane prefHeight="360.0" prefWidth="548.0" BorderPane.alignment="CENTER">
                <children>
-                  <TextField fx:id="txtUsuario" layoutX="132.0" layoutY="138.0" prefHeight="30.0" prefWidth="250.0" promptText="Usuario" />
-                  <PasswordField fx:id="txtSenha" layoutX="132.0" layoutY="186.0" prefHeight="30.0" prefWidth="250.0" promptText="Senha" />
-                  <Label layoutX="75.0" layoutY="145.0" text="Usuario" />
-                  <Label layoutX="77.0" layoutY="193.0" text="Senha" />
-                  <Button fx:id="btnEntrar" layoutX="316.0" layoutY="247.0" mnemonicParsing="false" onAction="#onBtnEntrarAction" text="Entrar" />
-                  <Button layoutX="249.0" layoutY="247.0" mnemonicParsing="false" text="Sair" />
+                  <TextField fx:id="txtUsuario" layoutX="95.0" layoutY="136.0" prefHeight="30.0" prefWidth="250.0" promptText="Usuario" />
+                  <PasswordField fx:id="txtSenha" layoutX="95.0" layoutY="184.0" prefHeight="30.0" prefWidth="250.0" promptText="Senha" />
+                  <Label layoutX="38.0" layoutY="143.0" text="Usuario" />
+                  <Label layoutX="40.0" layoutY="191.0" text="Senha" />
+                  <Button fx:id="btnEntrar" layoutX="279.0" layoutY="245.0" mnemonicParsing="false" onAction="#onBtnEntrarAction" style="-fx-background-color: FFB6C1;" text="Entrar" />
+                  <Button fx:id="btnSair" layoutX="212.0" layoutY="245.0" mnemonicParsing="false" onAction="#onBtnSairAction" style="-fx-background-color: FFB6C1;" text="Sair" />
                </children>
             </AnchorPane>
-         </center>
-         <left>
-            <ImageView fitHeight="246.0" fitWidth="309.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         </right>
+         <center>
+            <ImageView fitHeight="363.0" fitWidth="352.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <image>
                   <Image url="@../resource/dogIcon.png" />
                </image>
             </ImageView>
-         </left>
+         </center>
       </BorderPane>
    </children>
 </VBox>

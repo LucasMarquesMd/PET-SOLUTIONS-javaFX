@@ -63,13 +63,13 @@
                      </children>
                   </AnchorPane>
                </right>
-               <left>
-                  <ImageView fitHeight="263.0" fitWidth="413.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <center>
+                  <ImageView fitHeight="378.0" fitWidth="348.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                      <image>
                         <Image url="@../resource/dogIcon.png" />
                      </image>
                   </ImageView>
-               </left>
+               </center>
             </BorderPane>
          </children>
       </VBox>
