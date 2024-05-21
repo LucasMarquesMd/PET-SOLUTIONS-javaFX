@@ -616,6 +616,10 @@ public class PedidosFormController implements Initializable {
 		if (produtosList.size() == 0) {
 			exception.addErrors("Produto", "Lista de produtos vazia!");
 		}
+		
+		if (cboProduto.getSelectionModel().getSelectedItem() == null) {
+			exception.addErrors("Produto", "Adicione um produto!");
+		}
 
 		if (exception.getErrors().size() > 0) {
 			throw exception;// Lanca a excessao

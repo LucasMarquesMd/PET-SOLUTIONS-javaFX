@@ -14,6 +14,7 @@ import db.DbIntegrityException;
 import model.dao.ColaboradorDao;
 import model.entities.Colaborador;
 import model.entities.Endereco;
+import model.entities.enums.NivelDeAcesso;
 
 public class ColaboradorDaoJDBC implements ColaboradorDao{
 
@@ -40,7 +41,7 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 			st.setString(5, obj.getEmail());
 			st.setString(6, obj.getUser_Col());
 			st.setString(7, obj.getUser_Senha());
-			st.setInt(8, obj.getLevel_Access());
+			st.setString(8, obj.getLevel_Access().toString());
 			st.setInt(9, obj.getId_End());
 			
 			int rowsAffected = st.executeUpdate();
@@ -82,7 +83,7 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 			st.setString(5, obj.getEmail());
 			st.setString(6, obj.getUser_Col());
 			st.setString(7, obj.getUser_Senha());
-			st.setInt(8, obj.getLevel_Access());
+			st.setString(8, obj.getLevel_Access().toString());
 			
 			st.setInt(9, obj.getIdColab());
 			
@@ -281,7 +282,7 @@ public class ColaboradorDaoJDBC implements ColaboradorDao{
 		obj.setId_End(rs.getInt("id_End"));
 		obj.setUser_Col(rs.getString("user_Col"));
 		obj.setUser_Senha(rs.getString("user_Senha"));
-		obj.setLevel_Access(rs.getInt("level_Access"));
+		obj.setLevel_Access(NivelDeAcesso.valueOf(rs.getString("level_Access")));
 		
 		obj.setEndereco(end);
 		

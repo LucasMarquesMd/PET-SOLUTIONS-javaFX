@@ -7,23 +7,25 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import application.Main;
 import db.DbException;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Constraints;
 import gui.util.Utils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 import model.entities.Colaborador;
 import model.entities.Endereco;
+import model.entities.enums.NivelDeAcesso;
+import model.entities.enums.PedidoStatus;
 import model.exceptions.ValidationException;
 import model.services.ColaboradorServices;
 import model.services.EnderecoService;
@@ -41,6 +43,7 @@ public class ColaboradorFormController implements Initializable {
 
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
+	private ObservableList<NivelDeAcesso> obsListNivel = FXCollections.observableArrayList(NivelDeAcesso.values());
 // =================================================================================
 // 						Atibutos do Colaborador	
 // =================================================================================
@@ -62,7 +65,7 @@ public class ColaboradorFormController implements Initializable {
 	@FXML
 	private TextField txtSenha;
 	@FXML
-	private TextField txtLevel;
+	private ComboBox cboLevel;
 
 // =================================================================================
 //							Atibutos do Endereco	
@@ -109,6 +112,10 @@ public class ColaboradorFormController implements Initializable {
 	private Label lblErrorCelular;
 	@FXML
 	private Label lblErrorUsuario;
+	@FXML
+	private Label lblErrorLevel;
+	@FXML
+	private Label lblErrorSenha;
 
 	// Endereco
 	@FXML
@@ -121,10 +128,7 @@ public class ColaboradorFormController implements Initializable {
 	private Label lblErrorCEP;
 	@FXML
 	private Label lblErrorNumero;
-	@FXML
-	private Label lblErrorLevel;
-	@FXML
-	private Label lblErrorSenha;
+	
 
 // =================================================================================
 //							Funcoes dos controles	
@@ -221,12 +225,10 @@ public class ColaboradorFormController implements Initializable {
 		Constraints.setTextFieldInteger(txtCpf);
 		Constraints.setTextFieldMaxLength(txtCpf, 11);
 		Constraints.setTextFieldMaxLength(txtUsuario, 20);
-		Constraints.setTextFieldInteger(txtLevel);
-		Constraints.setTextFieldMaxLength(txtLevel, 1);
 		Constraints.setTextFieldMaxLength(txtSenha, 20);
-
-		// Instancia uma imagem
 		
+		cboLevel.setItems(obsListNivel);
+		cboLevel.getSelectionModel().selectFirst();
 
 	}
 
@@ -238,6 +240,12 @@ public class ColaboradorFormController implements Initializable {
 		if (entityColab.getIdColab() != null) {
 			id_Col = entityColab.getIdColab();
 		}
+		
+		if (entityColab.getLevel_Access() == null) {
+			cboLevel.getSelectionModel().selectFirst();
+		} else {
+			cboLevel.setValue(entityColab.getLevel_Access() );
+		}
 
 		txtNome.setText(entityColab.getName());
 		txtEmail.setText(entityColab.getEmail());
@@ -245,7 +253,6 @@ public class ColaboradorFormController implements Initializable {
 		txtTelefone.setText(String.valueOf(entityColab.getTelefone()));
 		txtCelular.setText(String.valueOf(entityColab.getCelular()));
 		txtUsuario.setText(entityColab.getUser_Col());
-		txtLevel.setText(String.valueOf(entityColab.getLevel_Access()));
 		txtSenha.setText(entityColab.getUser_Senha());
 
 		if (entityEnd == null) {
@@ -285,7 +292,7 @@ public class ColaboradorFormController implements Initializable {
 		obj.setTelefone(txtTelefone.getText());
 		obj.setCelular(txtCelular.getText());
 		obj.setUser_Col(txtUsuario.getText());
-		obj.setLevel_Access(Utils.tryParseToInt(txtLevel.getText()));
+		obj.setLevel_Access(NivelDeAcesso.valueOf(cboLevel.getValue().toString()));
 
 		obj.setUser_Senha(txtSenha.getText());
 
@@ -339,8 +346,8 @@ public class ColaboradorFormController implements Initializable {
 			exception.addErrors("Senha", "Informe a senha!");
 		}
 
-		if (txtLevel.getText() == null || txtLevel.getText().trim().equals("")) {
-			exception.addErrors("Nivel", "Informe o nivel de acesso!");
+		if (cboLevel.getSelectionModel().getSelectedItem() == null) {
+			exception.addErrors("Nivel", "Selecione um nivel!");
 		}
 
 		if (txtRua.getText() == null || txtRua.getText().trim().equals("")) {

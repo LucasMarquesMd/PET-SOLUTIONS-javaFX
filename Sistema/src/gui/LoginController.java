@@ -20,6 +20,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import model.entities.enums.NivelDeAcesso;
 import model.services.ColaboradorServices;
 
 public class LoginController implements Initializable{
@@ -161,7 +162,7 @@ public class LoginController implements Initializable{
 	
 	
 	private void validarColaborador(MenuBar menuBar) {
-		if(MainViewController.colaborador.getLevel_Access() > 1) {
+		if(MainViewController.colaborador.getLevel_Access() == NivelDeAcesso.COLABORADOR) {
 			esconderCampos(menuBar);
 		}
 	}

@@ -15,6 +15,7 @@ import model.dao.PedidosDao;
 import model.entities.Colaborador;
 import model.entities.Pagamentos;
 import model.entities.Pedidos;
+import model.entities.enums.NivelDeAcesso;
 import model.entities.enums.PedidoStatus;
 import model.entities.enums.TipoDePagamento;
 
@@ -246,7 +247,7 @@ public class PedidosDaoJDBC implements PedidosDao{
 		obj.setId_End(rs.getInt("id_End"));
 		obj.setUser_Col(rs.getString("user_Col"));
 		obj.setUser_Senha(rs.getString("user_Senha"));
-		obj.setLevel_Access(rs.getInt("level_Access"));
+		obj.setLevel_Access(NivelDeAcesso.valueOf(rs.getString("level_Access")));
 		
 		//obj.setEndereco(end);
 

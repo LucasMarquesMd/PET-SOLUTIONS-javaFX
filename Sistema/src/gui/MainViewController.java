@@ -209,6 +209,7 @@ public class MainViewController implements Initializable {
 	 * Metodos da classe
 	 * ========================================================================
 	 */
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		mainMenuBar.setVisible(false);

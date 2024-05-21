@@ -34,7 +34,7 @@ CREATE TABLE Colaborador (
     id_End INT,
     user_Col VARCHAR(20),
     user_Senha VARCHAR(20),
-    level_Access INT,
+    level_Access ENUM ('PROPRIETARIO', 'COLABORADOR'),
     CONSTRAINT fk_End_Col FOREIGN KEY (id_End) REFERENCES Endereco(id_End)
 ) DEFAULT CHARSET=utf8;
 
@@ -130,6 +130,6 @@ INSERT INTO Endereco (cep_End, num_End, rua_End, bairro_End, cidade_End) VALUES
 
 -- Insert data into Colaborador
 INSERT INTO Colaborador (nome_Col, cpf_Col, tel_Col, cel_Col, email_Col, id_End, user_Col, user_Senha, level_Access) VALUES 
-('adm', '111.111.111-11', '11111111', '911111111', 'colaborador1@example.com', 1, 'adm', '123', 1);
+('adm', '111.111.111-11', '11111111', '911111111', 'colaborador1@example.com', 1, 'adm', '123', 'PROPRIETARIO');
 
 -- drop database Risadog;

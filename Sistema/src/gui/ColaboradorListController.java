@@ -32,6 +32,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Colaborador;
 import model.entities.Endereco;
+import model.entities.enums.NivelDeAcesso;
 import model.services.ColaboradorServices;
 import model.services.EnderecoService;
 

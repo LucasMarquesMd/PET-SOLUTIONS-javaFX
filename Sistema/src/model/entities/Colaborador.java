@@ -1,9 +1,8 @@
 package model.entities;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-import org.w3c.dom.ls.LSSerializer;
+import model.entities.enums.NivelDeAcesso;
 
 public class Colaborador{
 	
@@ -15,7 +14,7 @@ public class Colaborador{
 	private String celular;
 	private String user_Col;
 	private String user_Senha;
-	private Integer level_Access;
+	private NivelDeAcesso level_Access;
 	
 	private Integer id_End;
 	private Endereco endereco;
@@ -26,7 +25,7 @@ public class Colaborador{
 
 
 	public Colaborador(Integer idColab, String name, String email, String cnpj_cpf, String telefone, String celular,
-			String user_Col, String user_Senha, Integer level_Access, Integer id_End) {
+			String user_Col, String user_Senha, NivelDeAcesso level_Access, Integer id_End) {
 		super();
 		this.idColab = idColab;
 		this.name = name;
@@ -121,12 +120,12 @@ public class Colaborador{
 	}
 
 
-	public Integer getLevel_Access() {
+	public NivelDeAcesso getLevel_Access() {
 		return level_Access;
 	}
 
 
-	public void setLevel_Access(Integer level) {
+	public void setLevel_Access(NivelDeAcesso level) {
 		this.level_Access = level;
 	}
 
