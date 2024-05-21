@@ -14,6 +14,7 @@ import db.DbIntegrityException;
 import model.dao.NotaEstoqueDao;
 import model.entities.Fornecimento;
 import model.entities.NotaEstoque;
+import model.entities.enums.LocalStatus;
 import model.services.FornecedorServices;
 import model.services.ProdutoServices;
 
@@ -212,6 +213,8 @@ public class NotaEstoqueDaoJDBC implements NotaEstoqueDao{
 		}
 
 	}//End findAll
+	
+	
 	
 	private Fornecimento instantiateFornecimento(ResultSet rs) throws SQLException{
 		Fornecimento obj = new Fornecimento();

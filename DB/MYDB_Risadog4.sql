@@ -91,7 +91,7 @@ CREATE TABLE Pagamento (
     id_Pag INT PRIMARY KEY AUTO_INCREMENT,
     preco_Pag DECIMAL(20,2) NOT NULL,
     dt_Pag DATE,
-    tipo_Pag ENUM('DEBITO', 'CREDITO', 'PIX') NOT NULL,
+    tipo_Pag ENUM('DEBITO', 'CREDITO', 'PIX', 'DINHEIRO') NOT NULL,
     nro_Ped INT
 ) DEFAULT CHARSET=utf8;
 

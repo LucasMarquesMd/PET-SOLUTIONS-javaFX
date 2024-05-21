@@ -159,6 +159,41 @@ public class LocalDeEstoqueDaoJDBC implements LocalDeEstoqueDao {
 			DB.closeResultSet(rs);
 		}
 	}
+	
+	@Override
+	public List<LocalDeEstoque> findAllAtivos() {
+		// PrepareStatement -> Utilizada quando uma instrucao sql sera executada vaira
+		// vezes (Statement)
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			// Cria a string sql eja define a conexao
+			st = conn.prepareStatement("SELECT *  " + "FROM Local_Estoque "
+					+ "WHERE sit_Local = ? " 
+					+ "ORDER BY nome_Local");
+
+			st.setString(1, LocalStatus.ATIVADO.toString());
+			// Executa a query e salva o resultado no ResultSet
+			rs = st.executeQuery();// Cria uma tabela, apaontando nenhum valor
+
+			List<LocalDeEstoque> list = new ArrayList<>();
+
+			while (rs.next()) {
+				LocalDeEstoque obj = instantiateLocalDeEstoque(rs);
+
+				list.add(obj);
+			} // end while
+
+			return list;
+
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+
+		} finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+	}
 
 	@Override
 	public List<LocalDeEstoque> findByName(String name) {

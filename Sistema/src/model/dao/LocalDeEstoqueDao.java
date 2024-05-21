@@ -13,6 +13,7 @@ public interface LocalDeEstoqueDao {
 	void deleteById(Integer id);
 	LocalDeEstoque findById(Integer id);
 	List<LocalDeEstoque> findAll();
+	List<LocalDeEstoque> findAllAtivos();
 	List<LocalDeEstoque> findByName(String name);
 
 }

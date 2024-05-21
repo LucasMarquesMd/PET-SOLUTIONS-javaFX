@@ -200,7 +200,7 @@ public class FornecedorFormController implements Initializable{
 		Constraints.setTextFieldInteger(txtCnpj);
 		Constraints.setTextFieldMaxLength(txtCnpj, 14);
 		Constraints.setTextFieldMaxLength(txtNome, 45);
-		Constraints.setTextFieldOnlyLetters(txtNome);
+		//Constraints.setTextFieldOnlyLetters(txtNome);
 		Constraints.setTextFieldMaxLength(txtEmail, 50);
 		
 	}

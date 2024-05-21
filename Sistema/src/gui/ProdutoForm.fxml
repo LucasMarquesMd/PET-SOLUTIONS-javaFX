@@ -18,7 +18,7 @@
       <Label layoutX="23.0" layoutY="85.0" text="Descricao" />
       <Label layoutX="17.0" layoutY="219.0" text="Preco" />
       <TextField fx:id="txtNome" layoutX="64.0" layoutY="48.0" prefHeight="25.0" prefWidth="222.0" promptText="Nome do Produto" />
-      <TextField fx:id="txtEstoque" layoutX="347.0" layoutY="48.0" prefHeight="25.0" prefWidth="149.0" promptText="Total no estoque" />
+      <TextField fx:id="txtEstoque" layoutX="347.0" layoutY="48.0" prefHeight="25.0" prefWidth="149.0" promptText="Quantidade disponivel" />
       <TextArea fx:id="txtDescricao" layoutX="20.0" layoutY="102.0" prefHeight="107.0" prefWidth="474.0" promptText="Descricao" />
       <TextField fx:id="txtPreco" layoutX="60.0" layoutY="215.0" promptText="Preco de venda" />
       <Button fx:id="btnSalvar" layoutX="371.0" layoutY="224.0" mnemonicParsing="false" onAction="#onBtnSaveAction" style="-fx-background-color: FFB6C1;" text="Salvar" />

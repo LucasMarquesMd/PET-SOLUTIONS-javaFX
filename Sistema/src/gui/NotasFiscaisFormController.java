@@ -322,7 +322,7 @@ public class NotasFiscaisFormController implements Initializable {
 		if (serviceLocal == null) {
 			throw new IllegalStateException("servicesLocal was null!");
 		}
-		List<LocalDeEstoque> listForn = serviceLocal.findAll();
+		List<LocalDeEstoque> listForn = serviceLocal.findAllAtivos();
 		obsListLocal = FXCollections.observableArrayList(listForn);
 		cboLocal.setItems(obsListLocal);
 	}

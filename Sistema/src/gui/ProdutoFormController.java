@@ -161,6 +161,10 @@ public class ProdutoFormController implements Initializable{
 		txtNome.setText(entity.getNome_Prod());
 		txtDescricao.setText(entity.getDesc_Prod());
 		txtPreco.setText(String.valueOf(entity.getPreco_Prod()));
+		if(entity.getQtd_Estocado() == null) {
+			Integer qt = 0;
+			txtEstoque.setText(String.valueOf(qt));
+		}
 		txtEstoque.setText(String.valueOf(entity.getQtd_Estocado()));
 	}
 	

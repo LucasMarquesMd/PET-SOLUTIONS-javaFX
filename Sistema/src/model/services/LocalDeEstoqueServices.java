@@ -23,6 +23,10 @@ public class LocalDeEstoqueServices {
 		return dao.findAll();
 	}
 	
+	public List<LocalDeEstoque> findAllAtivos() {
+		return dao.findAllAtivos();
+	}
+	
 	public LocalDeEstoque findById(Integer id) {
 		return dao.findById(id);
 	}
