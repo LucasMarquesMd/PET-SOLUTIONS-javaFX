@@ -183,7 +183,7 @@ public class ProdutoListController implements Initializable, DataChangeListener{
 			controller.subscribeDataChangeListener(this);//Incrissao para receber o evento do DataChangeListener
 			controller.updateFormData();
 			
-			dialogStage.setTitle("Entre com os dados do colaborador: ");
+			dialogStage.setTitle("Entre com os dados do Produto: ");
 			dialogStage.setScene(new Scene(pane));//Instanciar nova cena
 			//Bloquear o redimensionamento da janela
 			dialogStage.setResizable(false);

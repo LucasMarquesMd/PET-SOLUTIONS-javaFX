@@ -51,7 +51,7 @@ CREATE TABLE Fornecedor (
 CREATE TABLE Produto (
     id_Prod INT PRIMARY KEY AUTO_INCREMENT,
     nome_Prod VARCHAR(45) NOT NULL,
-    desc_Prod VARCHAR(45) NOT NULL,
+    desc_Prod VARCHAR(100) NOT NULL,
     preco_Forn DECIMAL(20,2) NOT NULL,
     preco_Cli DECIMAL(20,2) NOT NULL,
     qtd_Estocado INT NOT NULL,

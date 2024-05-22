@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import application.Main;
-import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,12 +13,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import model.entities.Colaborador;
 import model.services.ClienteServices;
@@ -27,7 +24,6 @@ import model.services.ColaboradorServices;
 import model.services.FornecedorServices;
 import model.services.LocalDeEstoqueServices;
 import model.services.NotaEstoqueServices;
-import model.services.PagamentosServices;
 import model.services.PedidosServices;
 import model.services.ProdutoServices;
 
@@ -82,6 +78,8 @@ public class MainViewController implements Initializable {
 	private MenuItem menuItemEstoque;
 	@FXML
 	private MenuItem menuItemSair;
+	@FXML
+	private MenuItem menuItemAjuda;
 
 	/*
 	 * ========================================================================
@@ -201,6 +199,11 @@ public class MainViewController implements Initializable {
 		loadView("/gui/Login.fxml", (LoginController controller) -> {
 			controller.setColaboradorServices(new ColaboradorServices());
 		});
+ 
+	}
+	
+	public void onMenuItemAjudaAction() {
+		loadView("/gui/About.fxml", x -> {});
  
 	}
 

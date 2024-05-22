@@ -70,15 +70,16 @@ public class ClienteDaoJDBC implements ClienteDao{
 			st = conn.prepareStatement(
 					"UPDATE Cliente  "
 					+ "SET nome_Cli = ?, cpf_Cli = ?, cel_Cli = ?, tel_Cli = ?, email_Cli = ? "
-					+ "WHERE id_Cli = ?");
+					+ "WHERE id_Cli = ? ");
 			
 			st.setString(1, obj.getNome_Cli());
 			st.setString(2, obj.getCpf_Cli());
-			st.setString(3, obj.getTel_Cli());
-			st.setString(4, obj.getCel_Cli());
+			st.setString(3, obj.getCel_Cli());
+			st.setString(4, obj.getTel_Cli());
 			st.setString(5, obj.getEmail_Cli());
 			
 			st.setInt(6, obj.getId_Cli());
+			System.out.println("id = " + obj.getId_Cli());
 			
 			st.executeUpdate();
 

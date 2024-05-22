@@ -32,7 +32,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Colaborador;
 import model.entities.Endereco;
-import model.entities.enums.NivelDeAcesso;
 import model.services.ColaboradorServices;
 import model.services.EnderecoService;
 
@@ -200,7 +199,7 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 			controller.subscribeDataChangeListener(this);//Incrissao para receber o evento do DataChangeListener
 			controller.updateFormData();
 			
-			dialogStage.setTitle("Entre com os dados do fornecedor: ");
+			dialogStage.setTitle("Entre com os dados do colaborador: ");
 			dialogStage.setScene(new Scene(pane));//Instanciar nova cena
 			//Bloquear o redimensionamento da janela
 			dialogStage.setResizable(false);

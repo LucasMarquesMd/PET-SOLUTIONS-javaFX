@@ -22,7 +22,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
-import javafx.util.Callback;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -30,6 +29,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.util.Callback;
 import model.entities.Estoque;
 import model.entities.Fornecedor;
 import model.entities.Fornecimento;
@@ -330,7 +330,7 @@ public class NotasFiscaisFormController implements Initializable {
 	// Atualiza os valores do formulario com os dados da entidade
 	public void updateFormData() {
 		if(entityNota.getNro_Nota() != null) {
-			btnSalvar.setVisible(false);
+			btnSalvar.setDisable(true);
 			//Bloqueia os comboboxs
 			cboProduto.setDisable(true);
 		    cboFornecedor.setDisable(true);

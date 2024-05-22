@@ -300,7 +300,7 @@ public class PedidosListController implements Initializable, DataChangeListener 
 			controller.subscribeDataChangeListener(this);// Incrissao para receber o evento do DataChangeListener
 			controller.updateFormData();
 
-			dialogStage.setTitle("Entre com os dados do pedido: ");
+			dialogStage.setTitle("Entre com os dados do pagamento: ");
 			dialogStage.setScene(new Scene(pane));// Instanciar nova cena
 			// Bloquear o redimensionamento da janela
 			dialogStage.setResizable(false);

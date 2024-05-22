@@ -25,7 +25,6 @@ import javafx.scene.control.TextField;
 import model.entities.Colaborador;
 import model.entities.Endereco;
 import model.entities.enums.NivelDeAcesso;
-import model.entities.enums.PedidoStatus;
 import model.exceptions.ValidationException;
 import model.services.ColaboradorServices;
 import model.services.EnderecoService;
@@ -319,11 +318,11 @@ public class ColaboradorFormController implements Initializable {
 		ValidationException exception = new ValidationException("Erro ao validar os dados do colaborador!");
 
 		if (txtNome.getText() == null || txtNome.getText().trim().equals("")) {
-			exception.addErrors("Nome", "Preencha o nome do colaborador!");
+			exception.addErrors("Nome", "Informe o nome do colaborador!");
 		}
 
 		if (txtEmail.getText() == null || txtEmail.getText().trim().equals("")) {
-			exception.addErrors("Email", "Preencha o email do colaborador!");
+			exception.addErrors("Email", "Informe o email do colaborador!");
 		}
 
 		if (txtCpf.getText() == null || txtCpf.getText().trim().equals("")) {
@@ -339,7 +338,7 @@ public class ColaboradorFormController implements Initializable {
 		}
 
 		if (txtUsuario.getText() == null || txtUsuario.getText().trim().equals("")) {
-			exception.addErrors("Usuario", "Informe um usuario!");
+			exception.addErrors("Usuario", "Informe um usuário!");
 		}
 
 		if (txtSenha.getText() == null || txtSenha.getText().trim().equals("")) {
@@ -363,11 +362,11 @@ public class ColaboradorFormController implements Initializable {
 		}
 
 		if (txtCep.getText() == null || txtCep.getText().trim().equals("")) {
-			exception.addErrors("CEP", "Digite o CEP!");
+			exception.addErrors("CEP", "Informe o CEP!");
 		}
 
 		if (txtNumero.getText() == null || txtNumero.getText().trim().equals("")) {
-			exception.addErrors("Numero", "Informe o numero!");
+			exception.addErrors("Numero", "Informe o número!");
 		}
 
 		if (exception.getErrors().size() > 0) {

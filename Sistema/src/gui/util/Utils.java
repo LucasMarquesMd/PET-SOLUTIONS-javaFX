@@ -69,4 +69,11 @@ public class Utils {
 			}
 		});
 	}//end
+	
+	public static String doubleToString(Double value) {
+	    if (value == null) {
+	        return "";
+	    }
+	    return String.format("%.2f", value);
+	}
 }

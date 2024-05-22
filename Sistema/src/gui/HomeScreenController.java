@@ -16,6 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import model.entities.Colaborador;
+import model.entities.enums.NivelDeAcesso;
 import model.services.ColaboradorServices;
 import model.services.FornecedorServices;
 import model.services.LocalDeEstoqueServices;
@@ -54,6 +56,7 @@ public class HomeScreenController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		validarUsuario(MainViewController.colaborador);
 
 	}
 
@@ -88,7 +91,7 @@ public class HomeScreenController implements Initializable {
 
 	@FXML
 	public void onBtnAjudaAction() {
-
+		loadView("/gui/About.fxml", x -> {});
 	}
 
 	@FXML
@@ -173,5 +176,18 @@ public class HomeScreenController implements Initializable {
 		}
 
 	}// end loadView
+	
+//====================================================================
+//							Validacoes
+//====================================================================
+	
+	public void validarUsuario(Colaborador colaborador) {
+		if(colaborador.getLevel_Access() == NivelDeAcesso.COLABORADOR) {
+			btnProdutos.setVisible(false);
+			btnNotas.setVisible(false);
+			btnFornecedores.setVisible(false);
+			btnLocais.setVisible(false);
+		}
+	}
 
 }

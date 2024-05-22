@@ -188,7 +188,7 @@ public class LocalDeEstoqueFormController implements Initializable{
 		obj.setNome_Local(txtNome.getText());
 		
 		if(txtDescricao.getText() == null || txtDescricao.getText().trim().equals("")) {
-			exception.addErrors("Descricao", "Informe a descricao");
+			exception.addErrors("Descricao", "Informe a descrição");
 		}
 		obj.setDesc_Local(txtDescricao.getText());
 		

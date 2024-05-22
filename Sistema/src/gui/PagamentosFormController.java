@@ -61,8 +61,7 @@ public class PagamentosFormController implements Initializable {
 // 							Atibutos do pagamento	
 // =================================================================================
 
-	@FXML
-	private TextField txtId;
+	private Integer id_Pag;
 	@FXML
 	private DatePicker dpData;
 	@FXML
@@ -112,12 +111,12 @@ public class PagamentosFormController implements Initializable {
 			fieldesValidation();
 			
 			if(entityPed.getStatus_Ped() == PedidoStatus.CANCELADO) {
-				Alerts.showAlerts("Aviso", "Pagamentos", "Pedido Cancelado!\n Operacao interrompida!", AlertType.WARNING);
+				Alerts.showAlerts("Aviso", "Pagamentos", "Pedido Cancelado!\nOperação interrompida!", AlertType.WARNING);
 				Utils.currentStage(event).close();
 				
 			}
 			else if(entityPed.getStatus_Ped() == PedidoStatus.PAGO) {
-				Alerts.showAlerts("Aviso", "Pagamentos", "Pedido Pago!\n Operacao interrompida!", AlertType.WARNING);
+				Alerts.showAlerts("Aviso", "Pagamentos", "Pedido Pago!\nOperação interrompida!", AlertType.WARNING);
 				Utils.currentStage(event).close();
 				
 			}else {
@@ -196,7 +195,7 @@ public class PagamentosFormController implements Initializable {
 		dpData.setValue(null);
 
 		// Constraints
-		Constraints.setTextFieldInteger(txtId);
+		
 		Constraints.setTextFieldDouble(txtPreco);
 		Constraints.setTextFieldInteger(txtNroPedido);
 
@@ -223,7 +222,9 @@ public class PagamentosFormController implements Initializable {
 			throw new IllegalStateException("Entity (Pedidos) was null");
 		}
 		
-		txtId.setText(String.valueOf(entityPag.getId_Pag()));
+		if(entityPag.getId_Pag() != null) {
+			id_Pag = entityPag.getId_Pag();
+		}
 		txtNroPedido.setText(entityPed.getId_Ped().toString());
 		txtPreco.setText(entityPed.getPreco_Ped().toString());
 		
@@ -264,7 +265,7 @@ public class PagamentosFormController implements Initializable {
 	private Pagamentos getFormDataPagamentos(Pedidos ped) {
 		Pagamentos obj = new Pagamentos();
 
-		obj.setId_Pag(Utils.tryParseToInt(txtId.getText()));
+		obj.setId_Pag(id_Pag);
 		obj.setPreco_Pag(Utils.tryParseToDouble(txtPreco.getText()));
 
 		// Instant -> data independente de localidade

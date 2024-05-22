@@ -51,7 +51,6 @@ import model.entities.enums.PedidoStatus;
 import model.entities.enums.TipoDePagamento;
 import model.exceptions.ValidationException;
 import model.services.ClienteServices;
-import model.services.ColaboradorServices;
 import model.services.PagamentosServices;
 import model.services.PedidoItemsServices;
 import model.services.PedidosServices;
@@ -223,7 +222,7 @@ public class PedidosFormController implements Initializable {
 		}
 
 		if (produtosList.contains(prod)) {
-			Alerts.showAlerts("Aviso", "Pedido", "O produto ja consta na lista de items!", AlertType.WARNING);
+			Alerts.showAlerts("Aviso", "Pedido", "O produto já consta na lista de items!", AlertType.WARNING);
 			btnAdicionar.requestFocus();
 		} else {
 
@@ -335,7 +334,6 @@ public class PedidosFormController implements Initializable {
 		initializeComboBoxProduto();
 
 		if (entityPag != null) {
-			System.out.println(entityPag.getId_Pag());
 			id_Pag = entityPag.getId_Pag();
 		}
 
@@ -370,11 +368,18 @@ public class PedidosFormController implements Initializable {
 
 	public void updateFormData() {
 		if(entityPed.getStatus_Ped() != null && entityPed.getStatus_Ped() == PedidoStatus.CANCELADO) {
-			btnSalvar.setVisible(false);
+			btnSalvar.setDisable(true);
+			cboStatus.setDisable(true);
+			cboProduto.setDisable(true);
+			btnAdicionar.setDisable(true);
+			
 		}
 		
 		if(entityPed.getStatus_Ped() != null && entityPed.getStatus_Ped() == PedidoStatus.PAGO) {
-			btnSalvar.setVisible(false);
+			btnSalvar.setDisable(true);
+			cboStatus.setDisable(true);
+			cboProduto.setDisable(true);
+			btnAdicionar.setDisable(true);
 		}
 		
 		

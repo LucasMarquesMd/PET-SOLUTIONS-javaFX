@@ -19,12 +19,12 @@
       <Label layoutX="17.0" layoutY="87.0" text="Descricao" />
       <Label layoutX="20.0" layoutY="228.0" text="Status" />
       <TextField fx:id="txtNome" layoutX="64.0" layoutY="40.0" prefHeight="25.0" prefWidth="276.0" promptText="Nome do local" />
-      <TextArea fx:id="txtDescricao" layoutX="14.0" layoutY="104.0" prefHeight="107.0" prefWidth="474.0" promptText="Descricao" />
+      <TextArea fx:id="txtDescricao" layoutX="14.0" layoutY="104.0" prefHeight="107.0" prefWidth="474.0" promptText="Descrição" />
       <Label fx:id="lblErrorDescricao" layoutX="72.0" layoutY="87.0" textFill="RED" />
       <Button fx:id="btnSalvar" layoutX="338.0" layoutY="224.0" mnemonicParsing="false" onAction="#onBtnSaveAction" style="-fx-background-color: FFB6C1;" text="Salvar" />
       <Button fx:id="btnCancelar" layoutX="404.0" layoutY="224.0" mnemonicParsing="false" onAction="#onBtnCancelAction" style="-fx-background-color: FFB6C1;" text="Cancelar" />
       <Label fx:id="lblErrorStatus" layoutX="225.0" layoutY="228.0" textFill="RED" />
       <Label fx:id="lblErrorNome" layoutX="338.0" layoutY="44.0" textFill="RED" />
-      <ComboBox fx:id="cboStatus" layoutX="64.0" layoutY="224.0" prefWidth="150.0" promptText="Situacao...." style="-fx-background-color: FFB6C1;" />
+      <ComboBox fx:id="cboStatus" layoutX="64.0" layoutY="224.0" prefWidth="150.0" promptText="Situação..." style="-fx-background-color: FFB6C1;" />
    </children>
 </AnchorPane>
