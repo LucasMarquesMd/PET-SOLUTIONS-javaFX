@@ -21,7 +21,7 @@ public class AboutFormController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Adicione os textos ao TextFlow com formatações
         textFlow.getChildren().addAll(
-                createTitle("Bem-vindo ao Sistema de Estoque PetAnalytics!"),
+                createTitle("Bem-vindo ao Sistema de Estoque PetSolutions!"),
                 createParagraph("Este sistema foi projetado para facilitar o gerenciamento eficiente do estoque de sua loja de produtos para animais. Aqui está um resumo das principais funcionalidades e como utilizá-las:"),
                 createSubtitle("Como fazer um novo cadastro para: Cliente, Colaborador, Fornecedor ou Produto?"),
                 createList("Acesse a aba \"Registro\" e selecione a opção desejada."),
