@@ -192,7 +192,7 @@ public class FornecedorListController implements Initializable, DataChangeListen
 			controller.subscribeDataChangeListener(this);//Incrissao para receber o evento do DataChangeListener
 			controller.updateFormData();
 			
-			dialogStage.setTitle("Entre com os dados do colaborador: ");
+			dialogStage.setTitle("Entre com os dados do fornecedor: ");
 			dialogStage.setScene(new Scene(pane));//Instanciar nova cena
 			//Bloquear o redimensionamento da janela
 			dialogStage.setResizable(false);
@@ -221,7 +221,7 @@ public class FornecedorListController implements Initializable, DataChangeListen
 	private void initEditButtons() {
 		tableCollumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableCollumnEDIT.setCellFactory(param -> new TableCell<Fornecedor, Fornecedor>() {
-			private final Button button = new Button("edit");
+			private final Button button = new Button("editar");
 
 			@Override
 			protected void updateItem(Fornecedor obj, boolean empty) {
@@ -244,7 +244,7 @@ public class FornecedorListController implements Initializable, DataChangeListen
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnREMOVE.setCellFactory(param -> new TableCell<Fornecedor, Fornecedor>() {
-			private final Button button = new Button("remove");
+			private final Button button = new Button("remover");
 
 			@Override
 			protected void updateItem(Fornecedor obj, boolean empty) {

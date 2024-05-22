@@ -327,7 +327,7 @@ public class PedidosListController implements Initializable, DataChangeListener 
 	private void initEditButtons() {
 		tableCollumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableCollumnEDIT.setCellFactory(param -> new TableCell<Pedidos, Pedidos>() {
-			private final Button button = new Button("Editar");
+			private final Button button = new Button("editar");
 
 			@Override
 			protected void updateItem(Pedidos obj, boolean empty) {
@@ -387,7 +387,7 @@ public class PedidosListController implements Initializable, DataChangeListener 
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnREMOVE.setCellFactory(param -> new TableCell<Pedidos, Pedidos>() {
-			private final Button button = new Button("Remover");
+			private final Button button = new Button("remover");
 
 			@Override
 			protected void updateItem(Pedidos obj, boolean empty) {

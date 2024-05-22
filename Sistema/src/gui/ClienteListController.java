@@ -222,7 +222,7 @@ public class ClienteListController implements Initializable, DataChangeListener{
 	private void initEditButtons() {
 		tableCollumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableCollumnEDIT.setCellFactory(param -> new TableCell<Cliente, Cliente>() {
-			private final Button button = new Button("edit");
+			private final Button button = new Button("editar");
 
 			@Override
 			protected void updateItem(Cliente obj, boolean empty) {
@@ -245,7 +245,7 @@ public class ClienteListController implements Initializable, DataChangeListener{
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnREMOVE.setCellFactory(param -> new TableCell<Cliente, Cliente>() {
-			private final Button button = new Button("remove");
+			private final Button button = new Button("remover");
 
 			@Override
 			protected void updateItem(Cliente obj, boolean empty) {
