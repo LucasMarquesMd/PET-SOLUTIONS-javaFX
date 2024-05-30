@@ -78,8 +78,7 @@ public class NotasListController implements Initializable, DataChangeListener {
 	private TableColumn<NotaEstoque, Integer> tableCollumnNumero;
 	@FXML
 	private TableColumn<NotaEstoque, NotaEstoque> tableCollumnEDIT;
-	@FXML
-	private TableColumn<NotaEstoque, NotaEstoque> tableColumnREMOVE;
+	
 
 	/*
 	 * ========================================================================
@@ -180,7 +179,6 @@ public class NotasListController implements Initializable, DataChangeListener {
 		tableViewNotaEstoque.setItems(obsListNota);
 
 		initEditButtons();
-		initRemoveButtons();
 	}// End updateTableView
 
 	public void updateTableViewConsult(String numero) {
@@ -198,7 +196,6 @@ public class NotasListController implements Initializable, DataChangeListener {
 		tableViewNotaEstoque.setItems(obsListNota);
 
 		initEditButtons();
-		initRemoveButtons();
 	}// End updateTableViewConsult
 
 	private void createDialogForm(NotaEstoque nota, Fornecimento forne, Fornecedor forn, LocalDeEstoque local, Produto prod, 
@@ -300,6 +297,7 @@ public class NotasListController implements Initializable, DataChangeListener {
 		});
 	}// End initEditButtons
 
+<<<<<<< HEAD
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnREMOVE.setCellFactory(param -> new TableCell<NotaEstoque, NotaEstoque>() {
@@ -352,5 +350,7 @@ public class NotasListController implements Initializable, DataChangeListener {
 			}
 		}
 	}
+=======
+>>>>>>> 8360bc5 (Final 123456789)
 
 }

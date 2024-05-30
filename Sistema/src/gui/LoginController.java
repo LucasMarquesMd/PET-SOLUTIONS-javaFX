@@ -171,6 +171,8 @@ public class LoginController implements Initializable{
 	private void validarColaborador(MenuBar menuBar) {
 		if(MainViewController.colaborador.getLevel_Access() == NivelDeAcesso.COLABORADOR) {
 			esconderCampos(menuBar);
+		}else {
+			apresentarCampos(menuBar);
 		}
 	}
 	
@@ -196,6 +198,35 @@ public class LoginController implements Initializable{
 		        }
 		        else if (menuItem.getText().equals("Local")) {
 		            menuItem.setVisible(false); // Torna o item de menu 'menuItemColab' invisível
+		      
+		        }
+		        
+		    }
+		}
+	}
+	
+	private void apresentarCampos(MenuBar menuBar) {
+		for (Menu menu : menuBar.getMenus()) {
+		    // Procura pelo item de menu menuItemColab dentro de cada menu
+		    for (MenuItem menuItem : menu.getItems()) {
+		        if (menuItem.getText().equals("Colaborador")) {
+		            menuItem.setVisible(true); // Torna o item de menu 'menuItemColab' invisível
+		      
+		        }
+		        else if (menuItem.getText().equals("Produto")) {
+		            menuItem.setVisible(true); // Torna o item de menu 'menuItemColab' invisível
+		      
+		        }
+		        else if (menuItem.getText().equals("Fornecedor")) {
+		            menuItem.setVisible(true); // Torna o item de menu 'menuItemColab' invisível
+		      
+		        }
+		        else if (menuItem.getText().equals("Notas")) {
+		            menuItem.setVisible(true); // Torna o item de menu 'menuItemColab' invisível
+		      
+		        }
+		        else if (menuItem.getText().equals("Local")) {
+		            menuItem.setVisible(true); // Torna o item de menu 'menuItemColab' invisível
 		      
 		        }
 		        

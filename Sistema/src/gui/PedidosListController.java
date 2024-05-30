@@ -392,7 +392,7 @@ public class PedidosListController implements Initializable, DataChangeListener 
 			@Override
 			protected void updateItem(Pedidos obj, boolean empty) {
 				super.updateItem(obj, empty);
-				if (obj == null) {
+				if (obj == null || obj.getStatus_Ped() == PedidoStatus.PAGO) {
 					setGraphic(null);
 					return;
 				}

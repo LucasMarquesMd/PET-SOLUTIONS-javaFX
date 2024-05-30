@@ -26,12 +26,12 @@
             <TextField fx:id="txtNro" layoutX="53.0" layoutY="15.0" promptText="Nro da nota" />
             <Label layoutX="348.0" layoutY="72.0" text="Local" />
             <ComboBox fx:id="cboLocal" layoutX="414.0" layoutY="68.0" prefHeight="25.0" prefWidth="161.0" promptText="Local" style="-fx-background-color: FFB6C1;" />
-            <Label fx:id="lblErrorNro" layoutX="202.0" layoutY="19.0" textFill="RED" />
             <Label fx:id="lblErrorPreco" layoutX="241.0" layoutY="91.0" textFill="#fc0000" />
             <Label fx:id="lblErrorQuantidade" layoutX="416.0" layoutY="145.0" textFill="#f50303" />
             <Label fx:id="lblErrorProduto" layoutX="71.0" layoutY="124.0" textFill="#ff0404" />
             <Label fx:id="lblErrorFornecedor" layoutX="416.0" layoutY="7.0" textFill="RED" />
             <Label fx:id="lblErrorLocal" layoutX="416.0" layoutY="51.0" textFill="#ff0505" />
+            <Label fx:id="lblErrorNro" layoutX="214.0" layoutY="19.0" textFill="RED" />
          </children>
       </AnchorPane>
       <ToolBar prefHeight="40.0" prefWidth="200.0">

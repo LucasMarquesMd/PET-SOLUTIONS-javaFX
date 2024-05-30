@@ -37,7 +37,7 @@
           <TableColumn fx:id="tbcId" prefWidth="63.0" text="ID" />
           <TableColumn fx:id="tbcNome" prefWidth="126.0" text="Nome" />
             <TableColumn fx:id="tbcQuantidade" prefWidth="79.0" text="Quantidade" />
-            <TableColumn fx:id="tbcPreco" prefWidth="115.0" text="Sub totais" />
+            <TableColumn fx:id="tbcPreco" prefWidth="115.0" text="Preco" />
             <TableColumn fx:id="tableColumnREMOVE" prefWidth="108.0" />
         </columns>
       </TableView>
